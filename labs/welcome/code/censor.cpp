@@ -7,8 +7,8 @@ int main(int argc, char* argv[]){
     }
     std::string input;
     std::getline(std::cin, input);
-    int count1 = 0;
-    int count2 = 0;
+    size_t count1 = 0;
+    size_t count2 = 0;
     while(count2 < input.size()){
         while(input[count1] == ' '){
             count1 ++;
