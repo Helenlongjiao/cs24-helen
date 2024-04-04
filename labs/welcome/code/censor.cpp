@@ -18,7 +18,8 @@ int main(int argc, char* argv[]){
             count2 ++;
         }
         else{
-            if(count2 - count1 != std::stoi(argv[1])){
+            int diff = count2 - count1;
+            if(diff != std::stoi(argv[1])){
                 if(count1 != 0){
                     std::cout<<' ';
                 }
