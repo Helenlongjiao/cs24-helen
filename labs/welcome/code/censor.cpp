@@ -3,7 +3,7 @@
 
 int main(int argc, char* argv[]){
     if(argc != 2){
-        std::cout<<"USAGE: censor [length]";
+        std::cout<<"USAGE: censor [length]\n";
         return 1;
     }
     std::string input;
@@ -15,7 +15,7 @@ int main(int argc, char* argv[]){
         while(input[count1] == ' '){
             count1 ++;
             count2 = count1;
-            first = count1;
+            first ++;
         }
         if(input[count2] != ' ' && count2 < input.size()){
             count2 ++;
