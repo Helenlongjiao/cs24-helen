@@ -33,7 +33,7 @@ int main(int argc, char* argv[]){
             if(diff != std::stoi(argv[1])){
                 isPrint = true;
                 if(count1 != first){
-                    std::cout<<'/';
+                    std::cout<<' ';
                 }
                 for(size_t i = count1; i < count2; ++i){
                     std::cout<<input[i];
