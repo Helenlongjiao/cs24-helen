@@ -11,20 +11,29 @@ int main(int argc, char* argv[]){
     size_t count1 = 0;
     size_t count2 = 0;
     size_t first = 0;
+    bool isPrint = false;
+    // while(input[count1] == ' '){
+    //     count1 ++;
+    //     first ++;
+    // }
+    // count1 = 0;
     while(count2 <= input.size()){
         while(input[count1] == ' '){
             count1 ++;
             count2 = count1;
-            first ++;
         }
-        if(input[count2] != ' ' && count2 < input.size()){
+        if(!isPrint){
+            first = count1;
+        }
+        if(input[count2] != ' ' && count2 <= input.size()){
             count2 ++;
         }
         else{
             int diff = count2 - count1;
             if(diff != std::stoi(argv[1])){
+                isPrint = true;
                 if(count1 != first){
-                    std::cout<<' ';
+                    std::cout<<'/';
                 }
                 for(size_t i = count1; i < count2; ++i){
                     std::cout<<input[i];
