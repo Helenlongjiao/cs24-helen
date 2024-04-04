@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 
-int main(int argc, char* argv[]){
+int main(size_t argc, char* argv[]){
     if(argc != 2){
         std::cout<<"USAGE: censor [length]";
     }
@@ -22,7 +22,7 @@ int main(int argc, char* argv[]){
                 if(count1 != 0){
                     std::cout<<' ';
                 }
-                for(int i = count1; i < count2; ++i){
+                for(size_t i = count1; i < count2; ++i){
                     std::cout<<input[i];
                 }
             }
