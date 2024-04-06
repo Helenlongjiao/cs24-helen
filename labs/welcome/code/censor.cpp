@@ -23,7 +23,7 @@ int main(int argc, char* argv[]){
         if(input[count2] != ' ' && count2 < input.size() && input[count2] != '\t'){
             count2 ++;
         }
-        else if(count2 >= input.size()){
+        else if(count2 >= input.size() && input[input.size() - 1] == ' '){
             break;
         }
         else{
