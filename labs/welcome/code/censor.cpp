@@ -12,11 +12,6 @@ int main(int argc, char* argv[]){
     size_t count2 = 0;
     size_t first = 0;
     bool isPrint = false;
-    // while(input[count1] == ' '){
-    //     count1 ++;
-    //     first ++;
-    // }
-    // count1 = 0;
     while(count2 <= input.size()){
         while(input[count1] == ' '){
             count1 ++;
@@ -25,7 +20,7 @@ int main(int argc, char* argv[]){
         if(!isPrint){
             first = count1;
         }
-        if(input[count2] != ' ' && count2 <= input.size()){
+        if(input[count2] != ' ' && count2 < input.size()){
             count2 ++;
         }
         else{
@@ -35,7 +30,7 @@ int main(int argc, char* argv[]){
                 if(count1 != first){
                     std::cout<<' ';
                 }
-                for(size_t i = count1; i < count2; ++i){
+                for(size_t i = count1; i < count2; ++i){  //there will be an extra space if the input include extra spaces at the end.
                     std::cout<<input[i];
                 }
             }
