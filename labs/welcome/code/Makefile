@@ -1,9 +1,13 @@
+CXX = g++
 
+TARGET_OBJ = censor.o
 
-All: censor.o
+SRCS = censor.cpp
 
-censor.o: censor.cpp
-	g++ -c censor.cpp -o censor.o
+all: $(TARGET_OBJ)
+
+$(TARGET_OBJ): $(SRCS)
+	$(CXX) $(CXXFLAGS) -c -o $@ $^
 
 clean:
-	rm censor.o
+	rm -f $(TARGET_OBJ)
