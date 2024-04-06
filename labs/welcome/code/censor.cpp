@@ -13,24 +13,27 @@ int main(int argc, char* argv[]){
     size_t first = 0;
     bool isPrint = false;
     while(count2 <= input.size()){
-        while(input[count1] == ' '){
+        while(input[count1] == ' ' || input[count1] == '\t'){
             count1 ++;
             count2 = count1;
         }
         if(!isPrint){
             first = count1;
         }
-        if(input[count2] != ' ' && count2 < input.size()){
+        if(input[count2] != ' ' && count2 < input.size() && input[count2] != '\t'){
             count2 ++;
+        }
+        else if(count2 >= input.size()){
+            break;
         }
         else{
             int diff = count2 - count1;
             if(diff != std::stoi(argv[1])){
                 isPrint = true;
                 if(count1 != first){
-                    std::cout<<' ';
+                    std::cout<<'/';
                 }
-                for(size_t i = count1; i < count2; ++i){  //there will be an extra space if the input include extra spaces at the end.
+                for(size_t i = count1; i < count2; ++i){
                     std::cout<<input[i];
                 }
             }
