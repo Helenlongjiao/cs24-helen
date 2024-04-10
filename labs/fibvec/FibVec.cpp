@@ -46,7 +46,7 @@ void FibVec::insert(int n, size_t index){
     this->cnt ++;
 }
 
-int FibVec::lookup(size_t index){
+int FibVec::lookup(size_t index) const{
     if(index >= cnt){
         throw std::out_of_range("lookup()");
     }

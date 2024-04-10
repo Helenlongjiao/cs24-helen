@@ -22,7 +22,7 @@ public:
   size_t capacity() const;
   size_t count() const;
   void insert(int n, size_t index);
-  int lookup(size_t index);
+  int lookup(size_t index) const;
   int pop();
   void push(int n);
   int remove(size_t index);
