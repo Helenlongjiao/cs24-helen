@@ -78,7 +78,7 @@ int FibVec::remove(size_t index){
         throw std::out_of_range("remove()");
     }
     int temp = this->value[index];
-    for(int i = index; i < this->cnt - 1; ++i){
+    for(size_t i = index; i < this->cnt - 1; ++i){
         this->value[i] = this->value[i + 1];
     }
     cnt --;
@@ -91,7 +91,7 @@ int FibVec::remove(size_t index){
 void FibVec::resize_add(){
     this->fibn ++;
     int* temp = new int[this->capa];
-    for(int i = 0; i < this->cnt; ++i){
+    for(size_t i = 0; i < this->cnt; ++i){
         temp[i] = this->value[i];
     }
     delete[] this->value;
@@ -101,7 +101,7 @@ void FibVec::resize_add(){
 void FibVec::resize_min(){
     this->fibn --;
     int* temp = new int[this->capa];
-    for(int i = 0; i < this->cnt; ++i){
+    for(size_t i = 0; i < this->cnt; ++i){
         temp[i] = this->value[i];
     }
     delete[] this->value;
