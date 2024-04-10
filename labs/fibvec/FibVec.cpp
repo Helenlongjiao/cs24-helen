@@ -90,6 +90,7 @@ int FibVec::remove(size_t index){
 
 void FibVec::resize_add(){
     this->fibn ++;
+    this->capa = fib(fibn);
     int* temp = new int[this->capa];
     for(size_t i = 0; i < this->cnt; ++i){
         temp[i] = this->value[i];
@@ -100,6 +101,7 @@ void FibVec::resize_add(){
 
 void FibVec::resize_min(){
     this->fibn --;
+    this->capa = fib(fibn);
     int* temp = new int[this->capa];
     for(size_t i = 0; i < this->cnt; ++i){
         temp[i] = this->value[i];
