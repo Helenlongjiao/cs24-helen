@@ -33,7 +33,7 @@ size_t FibVec::count() const{
 }
 
 void FibVec::insert(int n, size_t index){
-    if(index >= cnt){
+    if(index > cnt){
         throw std::out_of_range("insert()");
     }
     if(this->cnt >= this->capa){
