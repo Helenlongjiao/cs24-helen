@@ -14,6 +14,8 @@ struct Move {
   char player;
   int  row;
   int  column;
+  char row_char;
+  std::string comment;
 
   // The constructor parses a string.
   Move(const std::string& input);

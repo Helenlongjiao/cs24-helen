@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/asus1/Desktop/课堂资料/2024spring/cs24/labs/tictac",
+      "program": "/Users/asus1/Desktop/课堂资料/2024spring/cs24/labs/tictac/build/Debug/outDebug"
+    }
+  ]
+}
