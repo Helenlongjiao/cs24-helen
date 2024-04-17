@@ -28,7 +28,7 @@ std::string Move::to_string() const{
             output += std::toupper(row_char);
             output.append(std::to_string(column));
             if(comment != ""){
-                output.append(" # ");
+                output.append(" ");
                 output += comment;
             }
             return output;

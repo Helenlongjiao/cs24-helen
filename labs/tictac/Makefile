@@ -18,4 +18,4 @@ move-check.o: move-check.cpp
 
 
 clean:
-	rm -f test Move.o move-check.o
+	rm -f test Move.o move-check.o test
