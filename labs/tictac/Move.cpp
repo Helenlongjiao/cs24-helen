@@ -6,6 +6,7 @@
 Move::Move(const std::string& input){
     std::istringstream iss(input);
     iss >> number >> player >> row_char >> column;
+    row_char = std::toupper(row_char);
     row = row_char - 'A' + 1;
     if(input.find('#')){
         iss >> comment;
