@@ -19,6 +19,7 @@ struct Move {
 
   // The constructor parses a string.
   Move(const std::string& input);
+  Move();
 
   // Helper to render a Move as text.
   std::string to_string() const;

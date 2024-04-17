@@ -3,5 +3,5 @@
 #include "Move.h"
 
 int main() {
-
+    Board board;
 }

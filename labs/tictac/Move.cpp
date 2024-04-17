@@ -4,6 +4,15 @@
 
 // Space for implementing Move functions.
 
+Move::Move(){
+    number = 0;
+    player = 'O';
+    row_char = 'A';
+    column = 0;
+    row = 0;
+    comment = "no comment";
+}
+
 Move::Move(const std::string& input){
     std::istringstream iss(input);
     iss >> number >> player >> row_char >> column;
