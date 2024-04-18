@@ -13,6 +13,7 @@ Move::Move(const std::string& input){
         throw ParseError("missing space.\n");
     }
     std::istringstream iss(input);
+    std::string temp;
     iss >> number >> player >> row_char >> column;
     for(size_t i = 0; i < input.size(); ++i){
         if(input[i] == player){
@@ -30,16 +31,13 @@ Move::Move(const std::string& input){
                 throw ParseError("missing space.\n");
             }
         }
+        if((input.find('#') == std::string::npos) && (iss >> temp)){
+            throw ParseError("invalid comment.\n");
+        }
     }
     row_char = std::toupper(row_char);
     row = row_char - 'A' + 1;
     player = std::toupper(player);
-    if(input.find('#') != std::string::npos){
-        iss >> comment;
-    }
-    else{
-        comment = "";
-    }
     if(number < 1 || number > 9){
         throw ParseError("number out of bound\n");
     }
@@ -66,10 +64,6 @@ std::string Move::to_string() const{
             output.append(" ");
             output += row_char;
             output.append(std::to_string(column));
-            if(comment != ""){
-                output.append(" ");
-                output += comment;
-            }
             return output;
         // }
         // else{
