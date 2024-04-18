@@ -19,7 +19,7 @@ Move::Move(const std::string& input){
     player = std::toupper(player);
     if(input.find('#') != std::string::npos){
         iss >> comment;
-        if(input[7] != ' '){
+        if(input[7] != ' ' || input[9] != ' '){
             throw ParseError("missing space.\n");
         }
     }
