@@ -42,17 +42,17 @@ int Board::add(const Move& newMove){
 
     //column:
     std::cout<<square[0][0]<<square[0][1]<<square[0][2]<<'\n'<<square[1][0]<<square[1][1]<<square[1][2]<<'\n'<<square[2][0]<<square[0][1]<<square[2][2]<<'\n';
-    if((square[0][newMove.column - 1] == newMove.player 
-        && square[1][newMove.column - 1] == newMove.player 
-        && square[2][newMove.column - 1] == newMove.player)
+    if(((square[0][newMove.column - 1]) == newMove.player 
+        && (square[1][newMove.column - 1]) == newMove.player 
+        && (square[2][newMove.column - 1]) == newMove.player)
         ||
-        (square[newMove.row - 1][0] == newMove.player
-        && square[newMove.row - 1][1] == newMove.player
-        && square[newMove.row - 1][2] == newMove.player)
+        ((square[newMove.row - 1][0]) == newMove.player
+        && (square[newMove.row - 1][1]) == newMove.player
+        && (square[newMove.row - 1][2]) == newMove.player)
         ||
-        square[0][0] == square[1][1] == square[2][2]
+        (square[0][0] == square[1][1]) == (square[2][2])
         ||
-        square[0][2] == square[1][1] == square[2][0]){
+        (square[0][2] == square[1][1]) == (square[2][0])){
         std::cout << "Game over: " << newMove.player << " wins.\n";
         return 0;
     }

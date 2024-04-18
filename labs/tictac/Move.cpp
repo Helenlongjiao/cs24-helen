@@ -1,11 +1,12 @@
 #include "Errors.h"
 #include "Move.h"
 #include <sstream>
+#include <iostream>
 
 // Space for implementing Move functions.
 
 Move::Move(const std::string& input){
-    if(input[0] < 1 || input[0] > 9){
+    if(!std::isdigit(input[0])){
         throw ParseError("first int error.\n");
     }
     if(input[1] != ' ' || input[3] != ' '){
@@ -16,11 +17,11 @@ Move::Move(const std::string& input){
     row_char = std::toupper(row_char);
     row = row_char - 'A' + 1;
     player = std::toupper(player);
-    if(input.find('#')){
+    if(input.find('#') != std::string::npos){
         iss >> comment;
         if(input[7] != ' '){
-        throw ParseError("missing space.\n");
-    }
+            throw ParseError("missing space.\n");
+        }
     }
     else{
         comment = "";
