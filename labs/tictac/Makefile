@@ -20,4 +20,4 @@ Move.o: Move.cpp Move.h
 	${CXX} $(CXXFLAGS) -c -o $@ $<
 
 clean:
-	rm -f test Board.o game-check.o Move.o test
+	rm -f test Board.o game-check.o Move.o test move-check.o
