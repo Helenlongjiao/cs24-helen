@@ -14,14 +14,28 @@ Move::Move(const std::string& input){
     }
     std::istringstream iss(input);
     iss >> number >> player >> row_char >> column;
+    for(int i = 0; i < input.size(); ++i){
+        if(input[i] == player){
+            if(input[i + 1] != ' '){
+                throw ParseError("missing space.\n");
+            }
+        }
+        if(input[i] == row_char){
+            if(input[i + 1] - '0' != column){
+                throw ParseError("invalid column.\n");
+            }
+        }
+        if(input[i] - '0' == column){
+            if(input[i + 1] != ' ' && input.find('#') != std::string::npos){
+                throw ParseError("missing space.\n");
+            }
+        }
+    }
     row_char = std::toupper(row_char);
     row = row_char - 'A' + 1;
     player = std::toupper(player);
     if(input.find('#') != std::string::npos){
         iss >> comment;
-        if(input[7] != ' ' || input[9] != ' '){
-            throw ParseError("missing space.\n");
-        }
     }
     else{
         comment = "";
