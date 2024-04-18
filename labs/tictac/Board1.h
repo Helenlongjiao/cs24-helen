@@ -8,12 +8,12 @@
 
 struct Board{
 private:
-    char square[3][3];
+    Move* move;
     int step;
-    char currPlayer;
 public:
     Board();
+    Board(const Board& other);
     ~Board();
-    int add(const Move& newMove);
+    int add(const Move* newMove);
 };
 #endif

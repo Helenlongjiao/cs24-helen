@@ -4,16 +4,13 @@
 
 // Space for implementing Move functions.
 
-Move::Move(){
-    number = 0;
-    player = 'O';
-    row_char = 'A';
-    column = 0;
-    row = 0;
-    comment = "no comment";
-}
-
 Move::Move(const std::string& input){
+    if(input[0] < 1 || input[0] > 9){
+        throw ParseError("first int error.\n");
+    }
+    if(input[1] != ' ' || input[3] != ' '){
+        throw ParseError("missing space.\n");
+    }
     std::istringstream iss(input);
     iss >> number >> player >> row_char >> column;
     row_char = std::toupper(row_char);
@@ -21,6 +18,9 @@ Move::Move(const std::string& input){
     player = std::toupper(player);
     if(input.find('#')){
         iss >> comment;
+        if(input[7] != ' '){
+        throw ParseError("missing space.\n");
+    }
     }
     else{
         comment = "";
