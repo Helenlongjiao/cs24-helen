@@ -9,14 +9,14 @@ Move::Move(const std::string& input){
     if(!std::isdigit(input[0])){
         throw ParseError("first int error.\n");
     }
-    if(input[1] != ' ' || input[3] != ' '){
+    if(input[1] != ' ' && input[1] != '\t'){
         throw ParseError("missing space.\n");
     }
     std::istringstream iss(input);
     iss >> number >> player >> row_char >> column;
     for(int i = 0; i < input.size(); ++i){
         if(input[i] == player){
-            if(input[i + 1] != ' '){
+            if(input[i + 1] != ' ' && input[i + 1] != '\t'){
                 throw ParseError("missing space.\n");
             }
         }
@@ -26,7 +26,7 @@ Move::Move(const std::string& input){
             }
         }
         if(input[i] - '0' == column){
-            if(input[i + 1] != ' ' && input.find('#') != std::string::npos){
+            if((input[i + 1] != ' ' && input[i + 1] != '\t') && input.find('#') != std::string::npos){
                 throw ParseError("missing space.\n");
             }
         }
