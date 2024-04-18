@@ -8,8 +8,14 @@ int main() {
     std::string line;
     while(std::getline(std::cin, line)){
         Move move(line);
-        if(board.add(move) == 0){
-            break;
+        try{
+            if(board.add(move) == 0){
+            return 0;
+        }
+        }
+        catch(const InvalidMove& e){
+            std::cout<<"Invalid move.\n";
+            return 2;
         }
     }
 }
