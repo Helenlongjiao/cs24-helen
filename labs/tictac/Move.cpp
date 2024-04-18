@@ -14,7 +14,7 @@ Move::Move(const std::string& input){
     }
     std::istringstream iss(input);
     iss >> number >> player >> row_char >> column;
-    for(int i = 0; i < input.size(); ++i){
+    for(size_t i = 0; i < input.size(); ++i){
         if(input[i] == player){
             if(input[i + 1] != ' ' && input[i + 1] != '\t'){
                 throw ParseError("missing space.\n");
