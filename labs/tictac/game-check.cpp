@@ -7,7 +7,16 @@ int main() {
     Board board;
     std::string line;
     while(std::getline(std::cin, line)){
-        Move move(line);
+        // if (line.empty()) {
+        //     break;
+        // }
+        try{
+            Move move(line);
+        }
+        catch(const ParseError& e){
+            std::cout<<"Parse error.\n";
+            return 1;
+        }
         try{
             board.add(line);
         }
