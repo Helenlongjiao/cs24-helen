@@ -21,6 +21,10 @@ Board::~Board(){
 
 void Board::add(const Move& newMove){
     //check if it's a valid move
+    int sta = status();
+    if((sta == 1) || (sta == 2) || (sta == 3)){
+        throw InvalidMove("The game has ended.\n");
+    }
     if(step == 0){
         curr = newMove.player;
     }
@@ -41,7 +45,6 @@ void Board::add(const Move& newMove){
 
 int Board::status(){
     if(step == 0){
-        std::cout<<"Game in progress: New game.\n";
         return 0;
     }
     // std::cout<<square[0][0]<<square[0][1]<<square[0][2]<<'\n'<<square[1][0]<<square[1][1]<<square[1][2]<<'\n'<<square[2][0]<<square[2][1]<<square[2][2]<<'\n';
@@ -73,8 +76,7 @@ int Board::status(){
         ||
         ((square[0][2] == square[1][1]) && (square[0][2] == square[2][0]) && (square[0][2] == 'O'))
         ){
-        std::cout << "Game over: O wins.\n";
-        return 0;
+        return 1;
     }
 
     if(((square[0][0]) == 'X' 
@@ -106,19 +108,18 @@ int Board::status(){
         ((square[0][2] == square[1][1]) && (square[0][2] == square[2][0]) && (square[0][2] == 'X'))
         ){
         std::cout << "Game over: X wins.\n";
-        return 0;
+        return 2;
     }
 
     if(step == 9){
-        std::cout << "Game over: Draw.\n";
-        return 0;
+        return 3;
     }
     else if(curr == 'O'){
-        std::cout << "Game in progress: X's turn.\n";
+        return 4;
     }
     else{
-        std::cout << "Game in progress: O's turn.\n";
+        return 5;
     }
-    return 0;
+    return 6;
 }
 
