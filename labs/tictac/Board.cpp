@@ -113,7 +113,7 @@ int Board::status(){
         std::cout << "Game over: Draw.\n";
         return 0;
     }
-    else if(*square[step - 1] == 'O'){
+    else if(curr == 'O'){
         std::cout << "Game in progress: X's turn.\n";
     }
     else{
