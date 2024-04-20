@@ -7,9 +7,6 @@ int main() {
     Board board;
     std::string line;
     while(std::getline(std::cin, line)){
-        if (line.empty()) {
-            break;
-        }
         Move move(line);
         try{
             board.add(line);
