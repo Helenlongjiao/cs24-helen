@@ -16,7 +16,7 @@ Move::Move(const std::string& input){
     std::string temp;
     iss >> number >> player >> row_char >> column;
     for(size_t i = 0; i < input.size(); ++i){
-        if(input[i] == player){
+        if(input[i] == player && i <= 6){
             if(input[i + 1] != ' ' && input[i + 1] != '\t'){
                 throw ParseError("missing space.\n");
             }
@@ -34,7 +34,6 @@ Move::Move(const std::string& input){
         if((input.find('#') == std::string::npos) && (iss >> temp)){
             throw ParseError("invalid comment.\n");
         }
-        break;
     }
     row_char = std::toupper(row_char);
     row = row_char - 'A' + 1;
