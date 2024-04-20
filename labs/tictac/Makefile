@@ -13,7 +13,7 @@ Board.o: Board.cpp Board.h Move.h
 	${CXX} $(CXXFLAGS) -c -o $@ $<
 
 
-game-check.o: game-check.cpp Move.h
+game-check.o: game-check.cpp Move.h Board.h
 	${CXX} $(CXXFLAGS) -c -o $@ $<
 
 Move.o: Move.cpp Move.h

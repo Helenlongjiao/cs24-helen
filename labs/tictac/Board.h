@@ -10,10 +10,11 @@ struct Board{
 private:
     char square[3][3];
     int step;
-    char currPlayer;
+    char curr;
 public:
     Board();
     ~Board();
-    int add(const Move& newMove);
+    void add(const Move& newMove);
+    int status();
 };
 #endif

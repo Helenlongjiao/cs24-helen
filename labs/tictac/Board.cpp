@@ -12,20 +12,19 @@ Board::Board(){
         }
     }
     step = 0;
-    currPlayer = 'n';
-    std::cout << "Game in progress: New game.\n";
+    curr = 'n';
 }
 
 Board::~Board(){
 
 }
 
-int Board::add(const Move& newMove){
+void Board::add(const Move& newMove){
     //check if it's a valid move
     if(step == 0){
-        currPlayer = newMove.player;
+        curr = newMove.player;
     }
-    else if(newMove.player == currPlayer){
+    else if(newMove.player == curr){
         throw InvalidMove("You should switch player.\n");
     }
     if(newMove.number != step + 1){
@@ -35,43 +34,91 @@ int Board::add(const Move& newMove){
         throw InvalidMove("this square is claimed.\n");
     }
 
-    //first add newMove to square
+    curr = newMove.player;
     square[newMove.row - 1][newMove.column - 1] = newMove.player;
+    step ++;
+}
 
-    //check status
-
-    //column:
+int Board::status(){
+    if(step == 0){
+        std::cout<<"Game in progress: New game.\n";
+        return 0;
+    }
     // std::cout<<square[0][0]<<square[0][1]<<square[0][2]<<'\n'<<square[1][0]<<square[1][1]<<square[1][2]<<'\n'<<square[2][0]<<square[2][1]<<square[2][2]<<'\n';
-    if(((square[0][newMove.column - 1]) == newMove.player 
-        && (square[1][newMove.column - 1]) == newMove.player 
-        && (square[2][newMove.column - 1]) == newMove.player)
+    if(((square[0][0]) == 'O' 
+        && (square[1][0]) == 'O' 
+        && (square[2][0]) == 'O')
         ||
-        ((square[newMove.row - 1][0]) == newMove.player
-        && (square[newMove.row - 1][1]) == newMove.player
-        && (square[newMove.row - 1][2]) == newMove.player)
+        ((square[0][1]) == 'O' 
+        && (square[1][1]) == 'O' 
+        && (square[2][1]) == 'O')
         ||
-        ((square[0][0] == square[1][1]) && ( square[1][1] == square[2][2]) && (square[1][1] == newMove.player))
+        ((square[0][2]) == 'O' 
+        && (square[1][2]) == 'O' 
+        && (square[2][2]) == 'O')
         ||
-        ((square[0][2] == square[1][1]) && (square[0][2] == square[2][0]) && (square[0][2] == newMove.player))
+        ((square[0][0]) == 'O'
+        && (square[0][1]) == 'O'
+        && (square[0][2]) == 'O')
+        ||
+        ((square[1][0]) == 'O'
+        && (square[1][1]) == 'O'
+        && (square[1][2]) == 'O')
+        ||
+        ((square[2][0]) == 'O'
+        && (square[2][1]) == 'O'
+        && (square[2][2]) == 'O')
+        ||
+        ((square[0][0] == square[1][1]) && ( square[1][1] == square[2][2]) && (square[1][1] == 'O'))
+        ||
+        ((square[0][2] == square[1][1]) && (square[0][2] == square[2][0]) && (square[0][2] == 'O'))
         ){
-        std::cout << "Game over: " << newMove.player << " wins.\n";
+        std::cout << "Game over: O wins.\n";
         return 0;
     }
 
-    step ++;
+    if(((square[0][0]) == 'X' 
+        && (square[1][0]) == 'X' 
+        && (square[2][0]) == 'X')
+        ||
+        ((square[0][1]) == 'X' 
+        && (square[1][1]) == 'X' 
+        && (square[2][1]) == 'X')
+        ||
+        ((square[0][2]) == 'X' 
+        && (square[1][2]) == 'X' 
+        && (square[2][2]) == 'X')
+        ||
+        ((square[0][0]) == 'X'
+        && (square[0][1]) == 'X'
+        && (square[0][2]) == 'X')
+        ||
+        ((square[1][0]) == 'X'
+        && (square[1][1]) == 'X'
+        && (square[1][2]) == 'X')
+        ||
+        ((square[2][0]) == 'X'
+        && (square[2][1]) == 'X'
+        && (square[2][2]) == 'X')
+        ||
+        ((square[0][0] == square[1][1]) && ( square[1][1] == square[2][2]) && (square[1][1] == 'X'))
+        ||
+        ((square[0][2] == square[1][1]) && (square[0][2] == square[2][0]) && (square[0][2] == 'X'))
+        ){
+        std::cout << "Game over: X wins.\n";
+        return 0;
+    }
+
     if(step == 9){
         std::cout << "Game over: Draw.\n";
         return 0;
     }
-    else if(newMove.player == 'O'){
+    else if(*square[step - 1] == 'O'){
         std::cout << "Game in progress: X's turn.\n";
-        currPlayer = newMove.player;
-        return 1;
     }
     else{
         std::cout << "Game in progress: O's turn.\n";
-        currPlayer = newMove.player;
-        return 1;
     }
-    return 2;
+    return 0;
 }
+

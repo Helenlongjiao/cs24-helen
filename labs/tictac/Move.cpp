@@ -34,6 +34,7 @@ Move::Move(const std::string& input){
         if((input.find('#') == std::string::npos) && (iss >> temp)){
             throw ParseError("invalid comment.\n");
         }
+        break;
     }
     row_char = std::toupper(row_char);
     row = row_char - 'A' + 1;

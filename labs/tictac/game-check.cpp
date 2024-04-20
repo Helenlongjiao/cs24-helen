@@ -7,15 +7,18 @@ int main() {
     Board board;
     std::string line;
     while(std::getline(std::cin, line)){
+        if (line.empty()) {
+            break;
+        }
         Move move(line);
         try{
-            if(board.add(move) == 0){
-            return 0;
-        }
+            board.add(line);
         }
         catch(const InvalidMove& e){
             std::cout<<"Invalid move.\n";
             return 2;
         }
     }
+    board.status();
+    return 0;
 }
