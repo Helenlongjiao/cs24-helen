@@ -107,7 +107,6 @@ int Board::status(){
         ||
         ((square[0][2] == square[1][1]) && (square[0][2] == square[2][0]) && (square[0][2] == 'X'))
         ){
-        std::cout << "Game over: X wins.\n";
         return 2;
     }
 
