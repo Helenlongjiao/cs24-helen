@@ -44,6 +44,7 @@ void rec_clear(Node* curr){
 
 void Tree::clear(){
     rec_clear(head);
+    delete head;
     head = nullptr;
 }
 

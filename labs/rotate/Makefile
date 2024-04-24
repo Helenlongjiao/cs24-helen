@@ -6,7 +6,7 @@ CXX      = g++
 
 all: test
 
-test: Node.o Tree.o
+test: Node.o Tree.o test.o
 	${CXX} $(CXXFLAGS) -o $@ $+
 
 Node.o: Node.cpp Node.h
@@ -14,6 +14,9 @@ Node.o: Node.cpp Node.h
 
 
 Tree.o: Tree.cpp Tree.h Node.h
+	${CXX} $(CXXFLAGS) -c -o $@ $<
+
+test.o: test.cpp Tree.h
 	${CXX} $(CXXFLAGS) -c -o $@ $<
 
 clean:
