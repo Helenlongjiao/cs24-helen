@@ -73,7 +73,6 @@ bool Tree::contains(std::string input) const{
 }
 
 int Tree::find(std::string input) const{
-    //what's the rule for the index?
     return 1;
 }
 

@@ -6,9 +6,10 @@
 #include "Node.h"
 
 struct Tree{
+private:
     Node* head;
     int cnt;
-
+public:
     Tree();
     ~Tree();
     void clear();
