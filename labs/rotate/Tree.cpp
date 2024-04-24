@@ -47,7 +47,7 @@ void Tree::clear(){
     head = nullptr;
 }
 
-int Tree::count() const{
+size_t Tree::Tree::count() const{
     return cnt;
 }
 
@@ -68,11 +68,11 @@ bool contains_rec(Node* curr, std::string input){
     }
 }
 
-bool Tree::contains(std::string input) const{
-    return contains_rec(head, input);
+bool Tree::contains(const std::string& s) const{
+    return contains_rec(head, s);
 }
 
-int Tree::find(std::string input) const{
+size_t Tree::find(const std::string& s) const{
     return 1;
 }
 
@@ -100,21 +100,21 @@ Node* insert_rec(Node* curr, const std::string input) {
     }
 }
 
-void Tree::insert(const std::string input){
+void Tree::insert(const std::string& s){
     if(head == nullptr){
         Node* newOne = new Node();
-        newOne->data = input;
+        newOne->data = s;
         head = newOne;
         cnt ++;
     } else {
-        insert_rec(head, input);
+        insert_rec(head, s);
         cnt++;
     }
 }
 
 
-char Tree::lookup(int index) const{
-    return '0';
+std::string Tree::lookup(size_t index) const{
+    return "0";
 }
 
 std::string print_rec(Node* curr) {
@@ -133,7 +133,7 @@ void Tree::print() const{
     std::cout << print_rec(head) << '\n';
 }
 
-void Tree::remove(int index){}
+void remove(size_t index){}
 void promote(Node& node){}
 
 // int index(Node* curr, Node* node, int n){
