@@ -133,8 +133,8 @@ void Tree::print() const{
     std::cout << print_rec(head) << '\n';
 }
 
-void remove(size_t index){}
-void promote(Node& node){}
+void Tree::remove(size_t index){}
+void Tree::promote(Node& node){}
 
 // int index(Node* curr, Node* node, int n){
 //     if(curr->left != nullptr){
@@ -146,16 +146,4 @@ void promote(Node& node){}
 //     else{
 //         return index()
 //     }
-// }
-
-// int main(){
-//     Tree tree;
-//     tree.insert("a");
-//     tree.insert("b");
-//     tree.insert("c");
-//     tree.insert("d");
-//     tree.insert("f");
-//     tree.insert("e");
-//     tree.print();
-//     return 0;
 // }
