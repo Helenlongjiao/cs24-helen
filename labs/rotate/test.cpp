@@ -3,12 +3,12 @@
 
 int main(){
     Tree tree;
-    tree.insert("a");
-    tree.insert("b");
-    tree.insert("c");
     tree.insert("d");
-    tree.insert("f");
+    tree.insert("b");
     tree.insert("e");
-    tree.print();
+    tree.insert("a");
+    tree.insert("c");
+    tree.insert("f");
+    std::cout<<tree.find("d");
     return 0;
 }

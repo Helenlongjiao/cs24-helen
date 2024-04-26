@@ -2,7 +2,85 @@
 #include <string>
 #include "Tree.h"
 #include "Node.h"
- 
+ size_t find_index(Node* curr, std::string input, size_t n){
+    if(curr == nullptr){
+        return SIZE_MAX;
+    }
+    if((curr->left == nullptr && curr->data != input) || (curr->right == nullptr && curr->data != input)){
+        return SIZE_MAX;
+    }
+    if(input < curr->data){
+        if(input == curr->left->data){
+            if(curr->left->left != nullptr){
+                n = curr->left->left->weight;
+                size_t temp = find_index(curr->left->left, input, 100);
+                if(temp > n){
+                    return n;
+                }
+                else{
+                    return temp;
+                }
+            }
+            else{
+                n = 0;
+                return n;
+            }
+        }
+        else{
+            return find_index(curr->left, input, n);
+        }
+    }
+    else if(input > curr->data){
+        if(input == curr->right->data){
+            if(curr->right->left != nullptr){
+                n = curr->left->weight + curr->right->left->weight + 1;
+                size_t temp = find_index(curr->right->left, input, 100);
+                if(temp > n){
+                    return n;
+                }
+                else{
+                    return temp;
+                }
+            }
+            else{
+                n = curr->left->weight + 1;
+                return n;
+            }
+        }
+        else{
+            return find_index(curr->right, input, n);
+        }
+    }
+    else{
+        n = curr->left->weight;
+        size_t temp = find_index(curr->left, input, 100);
+        if(temp > n){
+            return n;
+        }
+        else{
+            return temp;
+        }
+    }
+}
+
+// size_t find_index(Node* curr, const std::string& input) {
+//     if (curr == nullptr) {
+//         return SIZE_MAX;
+//     }
+
+//     if (input < curr->data) {
+//         return find_index(curr->left, input);
+//     } else if (input > curr->data) {
+//         return find_index(curr->right, input);
+//     } else {
+//         size_t left_subtree_size = 0;
+//         if (curr->left != nullptr) {
+//             left_subtree_size = curr->left->weight + curr->right->left->weight + 1;
+//         }
+//         return left_subtree_size + 1;  // +1 for the current node (root of the subtree)
+//     }
+// }
+
 Tree::Tree(){
     head = nullptr;
     cnt = 0;
@@ -13,18 +91,6 @@ Tree::~Tree(){
 }
 
 void rec_clear(Node* curr){
-    // if(curr->left != nullptr){
-    //     rec_clear(curr->left);
-    //     delete curr->left;
-    //     if(curr->right->right != nullptr || curr->right->left != nullptr){
-    //         rec_clear(curr->right);
-    //     }
-    //     delete curr->right;
-    // }
-    // else{
-    //     delete curr->right;
-    // }
-
     if (curr == nullptr) {
         return;
     }
@@ -74,7 +140,7 @@ bool Tree::contains(const std::string& s) const{
 }
 
 size_t Tree::find(const std::string& s) const{
-    return 1;
+    return find_index(head, s, 100);
 }
 
 Node* insert_rec(Node* curr, const std::string input) {
@@ -134,17 +200,11 @@ void Tree::print() const{
     std::cout << print_rec(head) << '\n';
 }
 
-void Tree::remove(size_t index){}
+void Tree::remove(size_t index){
+    //情况1：没有children：直接remove，parent设为nullptr
+    //情况2：有一个children：remove后把children接到上面那个
+    //情况3：俩children：remove的对象->right->最左 替换到curr的位置
+    
+}
 void Tree::promote(Node& node){}
 
-// int index(Node* curr, Node* node, int n){
-//     if(curr->left != nullptr){
-//         return index(curr->left, node, n);
-//     }
-//     else if(curr->data == node->data){
-//         return n;
-//     }
-//     else{
-//         return index()
-//     }
-// }
