@@ -6,7 +6,7 @@
     if(curr == nullptr){
         return SIZE_MAX;
     }
-    if((curr->left == nullptr && curr->data != input) || (curr->right == nullptr && curr->data != input)){
+    if((curr->left == nullptr && input < curr->data) || (curr->right == nullptr && input > curr->data)){
         return SIZE_MAX;
     }
     if(input < curr->data){
@@ -112,6 +112,7 @@ void Tree::clear(){
     rec_clear(head);
     delete head;
     head = nullptr;
+    cnt = 0;
 }
 
 size_t Tree::Tree::count() const{
