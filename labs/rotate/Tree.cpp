@@ -14,11 +14,11 @@
             if(curr->left->left != nullptr){
                 n = curr->left->left->weight;
                 size_t temp = find_index(curr->left->left, input, 100, 0);
-                if(temp > n){
-                    return n;
+                if(temp != SIZE_MAX){
+                    return n - 1;
                 }
                 else{
-                    return temp;
+                    return n;
                 }
             }
             else{
@@ -41,11 +41,11 @@
             if(curr->right->left != nullptr){
                 n = temp1 + curr->right->left->weight;
                 size_t temp = find_index(curr->right->left, input, 100, 0);
-                if(temp > n){
-                    return n;
+                if(temp != SIZE_MAX){
+                    return n - 1;
                 }
                 else{
-                    return temp;
+                    return n;
                 }
             }
             else{
@@ -57,6 +57,9 @@
         }
     }
     else{
+        if(curr->left == nullptr){
+            return 0;
+        }
         n = curr->left->weight;
         size_t temp = find_index(curr->left, input, 100, 0);
         if(temp > n){
