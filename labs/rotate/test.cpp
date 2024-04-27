@@ -9,6 +9,6 @@ int main(){
     tree.insert("aaa");
     tree.insert("ccc");
     tree.insert("fff");
-    std::cout<<tree.find("ddd");
+    std::cout<<tree.find("fff");
     return 0;
 }

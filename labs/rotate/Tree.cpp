@@ -2,7 +2,7 @@
 #include <string>
 #include "Tree.h"
 #include "Node.h"
- size_t find_index(Node* curr, std::string input, size_t n){
+ size_t find_index(Node* curr, std::string input, size_t n, size_t temp1){
     if(curr == nullptr){
         return SIZE_MAX;
     }
@@ -13,7 +13,7 @@
         if(input == curr->left->data){
             if(curr->left->left != nullptr){
                 n = curr->left->left->weight;
-                size_t temp = find_index(curr->left->left, input, 100);
+                size_t temp = find_index(curr->left->left, input, 100, 0);
                 if(temp > n){
                     return n;
                 }
@@ -27,14 +27,20 @@
             }
         }
         else{
-            return find_index(curr->left, input, n);
+            return find_index(curr->left, input, n, temp1);
         }
     }
     else if(input > curr->data){
+        if(curr->left != nullptr){
+            temp1 = curr->left->weight + 1;
+        }
+        else{
+            temp1 ++;
+        }
         if(input == curr->right->data){
             if(curr->right->left != nullptr){
-                n = curr->left->weight + curr->right->left->weight + 1;
-                size_t temp = find_index(curr->right->left, input, 100);
+                n = temp1 + curr->right->left->weight;
+                size_t temp = find_index(curr->right->left, input, 100, 0);
                 if(temp > n){
                     return n;
                 }
@@ -43,17 +49,16 @@
                 }
             }
             else{
-                n = curr->left->weight + 1;
-                return n;
+                return temp1;
             }
         }
         else{
-            return find_index(curr->right, input, n);
+            return find_index(curr->right, input, n, temp1);
         }
     }
     else{
         n = curr->left->weight;
-        size_t temp = find_index(curr->left, input, 100);
+        size_t temp = find_index(curr->left, input, 100, 0);
         if(temp > n){
             return n;
         }
@@ -141,7 +146,7 @@ bool Tree::contains(const std::string& s) const{
 }
 
 size_t Tree::find(const std::string& s) const{
-    return find_index(head, s, 100);
+    return find_index(head, s, 100, 0);
 }
 
 Node* insert_rec(Node* curr, const std::string input) {
