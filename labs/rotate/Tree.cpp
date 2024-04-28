@@ -214,7 +214,7 @@ bool promote(Node* start, Node* curr, std::string target){
             }
         }
 
-        std::cout<<imbalance1<<"/"<<imbalance2<<'\n';
+        // std::cout<<imbalance1<<"/"<<imbalance2<<'\n';
         if(imbalance2 < imbalance1){
             Node* temp = curr->parent;
             while(true){
@@ -255,7 +255,7 @@ Node* insert_rec(Node* curr, const std::string input) {
     if (input > curr->data) {
         if (curr->right != nullptr) {
             Node* temp = insert_rec(curr->right, input);
-            std::cout<<"promote "<<curr->data<<'\n';
+            // std::cout<<"promote "<<curr->data<<'\n';
             promote(curr, curr->right, input);
             return temp;
         } else {
@@ -264,7 +264,7 @@ Node* insert_rec(Node* curr, const std::string input) {
             newOne->data = input;
             curr->right = newOne;
             curr->right->parent = curr;
-            std::cout<<"promote "<<curr->data<<'\n';
+            // std::cout<<"promote "<<curr->data<<'\n';
             promote(curr, curr->right, input);
             return newOne;
         }
