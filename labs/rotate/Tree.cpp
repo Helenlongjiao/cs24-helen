@@ -2,7 +2,17 @@
 #include <string>
 #include "Tree.h"
 #include "Node.h"
- size_t find_index(Node* curr, std::string input, size_t n, size_t temp1){
+
+int get_weight(Node* curr){
+    if(curr == nullptr){
+        return 0;
+    }
+    else{
+        return curr->weight;
+    }
+}
+
+ size_t find_index(Node* curr, std::string input, size_t n){
     if(curr == nullptr){
         return SIZE_MAX;
     }
@@ -11,49 +21,33 @@
     }
     if(input < curr->data){
         if(input == curr->left->data){
-            if(curr->left->left != nullptr){
-                n = curr->left->left->weight;
-                size_t temp = find_index(curr->left->left, input, 100, 0);
-                if(temp != SIZE_MAX){
-                    return n - temp - 1;
-                }
-                else{
-                    return n;
-                }
+            n += get_weight(curr->left->left);
+            size_t temp = find_index(curr->left->left, input, 0);
+            if(temp != SIZE_MAX){
+                return n - temp - 1;
             }
             else{
-                n = 0;
                 return n;
             }
         }
         else{
-            return find_index(curr->left, input, n, temp1);
+            return find_index(curr->left, input, n);
         }
     }
     else if(input > curr->data){
-        if(curr->left != nullptr){
-            temp1 += curr->left->weight + 1;
-        }
-        else{
-            temp1 ++;
-        }
+        n = n + get_weight(curr->left) + 1;
         if(input == curr->right->data){
-            if(curr->right->left != nullptr){
-                n = temp1 + curr->right->left->weight;
-                size_t temp = find_index(curr->right->left, input, 100, 0);
-                if(temp != SIZE_MAX){
-                    return n - 1;
-                }
-                else{
-                    return n;
-                }
+            n += get_weight(curr->right->left);
+            size_t temp = find_index(curr->right->left, input, 0);
+            if(temp != SIZE_MAX){
+                return n - 1;
             }
             else{
-                return temp1;
+                return n;
             }
         }
         else{
-            return find_index(curr->right, input, n, temp1);
+            return find_index(curr->right, input, n);
         }
     }
     else{
@@ -61,7 +55,7 @@
             return 0;
         }
         n = curr->left->weight;
-        size_t temp = find_index(curr->left, input, 100, 0);
+        size_t temp = find_index(curr->left, input, 0);
         if(temp > n){
             return n;
         }
@@ -89,14 +83,7 @@
 //     }
 // }
 
-int get_weight(Node* curr){
-    if(curr == nullptr){
-        return 0;
-    }
-    else{
-        return curr->weight;
-    }
-}
+
 
 Tree::Tree(){
     head = nullptr;
@@ -158,7 +145,7 @@ bool Tree::contains(const std::string& s) const{
 }
 
 size_t Tree::find(const std::string& s) const{
-    return find_index(head, s, 100, 0);
+    return find_index(head, s, 0);
 }
 
 
@@ -216,14 +203,14 @@ bool promote(Node* start, Node* curr, std::string target){
 
         // std::cout<<imbalance1<<"/"<<imbalance2<<'\n';
         if(imbalance2 < imbalance1){
-            Node* temp = curr->parent;
+            Node* temp = curr->parent; //temp keeps goes up to every parent between target and promotion head.
             while(true){
-                Node* temp2 = curr;
+                Node* temp2 = curr; //temp2 goes all the way left or right and finally points to the most left of right node.
                 if(temp->data <= curr->data){
                     while(temp2->left != nullptr){
                         temp2 = temp2->left;
                     }
-                    temp2->left = temp;   //I'm so confused why I'm getting seg fault here.
+                    temp2->left = temp;   //I'm so confused why I'm getting seg fault here. (pretty sure it's between line 220-227)
                 }
                 else{
                     while(temp2->right != nullptr){
@@ -256,7 +243,7 @@ Node* insert_rec(Node* curr, const std::string input) {
         if (curr->right != nullptr) {
             Node* temp = insert_rec(curr->right, input);
             // std::cout<<"promote "<<curr->data<<'\n';
-            promote(curr, curr->right, input);
+            // promote(curr, curr->right, input);
             return temp;
         } else {
             curr->weight ++;
@@ -265,13 +252,13 @@ Node* insert_rec(Node* curr, const std::string input) {
             curr->right = newOne;
             curr->right->parent = curr;
             // std::cout<<"promote "<<curr->data<<'\n';
-            promote(curr, curr->right, input);
+            // promote(curr, curr->right, input);
             return newOne;
         }
     } else{
         if (curr->left != nullptr) {
             Node* temp = insert_rec(curr->left, input);
-            promote(curr, curr->left, input);
+            // promote(curr, curr->left, input);
             return temp;
         } else {
             curr->weight ++;
@@ -279,7 +266,7 @@ Node* insert_rec(Node* curr, const std::string input) {
             newOne->data = input;
             curr->left = newOne;
             curr->left->parent = curr;
-            promote(curr, curr->left, input);
+            // promote(curr, curr->left, input);
             return newOne;
         }
     }
@@ -294,12 +281,38 @@ void Tree::insert(const std::string& s){
     } else {
         insert_rec(head, s);
         cnt++;
+        head->weight = cnt;
     }
 }
 
+size_t get_weight_odd(Node* curr){
+    if(get_weight(curr) % 2 == 0){
+        return get_weight(curr);
+    }
+    else{
+        return get_weight(curr + 1);
+    }
+}
+Node* Tree::lookup_rec(Node* curr, size_t index) const{
+    size_t temp = find_index(head, curr->data, 0);
+    if(index > temp){
+        return lookup_rec(curr->right, index);
+    }
+    else if(index < temp){
+        return lookup_rec(curr->left, index);
+    }
+    else{
+        return curr;
+    }
+}
 
 std::string Tree::lookup(size_t index) const{
-    return "0";
+    if(index >= cnt){
+        throw std::out_of_range("lookup()");
+    }
+    else{
+        return lookup_rec(head, index)->data;
+    }
 }
 
 std::string print_rec(Node* curr) {

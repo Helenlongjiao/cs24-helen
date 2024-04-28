@@ -7,7 +7,7 @@
 
 class Tree {
     Node* head;
-    int cnt;
+    size_t cnt;
 
 public:
   Tree();
@@ -17,6 +17,7 @@ public:
   bool        contains(const std::string& s) const;
   size_t      find(const std::string& s) const;
   void        insert(const std::string& s);
+  Node* lookup_rec(Node* curr, size_t index) const;
   std::string lookup(size_t index) const;
   void        print() const;
   void        remove(size_t index);
