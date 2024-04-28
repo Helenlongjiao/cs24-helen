@@ -20,7 +20,6 @@ public:
   std::string lookup(size_t index) const;
   void        print() const;
   void        remove(size_t index);
-  void promote(Node& node);
 };
 
 #endif

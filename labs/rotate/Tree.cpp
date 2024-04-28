@@ -15,7 +15,7 @@
                 n = curr->left->left->weight;
                 size_t temp = find_index(curr->left->left, input, 100, 0);
                 if(temp != SIZE_MAX){
-                    return n - 1;
+                    return n - temp - 1;
                 }
                 else{
                     return n;
@@ -32,7 +32,7 @@
     }
     else if(input > curr->data){
         if(curr->left != nullptr){
-            temp1 = curr->left->weight + 1;
+            temp1 += curr->left->weight + 1;
         }
         else{
             temp1 ++;
@@ -88,6 +88,15 @@
 //         return left_subtree_size + 1;  // +1 for the current node (root of the subtree)
 //     }
 // }
+
+int get_weight(Node* curr){
+    if(curr == nullptr){
+        return 0;
+    }
+    else{
+        return curr->weight;
+    }
+}
 
 Tree::Tree(){
     head = nullptr;
@@ -152,25 +161,125 @@ size_t Tree::find(const std::string& s) const{
     return find_index(head, s, 100, 0);
 }
 
+
+bool promote(Node* start, Node* curr, std::string target){
+    if(curr != nullptr){
+        int imbalance2 = 0;
+        int imbalance1 = std::abs(get_weight(start->left) - get_weight(start->right));
+        
+        if(target > curr->data){
+            Node* tempParent = curr->parent;
+            while(true){
+                imbalance2 += get_weight(tempParent->left) + 1;
+                if(tempParent == start){
+                    break;
+                }
+                tempParent = tempParent->parent;
+            }
+            imbalance2 = std::abs(imbalance2 + get_weight(curr->left) - get_weight(curr->right));
+        }
+        else if(target < curr->data){
+            Node* tempParent = curr->parent;
+            while(true){
+                imbalance2 += get_weight(tempParent->left) + 1;
+                if(tempParent == start){
+                    break;
+                }
+                tempParent = tempParent->parent;
+            }
+            imbalance2 = std::abs(imbalance2 + get_weight(curr->right) - get_weight(curr->left));
+        }
+        else{
+            if(target > curr->parent->data){
+                Node* tempParent = curr->parent;
+                while(true){
+                    imbalance2 += get_weight(tempParent->left) + 1;
+                    if(tempParent == start){
+                        break;
+                    }
+                    tempParent = tempParent->parent;
+                }
+                imbalance2 = std::abs(imbalance2 + get_weight(curr->left) - get_weight(curr->right));
+            }
+            else if(target < curr->parent->data){
+                Node* tempParent = curr->parent;
+                while(true){
+                    imbalance2 += get_weight(tempParent->left) + 1;
+                    if(tempParent == start){
+                        break;
+                    }
+                    tempParent = tempParent->parent;
+                }
+                imbalance2 = std::abs(imbalance2 + get_weight(curr->right) - get_weight(curr->left));
+            }
+        }
+
+        std::cout<<imbalance1<<"/"<<imbalance2<<'\n';
+        if(imbalance2 < imbalance1){
+            Node* temp = curr->parent;
+            while(true){
+                Node* temp2 = curr;
+                if(temp->data <= curr->data){
+                    while(temp2->left != nullptr){
+                        temp2 = temp2->left;
+                    }
+                    temp2->left = temp;   //I'm so confused why I'm getting seg fault here.
+                }
+                else{
+                    while(temp2->right != nullptr){
+                        temp2 = temp2->right;
+                    }
+                    temp2->right = temp;
+                }
+                if(temp->parent == start){
+                    break;
+                }
+                temp = temp->parent;
+            }
+            curr->parent = nullptr;
+            return true;
+        }
+        else{
+            if(target > curr->data){
+                promote(start, curr->right, target);
+            }
+            else{
+                promote(start, curr->left, target);
+            }
+        }
+    }
+    return false;
+}
+
 Node* insert_rec(Node* curr, const std::string input) {
     if (input > curr->data) {
         if (curr->right != nullptr) {
-            return insert_rec(curr->right, input);
+            Node* temp = insert_rec(curr->right, input);
+            std::cout<<"promote "<<curr->data<<'\n';
+            promote(curr, curr->right, input);
+            return temp;
         } else {
             curr->weight ++;
             Node* newOne = new Node();
             newOne->data = input;
-            (*curr).right = newOne;
+            curr->right = newOne;
+            curr->right->parent = curr;
+            std::cout<<"promote "<<curr->data<<'\n';
+            promote(curr, curr->right, input);
             return newOne;
         }
     } else{
         if (curr->left != nullptr) {
-            return insert_rec(curr->left, input);
+            Node* temp = insert_rec(curr->left, input);
+            promote(curr, curr->left, input);
+            return temp;
         } else {
             curr->weight ++;
             Node* newOne = new Node();
             newOne->data = input;
-            (*curr).left = newOne;
+            curr->left = newOne;
+            curr->left->parent = curr;
+            promote(curr, curr->left, input);
             return newOne;
         }
     }
@@ -208,12 +317,19 @@ std::string print_rec(Node* curr) {
 void Tree::print() const{
     std::cout << print_rec(head) << '\n';
 }
-
+ 
 void Tree::remove(size_t index){
     //情况1：没有children：直接remove，parent设为nullptr
     //情况2：有一个children：remove后把children接到上面那个
     //情况3：俩children：remove的对象->right->最左 替换到curr的位置
+    //promotion target: 
+    // if(curr->right != nullptr){
+    //     promote(curr,curr->right->data);
+    // }
+    // else{
+    //     promote(curr,curr->data);
+    // }
     
 }
-void Tree::promote(Node& node){}
+
 

@@ -7,6 +7,7 @@ Node::Node(){
     weight = 1;
     left = nullptr;
     right = nullptr;
+    parent = nullptr;
 }
 
 Node::Node(std::string data, Node* left, Node* right){
