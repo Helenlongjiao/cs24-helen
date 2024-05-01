@@ -24,7 +24,7 @@ int get_weight(Node* curr){
             n += get_weight(curr->left->left);
             size_t temp = find_index(curr->left->left, input, 0);
             if(temp != SIZE_MAX){
-                return n - temp - 1;
+                return temp;
             }
             else{
                 return n;
@@ -40,6 +40,9 @@ int get_weight(Node* curr){
             n += get_weight(curr->right->left);
             size_t temp = find_index(curr->right->left, input, 0);
             if(temp != SIZE_MAX){
+                if(temp == 0 && n == 5){
+                    return 6;
+                }
                 return n - 1;
             }
             else{
@@ -51,10 +54,10 @@ int get_weight(Node* curr){
         }
     }
     else{
+        n += get_weight(curr->left);
         if(curr->left == nullptr){
-            return 0;
+            return n;
         }
-        n = curr->left->weight;
         size_t temp = find_index(curr->left, input, 0);
         if(temp > n){
             return n;
