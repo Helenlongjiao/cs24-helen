@@ -31,7 +31,7 @@ int main(){
     tree.insert("snake");
     tree.insert("snake");
     // tree.print();
-    std::cout<<tree.find("snake");
+    std::cout<<tree.find("mushroom");
 
 //test code for promotion
     // tree.insert("a");

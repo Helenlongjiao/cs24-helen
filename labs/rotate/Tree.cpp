@@ -40,9 +40,6 @@ int get_weight(Node* curr){
             n += get_weight(curr->right->left);
             size_t temp = find_index(curr->right->left, input, 0);
             if(temp != SIZE_MAX){
-                if(temp == 0 && n == 5){
-                    return 6;
-                }
                 return n - 1;
             }
             else{
@@ -247,6 +244,7 @@ bool promote(Node* start, Node* curr, std::string target){
 Node* insert_rec(Node* curr, const std::string input) {
     if (input > curr->data) {
         if (curr->right != nullptr) {
+            curr->weight ++;
             Node* temp = insert_rec(curr->right, input);
             // std::cout<<"promote "<<curr->data<<'\n';
             // promote(curr, curr->right, input);
@@ -263,6 +261,7 @@ Node* insert_rec(Node* curr, const std::string input) {
         }
     } else{
         if (curr->left != nullptr) {
+            curr->weight ++;
             Node* temp = insert_rec(curr->left, input);
             // promote(curr, curr->left, input);
             return temp;
