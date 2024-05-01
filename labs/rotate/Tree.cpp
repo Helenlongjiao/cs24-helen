@@ -444,6 +444,12 @@ void Tree::remove(size_t index){
         clear();
     }
     else{
+        //先把weight更新一下
+        Node* temp = node->parent;
+        while(temp != nullptr){
+            temp->weight --;
+            temp = temp->parent;
+        }
         //情况1：没有children：直接remove，parent设为nullptr
         if(node->left == nullptr && node->right == nullptr){
             if(node->data > node->parent->data){
