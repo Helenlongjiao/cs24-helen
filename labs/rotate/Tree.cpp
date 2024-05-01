@@ -382,6 +382,11 @@ size_t lookup_index(Node* curr, Node* target, size_t n){  //this function return
 
 Node* Tree::lookup_rec(Node* curr, size_t index) const{
     size_t temp = lookup_index(head, curr, 0);
+    if(curr == nullptr){
+        print();
+        Node* tempe = new Node;
+        return tempe;
+    }
     if(index > temp){
         return lookup_rec(curr->right, index);
     }
@@ -480,8 +485,10 @@ void Tree::remove(size_t index){
             temp = temp->left;
         }
         node->data = temp->data;
+        temp->parent->left = nullptr;
         delete temp;
     }
+    cnt --;
     //promotion target: 
     // if(curr->right != nullptr){
     //     promote(curr,curr->right->data);
