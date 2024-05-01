@@ -487,9 +487,8 @@ void Tree::remove(size_t index){
             temp->parent->left = nullptr;
             delete temp;
         }
+        cnt --;
     }
-    
-    cnt --;
     //promotion target: 
     // if(curr->right != nullptr){
     //     promote(curr,curr->right->data);
