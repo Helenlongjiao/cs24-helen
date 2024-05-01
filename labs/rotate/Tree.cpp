@@ -437,55 +437,58 @@ void Tree::remove(size_t index){
         throw std::out_of_range("lookup()");
     }
     Node* node = lookup_node(index);
-
+    
     if(node == head){
         clear();
     }
-    //情况1：没有children：直接remove，parent设为nullptr
-    if(node->left == nullptr && node->right == nullptr){
-        if(node->data > node->parent->data){
-            node->parent->right = nullptr;
+    else{
+        //情况1：没有children：直接remove，parent设为nullptr
+        if(node->left == nullptr && node->right == nullptr){
+            if(node->data > node->parent->data){
+                node->parent->right = nullptr;
+            }
+            else{
+                node->parent->left = nullptr;
+            }
+            delete node;
         }
+        
+        //情况2：有一个children：remove后把children接到上面那个
+        else if(node->left == nullptr && node->right != nullptr){
+            if(node->data > node->parent->data){
+                node->parent->right = node->right;
+                node->right->parent = node->parent;
+            }
+            else{
+                node->parent->left = node->right;
+                node->right->parent = node->parent;
+            }
+            delete node;
+        }
+        else if(node->left != nullptr && node->right == nullptr){
+            if(node->data > node->parent->data){
+                node->parent->right = node->left;
+                node->left->parent = node->parent;
+            }
+            else{
+                node->parent->left = node->left;
+                node->left->parent = node->parent;
+            }
+            delete node;
+        }
+
+        //情况3：俩children：remove的对象->right->最左 替换到curr的位置
         else{
-            node->parent->left = nullptr;
+            Node* temp = node->right;
+            while(temp->left != nullptr){
+                temp = temp->left;
+            }
+            node->data = temp->data;
+            temp->parent->left = nullptr;
+            delete temp;
         }
-        delete node;
     }
     
-    //情况2：有一个children：remove后把children接到上面那个
-    else if(node->left == nullptr && node->right != nullptr){
-        if(node->data > node->parent->data){
-            node->parent->right = node->right;
-            node->right->parent = node->parent;
-        }
-        else{
-            node->parent->left = node->right;
-            node->right->parent = node->parent;
-        }
-        delete node;
-    }
-    else if(node->left != nullptr && node->right == nullptr){
-        if(node->data > node->parent->data){
-            node->parent->right = node->left;
-            node->left->parent = node->parent;
-        }
-        else{
-            node->parent->left = node->left;
-            node->left->parent = node->parent;
-        }
-        delete node;
-    }
-
-    //情况3：俩children：remove的对象->right->最左 替换到curr的位置
-    else{
-        Node* temp = node->right;
-        while(temp->left != nullptr){
-            temp = temp->left;
-        }
-        node->data = temp->data;
-        temp->parent->left = nullptr;
-        delete temp;
-    }
     cnt --;
     //promotion target: 
     // if(curr->right != nullptr){
