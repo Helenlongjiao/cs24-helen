@@ -124,6 +124,9 @@ size_t Tree::Tree::count() const{
 }
 
 bool contains_rec(Node* curr, std::string input){
+    if (curr == nullptr) {
+        return false;
+    }
     if((input > curr->data) && (curr -> right != nullptr)){
         return contains_rec(curr->right, input);
     }
@@ -381,11 +384,6 @@ size_t lookup_index(Node* curr, Node* target, size_t n){  //this function return
 
 
 Node* Tree::lookup_rec(Node* curr, size_t index) const{
-    if(curr == nullptr){
-        print();
-        Node* tempe = new Node;
-        return tempe;
-    }
     size_t temp = lookup_index(head, curr, 0);
     if(index > temp){
         return lookup_rec(curr->right, index);
