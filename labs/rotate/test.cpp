@@ -3,6 +3,8 @@
 
 int main(){
     Tree tree;
+
+//test code for lookup (duplicate data)
     tree.insert("d");
     tree.insert("b");
     tree.insert("e");
@@ -12,6 +14,10 @@ int main(){
     tree.insert("g");
     tree.insert("f");
     tree.insert("h");
+    tree.remove(6);
+    tree.print();
+
+
 
     // tree.insert("d");
     // tree.insert("b");
@@ -22,10 +28,11 @@ int main(){
     // tree.insert("f");
     // tree.insert("j");
 
+//test code for promotion
     // tree.insert("a");
     // tree.insert("b");
+    // std::cout<<"insert c\n";
     // tree.insert("c");
-    
-    std::cout<<tree.find("h");
-    return 0;
+    // tree.print();
+    // return 0;
 }

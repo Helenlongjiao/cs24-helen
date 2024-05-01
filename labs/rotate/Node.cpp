@@ -16,3 +16,11 @@ Node::Node(std::string data, Node* left, Node* right){
     this->right = right;
     weight = 1;
 }
+
+Node::Node(const Node& other){
+    this->left = other.left;
+    this->right = other.right;
+    weight = other.weight;
+    parent = other.parent;
+    data = other.data;
+}

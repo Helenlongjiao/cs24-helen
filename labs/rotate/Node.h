@@ -13,5 +13,6 @@ struct Node{
 
     Node();
     Node(std::string data, Node* left, Node* right);
+    Node(const Node& other);
 };
 #endif

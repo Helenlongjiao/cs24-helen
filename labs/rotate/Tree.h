@@ -20,6 +20,7 @@ public:
   Node* lookup_rec(Node* curr, size_t index) const;
   std::string lookup(size_t index) const;
   void        print() const;
+  Node* lookup_node(size_t index) const;
   void        remove(size_t index);
 };
 
