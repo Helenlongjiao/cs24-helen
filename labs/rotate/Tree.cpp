@@ -215,14 +215,18 @@ void Tree::promote(Node* start, Node* curr, std::string target){
                 start->parent = head;
             }
             if(curr->data > start->data){
-                curr->left->parent = start;
-                start->right = curr->left;
+                if(curr->left != nullptr){
+                    curr->left->parent = start;
+                    start->right = curr->left;
+                }
                 curr->left = start;
                 start->parent = curr;
             }
             else{
-                curr->right->parent = start;
-                start->left = curr->right;
+                if(curr->left != nullptr){
+                    curr->right->parent = start;
+                    start->left = curr->right;
+                }
                 curr->right = start;
                 start->parent = curr;
             }
