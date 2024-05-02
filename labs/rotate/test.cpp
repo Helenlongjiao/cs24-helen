@@ -31,9 +31,12 @@ int main(){
     // std::cout<<tree.find("mushroom");
 
 //test code for promotion
-    tree.insert("a");
-    tree.insert("b");
-    tree.insert("c");
+    tree.insert("sulfur");
+    tree.insert("tellurium");
+    tree.insert("polonium");
+    tree.insert("selenium");
+    tree.insert("oxygen");
+    tree.insert("livermorium");
     tree.print();
     return 0;
 }

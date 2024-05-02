@@ -216,7 +216,7 @@ void Tree::promote(Node* start, Node* curr, std::string target){
                 head = curr;
             }
             else{
-                if(curr->data > start->parent->data){
+                if(start == start->parent->right){
                     start->parent->right = curr;
                 }
                 else{
@@ -292,6 +292,7 @@ void Tree::promote(Node* start, Node* curr, std::string target){
 Node* Tree::insert_rec(Node* curr, const std::string input) {
     if (input > curr->data) {
         if (curr->right != nullptr) {
+            curr->weight ++;
             Node* temp = insert_rec(curr->right, input);
             promote(curr, curr->right, input);
             return temp;
@@ -306,6 +307,7 @@ Node* Tree::insert_rec(Node* curr, const std::string input) {
         }
     } else{
         if (curr->left != nullptr) {
+            curr->weight ++;
             Node* temp = insert_rec(curr->left, input);
             promote(curr, curr->left, input);
             return temp;
