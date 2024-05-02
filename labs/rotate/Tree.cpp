@@ -156,7 +156,7 @@ void Tree::promote(Node* start, Node* curr, std::string target){
     if(curr != nullptr){
         int imbalance2 = 0;
         int imbalance1 = std::abs(get_weight(start->left) - get_weight(start->right));
-        if(target > curr->data){
+        if(target > start->data){
             imbalance2 = std::abs(get_weight(curr->left) + get_weight(start->left) + 1 - get_weight(curr->right));
         }
         else{
@@ -213,23 +213,31 @@ void Tree::promote(Node* start, Node* curr, std::string target){
         if(imbalance2 < imbalance1){
             if(start == head){
                 start->parent = head;
-            }
-            if(curr->data > start->data){
-                if(curr->left != nullptr){
-                    curr->left->parent = start;
-                    start->right = curr->left;
-                }
-                curr->left = start;
-                start->parent = curr;
+                head = curr;
             }
             else{
-                if(curr->left != nullptr){
-                    curr->right->parent = start;
-                    start->left = curr->right;
+                if(curr->data > start->parent->data){
+                    start->parent->right = curr;
                 }
-                curr->right = start;
-                start->parent = curr;
+                else{
+                    start->parent->left = curr;
+                }
             }
+            if(curr == start->right){
+                if(curr->left != nullptr){
+                    curr->left->parent = start;
+                }
+                start->right = curr->left;
+                curr->left = start;
+            }
+            else{
+                if(curr->right != nullptr){
+                    curr->right->parent = start;
+                }
+                start->left = curr->right;
+                curr->right = start;
+            }
+            start->parent = curr;
         }
         // else{
         //     if(target > curr->data){

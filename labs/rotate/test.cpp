@@ -33,7 +33,6 @@ int main(){
 //test code for promotion
     tree.insert("a");
     tree.insert("b");
-    std::cout<<"insert c\n";
     tree.insert("c");
     tree.print();
     return 0;
