@@ -17,12 +17,6 @@ int main(){
     // tree.remove(1);
     // tree.print();
 
-    tree.insert("scape");
-    std::cout<<tree.count()<<'\n';
-    tree.print();
-    tree.remove(0);
-    std::cout<<tree.count()<<'\n';
-    tree.print();
 
 //test code for find duplicate
     // tree.insert("mushroom");
@@ -37,10 +31,10 @@ int main(){
     // std::cout<<tree.find("mushroom");
 
 //test code for promotion
-    // tree.insert("a");
-    // tree.insert("b");
-    // std::cout<<"insert c\n";
-    // tree.insert("c");
-    // tree.print();
-    // return 0;
+    tree.insert("a");
+    tree.insert("b");
+    std::cout<<"insert c\n";
+    tree.insert("c");
+    tree.print();
+    return 0;
 }

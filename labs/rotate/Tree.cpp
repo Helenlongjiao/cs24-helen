@@ -152,137 +152,99 @@ size_t Tree::find(const std::string& s) const{
 }
 
 
-bool promote(Node* start, Node* curr, std::string target){
+void Tree::promote(Node* start, Node* curr, std::string target){
     if(curr != nullptr){
         int imbalance2 = 0;
         int imbalance1 = std::abs(get_weight(start->left) - get_weight(start->right));
-        
         if(target > curr->data){
-            Node* tempParent = curr->parent;
-            while(true){
-                imbalance2 += get_weight(tempParent->left) + 1;
-                if(tempParent == start){
-                    break;
-                }
-                tempParent = tempParent->parent;
-            }
-            imbalance2 = std::abs(imbalance2 + get_weight(curr->left) - get_weight(curr->right));
-        }
-        else if(target < curr->data){
-            Node* tempParent = curr->parent;
-            while(true){
-                imbalance2 += get_weight(tempParent->left) + 1;
-                if(tempParent == start){
-                    break;
-                }
-                tempParent = tempParent->parent;
-            }
-            imbalance2 = std::abs(imbalance2 + get_weight(curr->right) - get_weight(curr->left));
+            imbalance2 = std::abs(get_weight(curr->left) + get_weight(start->left) + 1 - get_weight(curr->right));
         }
         else{
-            if(target > curr->parent->data){
-                Node* tempParent = curr->parent;
-                while(true){
-                    imbalance2 += get_weight(tempParent->left) + 1;
-                    if(tempParent == start){
-                        break;
-                    }
-                    tempParent = tempParent->parent;
-                }
-                imbalance2 = std::abs(imbalance2 + get_weight(curr->left) - get_weight(curr->right));
-            }
-            else if(target < curr->parent->data){
-                Node* tempParent = curr->parent;
-                while(true){
-                    imbalance2 += get_weight(tempParent->left) + 1;
-                    if(tempParent == start){
-                        break;
-                    }
-                    tempParent = tempParent->parent;
-                }
-                imbalance2 = std::abs(imbalance2 + get_weight(curr->right) - get_weight(curr->left));
-            }
+            imbalance2 = std::abs(get_weight(curr->right) + get_weight(start->right) + 1 - get_weight(curr->left));
         }
+        // if(target > curr->data){
+        //     Node* tempParent = curr->parent;
+        //     while(true){
+        //         imbalance2 += get_weight(tempParent->left) + 1;
+        //         if(tempParent == start){
+        //             break;
+        //         }
+        //         tempParent = tempParent->parent;
+        //     }
+        //     imbalance2 = std::abs(imbalance2 + get_weight(curr->left) - get_weight(curr->right));
+        // }
+        // else if(target < curr->data){
+        //     Node* tempParent = curr->parent;
+        //     while(true){
+        //         imbalance2 += get_weight(tempParent->left) + 1;
+        //         if(tempParent == start){
+        //             break;
+        //         }
+        //         tempParent = tempParent->parent;
+        //     }
+        //     imbalance2 = std::abs(imbalance2 + get_weight(curr->right) - get_weight(curr->left));
+        // }
+        // else{
+        //     if(target > curr->parent->data){
+        //         Node* tempParent = curr->parent;
+        //         while(true){
+        //             imbalance2 += get_weight(tempParent->left) + 1;
+        //             if(tempParent == start){
+        //                 break;
+        //             }
+        //             tempParent = tempParent->parent;
+        //         }
+        //         imbalance2 = std::abs(imbalance2 + get_weight(curr->left) - get_weight(curr->right));
+        //     }
+        //     else if(target < curr->parent->data){
+        //         Node* tempParent = curr->parent;
+        //         while(true){
+        //             imbalance2 += get_weight(tempParent->left) + 1;
+        //             if(tempParent == start){
+        //                 break;
+        //             }
+        //             tempParent = tempParent->parent;
+        //         }
+        //         imbalance2 = std::abs(imbalance2 + get_weight(curr->right) - get_weight(curr->left));
+        //     }
+        // }
 
         // std::cout<<imbalance1<<"/"<<imbalance2<<'\n';
         if(imbalance2 < imbalance1){
-            Node* temp = curr->parent; //Q2: temp keeps goes up to every parent between target and promotion head.
-            while(true){
-                Node* temp2 = curr; //temp2 goes all the way left or right and finally points to the most left of right node.
-                if(temp->data <= curr->data){
-                    while(temp2->left != nullptr){
-                        temp2 = temp2->left;
-                    }
-                    temp2->left = temp;   //I'm so confused why I'm getting seg fault here. (pretty sure it's between line 220-227)
-                }
-                else{
-                    while(temp2->right != nullptr){
-                        temp2 = temp2->right;
-                    }
-                    temp2->right = temp;
-                }
-                if(temp->parent == start){
-                    break;
-                }
-                temp = temp->parent;
+            if(start == head){
+                start->parent = head;
             }
-            curr->parent = nullptr;
-            return true;
-        }
-        else{
-            if(target > curr->data){
-                promote(start, curr->right, target);
+            if(curr->data > start->data){
+                curr->left->parent = start;
+                start->right = curr->left;
+                curr->left = start;
+                start->parent = curr;
             }
             else{
-                promote(start, curr->left, target);
+                curr->right->parent = start;
+                start->left = curr->right;
+                curr->right = start;
+                start->parent = curr;
             }
         }
-    }
-    return false;
-}
-
-Node* insert_rec(Node* curr, const std::string input) {
-    if (input > curr->data) {
-        if (curr->right != nullptr) {
-            curr->weight ++;
-            Node* temp = insert_rec(curr->right, input);
-            // std::cout<<"promote "<<curr->data<<'\n';
-            // promote(curr, curr->right, input);
-            return temp;
-        } else {
-            curr->weight ++;
-            Node* newOne = new Node();
-            newOne->data = input;
-            curr->right = newOne;
-            curr->right->parent = curr;
-            // std::cout<<"promote "<<curr->data<<'\n';
-            // promote(curr, curr->right, input);
-            return newOne;
-        }
-    } else{
-        if (curr->left != nullptr) {
-            curr->weight ++;
-            Node* temp = insert_rec(curr->left, input);
-            // promote(curr, curr->left, input);
-            return temp;
-        } else {
-            curr->weight ++;
-            Node* newOne = new Node();
-            newOne->data = input;
-            curr->left = newOne;
-            curr->left->parent = curr;
-            // promote(curr, curr->left, input);
-            return newOne;
-        }
+        // else{
+        //     if(target > curr->data){
+        //         promote(start, curr->right, target);
+        //     }
+        //     else{
+        //         promote(start, curr->left, target);
+        //     }
+        // }
     }
 }
 
 // Node* insert_rec(Node* curr, const std::string input) {
 //     if (input > curr->data) {
 //         if (curr->right != nullptr) {
+//             curr->weight ++;
 //             Node* temp = insert_rec(curr->right, input);
-//             std::cout<<"promote "<<curr->right->data<<'\n';
-//             promote(curr, curr->right, input);
+//             // std::cout<<"promote "<<curr->data<<'\n';
+//             // promote(curr, curr->right, input);
 //             return temp;
 //         } else {
 //             curr->weight ++;
@@ -290,14 +252,15 @@ Node* insert_rec(Node* curr, const std::string input) {
 //             newOne->data = input;
 //             curr->right = newOne;
 //             curr->right->parent = curr;
-//             std::cout<<"promote "<<curr->right->data<<'\n';
-//             promote(curr, curr->right, input);
+//             // std::cout<<"promote "<<curr->data<<'\n';
+//             // promote(curr, curr->right, input);
 //             return newOne;
 //         }
 //     } else{
 //         if (curr->left != nullptr) {
+//             curr->weight ++;
 //             Node* temp = insert_rec(curr->left, input);
-//             promote(curr, curr->left, input);
+//             // promote(curr, curr->left, input);
 //             return temp;
 //         } else {
 //             curr->weight ++;
@@ -305,11 +268,43 @@ Node* insert_rec(Node* curr, const std::string input) {
 //             newOne->data = input;
 //             curr->left = newOne;
 //             curr->left->parent = curr;
-//             promote(curr, curr->left, input);
+//             // promote(curr, curr->left, input);
 //             return newOne;
 //         }
 //     }
 // }
+
+Node* Tree::insert_rec(Node* curr, const std::string input) {
+    if (input > curr->data) {
+        if (curr->right != nullptr) {
+            Node* temp = insert_rec(curr->right, input);
+            promote(curr, curr->right, input);
+            return temp;
+        } else {
+            curr->weight ++;
+            Node* newOne = new Node();
+            newOne->data = input;
+            curr->right = newOne;
+            curr->right->parent = curr;
+            promote(curr, curr->right, input);
+            return newOne;
+        }
+    } else{
+        if (curr->left != nullptr) {
+            Node* temp = insert_rec(curr->left, input);
+            promote(curr, curr->left, input);
+            return temp;
+        } else {
+            curr->weight ++;
+            Node* newOne = new Node();
+            newOne->data = input;
+            curr->left = newOne;
+            curr->left->parent = curr;
+            promote(curr, curr->left, input);
+            return newOne;
+        }
+    }
+}
 
 
 void Tree::insert(const std::string& s){
