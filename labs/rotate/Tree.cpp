@@ -227,6 +227,7 @@ void Tree::promote(Node* start, Node* curr, std::string target){
                 if(curr->left != nullptr){
                     curr->left->parent = start;
                 }
+                start->weight = get_weight(curr->left);
                 start->right = curr->left;
                 curr->left = start;
             }
@@ -237,7 +238,9 @@ void Tree::promote(Node* start, Node* curr, std::string target){
                 start->left = curr->right;
                 curr->right = start;
             }
+            start->weight = get_weight(curr->right);
             start->parent = curr;
+            curr->weight ++;
         }
         // else{
         //     if(target > curr->data){
