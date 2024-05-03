@@ -162,7 +162,7 @@ void Tree::promote(Node* start, Node* curr, std::string target){
                 if(curr->left != nullptr){
                     curr->left->parent = start;
                 }
-                start->weight = get_weight(curr->left);
+                start->weight = get_weight(curr->left) + 1;
                 start->right = curr->left;
                 curr->left = start;
             }
@@ -170,10 +170,10 @@ void Tree::promote(Node* start, Node* curr, std::string target){
                 if(curr->right != nullptr){
                     curr->right->parent = start;
                 }
+                start->weight = get_weight(curr->right) + 1;
                 start->left = curr->right;
                 curr->right = start;
             }
-            start->weight = get_weight(curr->right);
             start->parent = curr;
             curr->weight ++;
         }
@@ -273,23 +273,13 @@ size_t lookup_index(Node* curr, Node* target, size_t n){  //this function return
             return l;
         }
         
-        // if(curr->left == nullptr){
-        //     return n;
-        // }
-        // n += curr->left->weight;
-        // size_t temp = lookup_index(curr->left, target, 0);
-        // if(temp > n){
-        //     return n;
-        // }
-        // else{
-        //     return temp;
-        // }
     }
 }
 
 
 Node* Tree::lookup_rec(Node* curr, size_t index) const{
     size_t temp = lookup_index(head, curr, 0);
+    // std::cout<<curr->data<<" index "<<temp<<" weight "<<curr->weight<<'\n';
     if(index > temp){
         return lookup_rec(curr->right, index);
     }
@@ -330,7 +320,7 @@ void Tree::print() const{
 
 Node* Tree::lookup_node(size_t index) const{
     if(index >= cnt){
-        throw std::out_of_range("lookup()");
+        throw std::out_of_range("lookup_node()");
     }
     else{
         return lookup_rec(head, index);
@@ -394,9 +384,30 @@ void Tree::remove(size_t index){
             while(temp->left != nullptr){
                 temp = temp->left;
             }
-            node->data = temp->data;
-            temp->parent->left = nullptr;
-            delete temp;
+            if(node->right == temp){
+                if(node == node->parent->right){   //here might have seg when node is head
+                    node->parent->right = temp;
+                }
+                else{
+                    node->parent->left = temp;
+                }
+                temp->parent = node->parent;
+                delete node;
+            }
+            else if(temp->right != nullptr && node->right != temp){
+                temp->right->right = node->right;
+                node->right = temp->right;
+                temp->right->parent = node;
+                temp->parent->left = nullptr;
+                node->right->parent = temp->right;
+                node->data = temp->data;
+                delete temp;
+            }
+            else{
+                node->data = temp->data;
+                temp->parent->left = nullptr;
+                delete temp;
+            }
         }
         cnt --;
     }
