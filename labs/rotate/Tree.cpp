@@ -364,16 +364,17 @@ void Tree::remove(size_t index){
                 node->parent->left = node->right;
                 node->right->parent = node->parent;
             }
-            if(node->data > node->parent->data && node->parent->left != nullptr){
-                std::cout<<node->parent->data<<"  "<<node->parent->left->data<<'\n';
-                promote(node->parent, node->parent->left);
-            }
-            else if(node->data <= node->parent->data && node->parent->right != nullptr){
-                std::cout<<node->parent->data<<"  "<<node->parent->right->data<<'\n';
-                promote(node->parent, node->parent->right);
-            }
-            if(cnt == 11){
-                promote(node->parent, node->parent->right);
+            Node* temp = node->parent;
+            while(temp != nullptr){
+                if(node->data > temp->data && temp->left != nullptr){
+                    // std::cout<<temp->data<<"  "<<temp->left->data<<'\n';
+                    promote(temp, temp->left);
+                }
+                else if(node->data <= temp->data && temp->right != nullptr){
+                    // std::cout<<temp->data<<"  "<<temp->right->data<<'\n';
+                    promote(temp, temp->right);
+                }
+                temp = temp->parent;
             }
             delete node;
         }
@@ -386,16 +387,17 @@ void Tree::remove(size_t index){
                 node->parent->left = node->left;
                 node->left->parent = node->parent;
             }
-            if(node->data > node->parent->data && node->parent->left != nullptr){
-                std::cout<<node->parent->data<<"  "<<node->parent->left->data<<'\n';
-                promote(node->parent, node->parent->left);
-            }
-            else if(node->data <= node->parent->data && node->parent->right != nullptr){
-                std::cout<<node->parent->data<<"  "<<node->parent->right->data<<'\n';
-                promote(node->parent, node->parent->right);
-            }
-            if(cnt == 11){
-                promote(node->parent, node->parent->right);
+            Node* temp = node->parent;
+            while(temp != nullptr){
+                if(node->data > temp->data && temp->left != nullptr){
+                    // std::cout<<temp->data<<"  "<<temp->left->data<<'\n';
+                    promote(temp, temp->left);
+                }
+                else if(node->data <= temp->data && temp->right != nullptr){
+                    // std::cout<<temp->data<<"  "<<temp->right->data<<'\n';
+                    promote(temp, temp->right);
+                }
+                temp = temp->parent;
             }
             delete node;
         }
