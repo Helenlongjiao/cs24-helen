@@ -19,7 +19,7 @@ int main(){
     // tree.insert("c");
     // tree.insert("d");
     tree.print();
-    tree.remove(6);
+    tree.remove(1);
     tree.print();
 
 

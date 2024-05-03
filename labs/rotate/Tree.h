@@ -16,7 +16,7 @@ public:
   size_t      count() const;
   bool        contains(const std::string& s) const;
   size_t      find(const std::string& s) const;
-  void promote(Node* start, Node* curr, std::string target);
+  void promote(Node* start, Node* curr);
   void        insert(const std::string& s);
   Node* lookup_rec(Node* curr, size_t index) const;
   std::string lookup(size_t index) const;

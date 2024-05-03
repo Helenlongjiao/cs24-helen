@@ -133,11 +133,11 @@ size_t Tree::find(const std::string& s) const{
 }
 
 
-void Tree::promote(Node* start, Node* curr, std::string target){
+void Tree::promote(Node* start, Node* curr){
     if(curr != nullptr){
         int imbalance2 = 0;
         int imbalance1 = std::abs(get_weight(start->left) - get_weight(start->right));
-        if(target > start->data){
+        if(curr->data > start->data){
             imbalance2 = std::abs(get_weight(curr->left) + get_weight(start->left) + 1 - get_weight(curr->right));
         }
         else{
@@ -185,7 +185,7 @@ Node* Tree::insert_rec(Node* curr, const std::string input) {
         if (curr->right != nullptr) {
             curr->weight ++;
             Node* temp = insert_rec(curr->right, input);
-            promote(curr, curr->right, input);
+            promote(curr, curr->right);
             return temp;
         } else {
             curr->weight ++;
@@ -193,14 +193,14 @@ Node* Tree::insert_rec(Node* curr, const std::string input) {
             newOne->data = input;
             curr->right = newOne;
             newOne->parent = curr;
-            promote(curr, curr->right, input);
+            promote(curr, curr->right);
             return newOne;
         }
     } else{
         if (curr->left != nullptr) {
             curr->weight ++;
             Node* temp = insert_rec(curr->left, input);
-            promote(curr, curr->left, input);
+            promote(curr, curr->left);
             return temp;
         } else {
             curr->weight ++;
@@ -208,7 +208,7 @@ Node* Tree::insert_rec(Node* curr, const std::string input) {
             newOne->data = input;
             curr->left = newOne;
             newOne->parent = curr;
-            promote(curr, curr->left, input);
+            promote(curr, curr->left);
             return newOne;
         }
     }
@@ -365,6 +365,7 @@ void Tree::remove(size_t index){
                 node->right->parent = node->parent;
             }
             delete node;
+            promote(node->parent, node);
         }
         else if(node->left != nullptr && node->right == nullptr){
             if(node->data > node->parent->data){
@@ -376,6 +377,7 @@ void Tree::remove(size_t index){
                 node->left->parent = node->parent;
             }
             delete node;
+            promote(node->parent, node);
         }
 
         //情况3：俩children：remove的对象->right->最左 替换到curr的位置
