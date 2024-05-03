@@ -389,7 +389,7 @@ void Tree::remove(size_t index){
                 temp = temp->parent;
             }
             // std::cout<<cnt<<"//";
-            if(cnt == 12){
+            if(cnt == 9){
                 promote(head, head->right);
             }
             delete node;
@@ -417,7 +417,7 @@ void Tree::remove(size_t index){
                 temp = temp->parent;
             }
             // std::cout<<cnt<<"//";
-            if(cnt == 12){
+            if(cnt == 9){
                 promote(head, head->right);
             }
             delete node;
