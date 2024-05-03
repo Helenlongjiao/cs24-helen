@@ -364,7 +364,12 @@ void Tree::remove(size_t index){
                 node->parent->left = node->right;
                 node->right->parent = node->parent;
             }
-            promote(node->parent, node->parent->right);
+            if(node->data > node->parent->data && node->parent->left != nullptr){
+                promote(node->parent, node->parent->left);
+            }
+            else if(node->data <= node->parent->data && node->parent->right != nullptr){
+                promote(node->parent, node->parent->right);
+            }
             delete node;
         }
         else if(node->left != nullptr && node->right == nullptr){
@@ -376,7 +381,12 @@ void Tree::remove(size_t index){
                 node->parent->left = node->left;
                 node->left->parent = node->parent;
             }
-            promote(node->parent, node->parent->left);
+            if(node->data > node->parent->data && node->parent->left != nullptr){
+                promote(node->parent, node->parent->left);
+            }
+            else if(node->data <= node->parent->data && node->parent->right != nullptr){
+                promote(node->parent, node->parent->right);
+            }
             delete node;
         }
 
