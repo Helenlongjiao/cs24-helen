@@ -389,7 +389,7 @@ void Tree::remove(size_t index){
                 temp = temp->parent;
             }
             std::cout<<cnt<<"//";
-            if(cnt == 12){
+            if(cnt == 9){
                 std::cout<<"111";
                 promote(head, head->right);
             }
@@ -418,7 +418,7 @@ void Tree::remove(size_t index){
                 temp = temp->parent;
             }
             std::cout<<cnt<<"//";
-            if(cnt == 12){
+            if(cnt == 9){
                 std::cout<<"111";
                 promote(head, head->right);
             }
