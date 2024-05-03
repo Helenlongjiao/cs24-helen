@@ -388,6 +388,7 @@ void Tree::remove(size_t index){
                 }
                 temp = temp->parent;
             }
+            std::cout<<cnt<<"//";
             if(cnt == 10){
                 promote(head, head->right);
             }
@@ -415,6 +416,7 @@ void Tree::remove(size_t index){
                 }
                 temp = temp->parent;
             }
+            std::cout<<cnt<<"//";
             if(cnt == 10){
                 promote(head, head->right);
             }
