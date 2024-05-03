@@ -330,12 +330,7 @@ void Tree::print() const{
  
 
 Node* Tree::lookup_node(size_t index) const{
-    if(index >= cnt){
-        throw std::out_of_range("lookup_node()");
-    }
-    else{
-        return lookup_rec(head, index);
-    }
+    return lookup_rec(head, index);
 }
 
 void Tree::remove(size_t index){
@@ -388,11 +383,7 @@ void Tree::remove(size_t index){
                 }
                 temp = temp->parent;
             }
-            std::cout<<cnt<<"//";
-            if(cnt == 9){
-                std::cout<<"111";
-                promote(head, head->right);
-            }
+
             delete node;
         }
         else if(node->left != nullptr && node->right == nullptr){
@@ -416,11 +407,6 @@ void Tree::remove(size_t index){
                     promote(temp, temp->right);
                 }
                 temp = temp->parent;
-            }
-            std::cout<<cnt<<"//";
-            if(cnt == 9){
-                std::cout<<"111";
-                promote(head, head->right);
             }
             delete node;
         }
