@@ -364,8 +364,8 @@ void Tree::remove(size_t index){
                 node->parent->left = node->right;
                 node->right->parent = node->parent;
             }
-            delete node;
             promote(node->parent, node);
+            delete node;
         }
         else if(node->left != nullptr && node->right == nullptr){
             if(node->data > node->parent->data){
@@ -376,8 +376,8 @@ void Tree::remove(size_t index){
                 node->parent->left = node->left;
                 node->left->parent = node->parent;
             }
-            delete node;
             promote(node->parent, node);
+            delete node;
         }
 
         //情况3：俩children：remove的对象->right->最左 替换到curr的位置
