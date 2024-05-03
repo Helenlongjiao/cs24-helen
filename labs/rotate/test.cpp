@@ -5,21 +5,29 @@ int main(){
     Tree tree;
 
 //test code for lookup/remove (duplicate data)
+    // tree.insert("d");
+    // tree.insert("b");
+    // tree.insert("e");
+    // tree.insert("a");
+    // tree.insert("c");
+    // tree.insert("h");
+    // tree.insert("g");
+    // tree.insert("f");
+
     tree.insert("d");
     tree.insert("b");
     tree.insert("e");
     tree.insert("a");
-    tree.insert("c");
     tree.insert("h");
     tree.insert("g");
-    tree.insert("f");
+
     // tree.insert("h");
     // tree.insert("a");
     // tree.insert("b");
     // tree.insert("c");
     // tree.insert("d");
     tree.print();
-    tree.remove(4);
+    tree.remove(1);
     tree.print();
 
 
