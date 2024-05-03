@@ -385,12 +385,13 @@ void Tree::remove(size_t index){
                 temp = temp->left;
             }
             if(node->right == temp){
-                if(node == node->parent->right){   //here might have seg when node is head
+                if(node == node->parent->right){
                     node->parent->right = temp;
                 }
                 else{
                     node->parent->left = temp;
                 }
+                temp->left = node->left;
                 temp->parent = node->parent;
                 delete node;
             }
