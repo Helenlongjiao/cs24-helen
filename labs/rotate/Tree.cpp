@@ -339,12 +339,12 @@ Node* Tree::lookup_node(size_t index) const{
 
 void Tree::remove(size_t index){
     if(index >= cnt){
-        throw std::out_of_range("lookup()");
+        throw std::out_of_range("remove()");
     }
     Node* node = lookup_node(index);
     
     if(node == head){
-        std::cout<<"111";
+        clear();
     }
     else{
         //先把weight更新一下
