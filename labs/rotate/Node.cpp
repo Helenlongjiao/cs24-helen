@@ -14,6 +14,7 @@ Node::Node(std::string data, Node* left, Node* right){
     this->data = data;
     this->left = left;
     this->right = right;
+    parent = nullptr;
     weight = 1;
 }
 

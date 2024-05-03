@@ -65,25 +65,6 @@ int get_weight(Node* curr){
     }
 }
 
-// size_t find_index(Node* curr, const std::string& input) {
-//     if (curr == nullptr) {
-//         return SIZE_MAX;
-//     }
-
-//     if (input < curr->data) {
-//         return find_index(curr->left, input);
-//     } else if (input > curr->data) {
-//         return find_index(curr->right, input);
-//     } else {
-//         size_t left_subtree_size = 0;
-//         if (curr->left != nullptr) {
-//             left_subtree_size = curr->left->weight + curr->right->left->weight + 1;
-//         }
-//         return left_subtree_size + 1;  // +1 for the current node (root of the subtree)
-//     }
-// }
-
-
 
 Tree::Tree(){
     head = nullptr;
@@ -162,57 +143,10 @@ void Tree::promote(Node* start, Node* curr, std::string target){
         else{
             imbalance2 = std::abs(get_weight(curr->right) + get_weight(start->right) + 1 - get_weight(curr->left));
         }
-        // if(target > curr->data){
-        //     Node* tempParent = curr->parent;
-        //     while(true){
-        //         imbalance2 += get_weight(tempParent->left) + 1;
-        //         if(tempParent == start){
-        //             break;
-        //         }
-        //         tempParent = tempParent->parent;
-        //     }
-        //     imbalance2 = std::abs(imbalance2 + get_weight(curr->left) - get_weight(curr->right));
-        // }
-        // else if(target < curr->data){
-        //     Node* tempParent = curr->parent;
-        //     while(true){
-        //         imbalance2 += get_weight(tempParent->left) + 1;
-        //         if(tempParent == start){
-        //             break;
-        //         }
-        //         tempParent = tempParent->parent;
-        //     }
-        //     imbalance2 = std::abs(imbalance2 + get_weight(curr->right) - get_weight(curr->left));
-        // }
-        // else{
-        //     if(target > curr->parent->data){
-        //         Node* tempParent = curr->parent;
-        //         while(true){
-        //             imbalance2 += get_weight(tempParent->left) + 1;
-        //             if(tempParent == start){
-        //                 break;
-        //             }
-        //             tempParent = tempParent->parent;
-        //         }
-        //         imbalance2 = std::abs(imbalance2 + get_weight(curr->left) - get_weight(curr->right));
-        //     }
-        //     else if(target < curr->parent->data){
-        //         Node* tempParent = curr->parent;
-        //         while(true){
-        //             imbalance2 += get_weight(tempParent->left) + 1;
-        //             if(tempParent == start){
-        //                 break;
-        //             }
-        //             tempParent = tempParent->parent;
-        //         }
-        //         imbalance2 = std::abs(imbalance2 + get_weight(curr->right) - get_weight(curr->left));
-        //     }
-        // }
 
-        // std::cout<<imbalance1<<"/"<<imbalance2<<'\n';
         if(imbalance2 < imbalance1){
             if(start == head){
-                start->parent = head;
+                curr->parent = nullptr;
                 head = curr;
             }
             else{
@@ -222,6 +156,7 @@ void Tree::promote(Node* start, Node* curr, std::string target){
                 else{
                     start->parent->left = curr;
                 }
+                curr->parent = start->parent;
             }
             if(curr == start->right){
                 if(curr->left != nullptr){
@@ -242,52 +177,8 @@ void Tree::promote(Node* start, Node* curr, std::string target){
             start->parent = curr;
             curr->weight ++;
         }
-        // else{
-        //     if(target > curr->data){
-        //         promote(start, curr->right, target);
-        //     }
-        //     else{
-        //         promote(start, curr->left, target);
-        //     }
-        // }
     }
 }
-
-// Node* insert_rec(Node* curr, const std::string input) {
-//     if (input > curr->data) {
-//         if (curr->right != nullptr) {
-//             curr->weight ++;
-//             Node* temp = insert_rec(curr->right, input);
-//             // std::cout<<"promote "<<curr->data<<'\n';
-//             // promote(curr, curr->right, input);
-//             return temp;
-//         } else {
-//             curr->weight ++;
-//             Node* newOne = new Node();
-//             newOne->data = input;
-//             curr->right = newOne;
-//             curr->right->parent = curr;
-//             // std::cout<<"promote "<<curr->data<<'\n';
-//             // promote(curr, curr->right, input);
-//             return newOne;
-//         }
-//     } else{
-//         if (curr->left != nullptr) {
-//             curr->weight ++;
-//             Node* temp = insert_rec(curr->left, input);
-//             // promote(curr, curr->left, input);
-//             return temp;
-//         } else {
-//             curr->weight ++;
-//             Node* newOne = new Node();
-//             newOne->data = input;
-//             curr->left = newOne;
-//             curr->left->parent = curr;
-//             // promote(curr, curr->left, input);
-//             return newOne;
-//         }
-//     }
-// }
 
 Node* Tree::insert_rec(Node* curr, const std::string input) {
     if (input > curr->data) {
@@ -301,7 +192,7 @@ Node* Tree::insert_rec(Node* curr, const std::string input) {
             Node* newOne = new Node();
             newOne->data = input;
             curr->right = newOne;
-            curr->right->parent = curr;
+            newOne->parent = curr;
             promote(curr, curr->right, input);
             return newOne;
         }
@@ -316,7 +207,7 @@ Node* Tree::insert_rec(Node* curr, const std::string input) {
             Node* newOne = new Node();
             newOne->data = input;
             curr->left = newOne;
-            curr->left->parent = curr;
+            newOne->parent = curr;
             promote(curr, curr->left, input);
             return newOne;
         }
@@ -453,7 +344,7 @@ void Tree::remove(size_t index){
     Node* node = lookup_node(index);
     
     if(node == head){
-        clear();
+        std::cout<<"111";
     }
     else{
         //先把weight更新一下

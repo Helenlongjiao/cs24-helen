@@ -9,13 +9,17 @@ int main(){
     // tree.insert("b");
     // tree.insert("e");
     // tree.insert("a");
-    // // tree.insert("c");
+    // tree.insert("c");
     // tree.insert("h");
     // tree.insert("g");
     // tree.insert("f");
     // tree.insert("h");
-    // tree.remove(1);
-    // tree.print();
+    tree.insert("a");
+    tree.insert("b");
+    tree.insert("c");
+    tree.insert("d");
+    tree.remove(2);
+    tree.print();
 
 
 //test code for find duplicate
@@ -31,12 +35,12 @@ int main(){
     // std::cout<<tree.find("mushroom");
 
 //test code for promotion
-    tree.insert("sulfur");
-    tree.insert("tellurium");
-    tree.insert("polonium");
-    tree.insert("selenium");
-    tree.insert("oxygen");
-    tree.insert("livermorium");
-    tree.print();
+    // tree.insert("sulfur");
+    // tree.insert("tellurium");
+    // tree.insert("polonium");
+    // tree.insert("selenium");
+    // tree.insert("oxygen");
+    // tree.insert("livermorium");
+    // tree.print();
     return 0;
 }
