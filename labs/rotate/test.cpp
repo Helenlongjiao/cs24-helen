@@ -14,12 +14,16 @@ int main(){
     // tree.insert("g");
     // tree.insert("f");
 
-    tree.insert("d");
-    tree.insert("b");
-    tree.insert("e");
     tree.insert("a");
-    tree.insert("h");
-    tree.insert("g");
+    tree.insert("b");
+    tree.insert("c");
+    tree.insert("d");
+    tree.insert("e");
+    tree.insert("f");
+    // tree.insert("g");
+    // tree.insert("h");
+    // tree.insert("i");
+
 
     // tree.insert("h");
     // tree.insert("a");
@@ -27,7 +31,7 @@ int main(){
     // tree.insert("c");
     // tree.insert("d");
     tree.print();
-    tree.remove(1);
+    std::cout<<tree.lookup(0);
     tree.print();
 
 
