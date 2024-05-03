@@ -356,6 +356,7 @@ void Tree::remove(size_t index){
         
         //情况2：有一个children：remove后把children接到上面那个
         else if(node->left == nullptr && node->right != nullptr){
+            std::cout<<node->data;
             if(node->data > node->parent->data){
                 node->parent->right = node->right;
                 node->right->parent = node->parent;
@@ -379,6 +380,7 @@ void Tree::remove(size_t index){
             delete node;
         }
         else if(node->left != nullptr && node->right == nullptr){
+            std::cout<<node->data;
             if(node->data > node->parent->data){
                 node->parent->right = node->left;
                 node->left->parent = node->parent;
