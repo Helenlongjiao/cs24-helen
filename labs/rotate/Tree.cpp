@@ -338,10 +338,10 @@ void Tree::remove(size_t index){
     }
     else{
         //先把weight更新一下
-        Node* temp = node->parent;
-        while(temp != nullptr){
-            temp->weight --;
-            temp = temp->parent;
+        Node* temp1 = node->parent;
+        while(temp1 != nullptr){
+            temp1->weight --;
+            temp1 = temp1->parent;
         }
         //情况1：没有children：直接remove，parent设为nullptr
         if(node->left == nullptr && node->right == nullptr){
@@ -364,7 +364,7 @@ void Tree::remove(size_t index){
                 node->parent->left = node->right;
                 node->right->parent = node->parent;
             }
-            promote(node->parent, node);
+            promote(node->parent, node->parent->right);
             delete node;
         }
         else if(node->left != nullptr && node->right == nullptr){
@@ -376,7 +376,7 @@ void Tree::remove(size_t index){
                 node->parent->left = node->left;
                 node->left->parent = node->parent;
             }
-            promote(node->parent, node);
+            promote(node->parent, node->parent->left);
             delete node;
         }
 
