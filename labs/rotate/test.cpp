@@ -14,12 +14,29 @@ int main(){
     // tree.insert("g");
     // tree.insert("f");
 
-    tree.insert("a");
-    tree.insert("b");
-    tree.insert("c");
-    tree.insert("d");
-    tree.insert("e");
-    tree.insert("f");
+    tree.insert("alpha");
+    tree.insert("beta");
+    tree.insert("chi");
+    tree.insert("delta");
+    tree.insert("epsilon");
+    tree.insert("eta");
+    tree.insert("gamma");
+    tree.insert("iota");
+    tree.insert("kappa");
+    tree.insert("lambda");
+    tree.insert("nu");
+    tree.insert("omega");
+    tree.insert("omicron");
+    tree.insert("phi");
+    tree.insert("pi");
+    tree.insert("psi");
+    tree.insert("rho");
+    tree.insert("sigma");
+    tree.insert("tau");
+    tree.insert("theta");
+    tree.insert("upsilon");
+    tree.insert("xi");
+    tree.insert("zeta");
     // tree.insert("g");
     // tree.insert("h");
     // tree.insert("i");
@@ -31,7 +48,8 @@ int main(){
     // tree.insert("c");
     // tree.insert("d");
     tree.print();
-    std::cout<<tree.lookup(0);
+    tree.remove(4);
+    std::cout<<tree.count();
     tree.print();
 
 

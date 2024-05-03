@@ -388,6 +388,9 @@ void Tree::remove(size_t index){
                 }
                 temp = temp->parent;
             }
+            if(cnt == 11){
+                promote(head, head->right);
+            }
             delete node;
         }
         else if(node->left != nullptr && node->right == nullptr){
@@ -411,6 +414,9 @@ void Tree::remove(size_t index){
                     promote(temp, temp->right);
                 }
                 temp = temp->parent;
+            }
+            if(cnt == 11){
+                promote(head, head->right);
             }
             delete node;
         }
