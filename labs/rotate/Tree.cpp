@@ -356,8 +356,7 @@ void Tree::remove(size_t index){
         
         //情况2：有一个children：remove后把children接到上面那个
         else if(node->left == nullptr && node->right != nullptr){
-            std::cout<<node->data<<'\n';
-            print();
+            // std::cout<<node->data<<'\n';
             if(node->data > node->parent->data){
                 node->parent->right = node->right;
                 node->right->parent = node->parent;
@@ -369,11 +368,11 @@ void Tree::remove(size_t index){
             Node* temp = node->parent;
             while(temp != nullptr){
                 if(node->data > temp->data && temp->left != nullptr){
-                    std::cout<<temp->data<<"  "<<temp->left->data<<'\n';
+                    // std::cout<<temp->data<<"  "<<temp->left->data<<'\n';
                     promote(temp, temp->left);
                 }
                 else if(node->data <= temp->data && temp->right != nullptr){
-                    std::cout<<temp->data<<"  "<<temp->right->data<<'\n';
+                    // std::cout<<temp->data<<"  "<<temp->right->data<<'\n';
                     promote(temp, temp->right);
                 }
                 temp = temp->parent;
@@ -381,8 +380,7 @@ void Tree::remove(size_t index){
             delete node;
         }
         else if(node->left != nullptr && node->right == nullptr){
-            std::cout<<node->data<<'\n';
-            print();
+            // std::cout<<node->data<<'\n';
             if(node->data > node->parent->data){
                 node->parent->right = node->left;
                 node->left->parent = node->parent;
@@ -394,11 +392,11 @@ void Tree::remove(size_t index){
             Node* temp = node->parent;
             while(temp != nullptr){
                 if(node->data > temp->data && temp->left != nullptr){
-                    std::cout<<temp->data<<"  "<<temp->left->data<<'\n';
+                    // std::cout<<temp->data<<"  "<<temp->left->data<<'\n';
                     promote(temp, temp->left);
                 }
                 else if(node->data <= temp->data && temp->right != nullptr){
-                    std::cout<<temp->data<<"  "<<temp->right->data<<'\n';
+                    // std::cout<<temp->data<<"  "<<temp->right->data<<'\n';
                     promote(temp, temp->right);
                 }
                 temp = temp->parent;
