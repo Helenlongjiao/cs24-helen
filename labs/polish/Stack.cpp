@@ -8,11 +8,11 @@ Stack::Stack(){
     index = -1;
 } // Constructor
 
-void Stack::print(){
-    for(int i = 0; i <= index; ++i){
-        stackArray[i]->print();
-    }
-}
+// void Stack::print(){
+//     for(int i = 0; i <= index; ++i){
+//         stackArray[i]->print();
+//     }
+// }
 
 void Stack::push(AST* element){
     if(index == 100){
