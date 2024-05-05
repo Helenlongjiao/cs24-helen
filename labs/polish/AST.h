@@ -18,6 +18,7 @@ public:
   virtual ~AST() {}
 
   // Member functions for output:
+  virtual void print() const = 0;
   virtual std::string prefix()  const = 0;
   virtual std::string postfix() const = 0;
   virtual double      value()   const = 0;

@@ -2,6 +2,7 @@
 
 #include <sstream>
 #include <string>
+#include <iostream>
 
 // This creates the number format the autograder expects:
 std::string format(double number) {
@@ -14,28 +15,76 @@ std::string format(double number) {
 Number::Number(int data): data(data){}
 
 std::string Number::prefix() const{
-  return std::to_string(data);
+  return std::to_string(data) + ' ';
 }
 std::string Number::postfix() const{
-  return std::to_string(data);
+  return std::to_string(data) + ' ';
 }
 double Number::value() const{
   return data;
+}
+void Number::print() const{
+  std::cout<<data;
 }
 
 //Operator implementation
 Operator::Operator(char opr, AST* left, AST* right): opr(opr), left(left), right(right){}
 
-std::string Operator::prefix() const{}
-std::string Operator::postfix() const{}
+std::string Operator::prefix() const{
+  std::string output;
+  output += opr;
+  output += ' ';
+  output.append(left->prefix());
+  output.append(right->prefix());
+  return output;
+}
+
+std::string Operator::postfix() const{
+  std::string output;
+  output.append(left->postfix());
+  output.append(right->postfix());
+  output += opr;
+  output += ' ';
+  return output;
+}
+
 double Operator::value() const{
   if(opr == '+'){}
   else if(opr == '-'){}
+  return 0;
   //...
 }
 
+void Operator::print() const{
+  std::cout<< opr <<" (left child: ";
+  left->print();
+  std::cout<< " right child: ";
+  right->print();
+  std::cout<<") ";
+}
+
 //Negation implementation
-Negation::Negation(AST* child): child(child){}
-std::string Negation::prefix() const{}
-std::string Negation::postfix() const{}
-double Negation::value() const{}
+Negation::Negation(AST* child):child(child){}
+
+std::string Negation::prefix() const{
+  std::string output;
+  output += "~ ";
+  output.append(child->prefix());
+  return output;
+}
+
+std::string Negation::postfix() const{
+  std::string output;
+  output.append(child->postfix());
+  output += "~ ";
+  return output;
+}
+
+double Negation::value() const{
+  return 0;
+}
+
+void Negation::print() const{
+  std::cout<<'~';
+  child->print();
+}
