@@ -18,16 +18,20 @@ public:
 
 class Operator: public AST{
 public:
-    std::string sign;
+    char opr;
+    AST* left;
+    AST* right;
 public:
-    Operator(std::string sign);
+    Operator(char opr);
     std::string prefix() const;
     std::string postfix() const;
     double value() const;
 };
 
 class Negation: public AST{
-
+public:
+    AST* child;
+public:
     Negation();
     std::string prefix() const;
     std::string postfix() const;
