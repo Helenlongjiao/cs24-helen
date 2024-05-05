@@ -1,5 +1,7 @@
 #include "AST.h"
 #include "Nodes.h"
+#include "Stack.h"
+#include "Stack.cpp"
 
 #include <sstream>
 
@@ -13,6 +15,7 @@ bool isNumber(const std::string& str) {
 }
 
 AST* AST::parse(const std::string& expression) {
+    Stack stack();
     std::string token;
     std::istringstream stream(expression);
 
@@ -33,6 +36,7 @@ AST* AST::parse(const std::string& expression) {
             throw std::runtime_error("Invalid token: " + token);
         }
     }
-
-    // ...
+    AST* retNode = stack.pop();
+    if (!stack.isEmpty()) throw std::runtime_error("Too many operands.");
+    return retNode;
 }
