@@ -27,10 +27,8 @@ public:
 };
 
 class Negation: public AST{
-public:
-    int data;
-public:
-    Negation(int data);
+
+    Negation();
     std::string prefix() const;
     std::string postfix() const;
     double value() const;

@@ -11,9 +11,14 @@ std::string format(double number) {
 }
 
 
-class Negation: public AST{
-public:
-    int data;
-public:
-    Negation(int data): data(data) {}
-};
+Number::Number(int data): data(data){}
+
+std::string Number::prefix() const{
+  return std::to_string(data);
+}
+std::string Number::postfix() const{
+  return std::to_string(data);
+}
+double Number::value() const{
+  return data;
+}
