@@ -5,7 +5,7 @@
 #include <iostream>
 
 // This creates the number format the autograder expects:
-std::string format(double number) {
+std::string format(double number) {  //这个在哪里用到？
   std::ostringstream stream;
   stream << number;
   return stream.str();

@@ -8,7 +8,7 @@
 
 class Number: public AST{
 public:
-    int data;
+    double data;
 public:
     void print() const;
     Number(int data);
