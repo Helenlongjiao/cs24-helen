@@ -5,16 +5,11 @@
 
 #include <sstream>
 
-bool isNumber(const std::string& s) {
-    // try {
-    //     std::stoi(str);
-    //     return true;
-    // } catch (const std::invalid_argument&) {
-    //     return false;
-    // }
-    std::string::const_iterator it = s.begin();
-    while (it != s.end() && std::isdigit(*it)) ++it;
-    return !s.empty() && it == s.end();
+bool isNumber(const std::string& str) {
+    std::istringstream iss(str);
+    double num;
+    iss >> std::noskipws >> num; // Read the number, skipping white spaces
+    return iss.eof() && !iss.fail(); // Check if reached end of stream and no errors
 }
 
 
