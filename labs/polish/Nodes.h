@@ -22,7 +22,7 @@ public:
     AST* left;
     AST* right;
 public:
-    Operator(char opr);
+    Operator(char opr, AST* left, AST* right);
     std::string prefix() const;
     std::string postfix() const;
     double value() const;
@@ -32,7 +32,7 @@ class Negation: public AST{
 public:
     AST* child;
 public:
-    Negation();
+    Negation(AST* child);
     std::string prefix() const;
     std::string postfix() const;
     double value() const;

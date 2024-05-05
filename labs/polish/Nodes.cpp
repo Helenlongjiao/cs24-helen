@@ -24,12 +24,18 @@ double Number::value() const{
 }
 
 //Operator implementation
-Operator::Operator(std::string opr): opr(opr){}
+Operator::Operator(char opr, AST* left, AST* right): opr(opr), left(left), right(right){}
 
 std::string Operator::prefix() const{}
 std::string Operator::postfix() const{}
 double Operator::value() const{
-  if(opr == "+"){}
-  else if(opr == "-"){}
+  if(opr == '+'){}
+  else if(opr == '-'){}
   //...
 }
+
+//Negation implementation
+Negation::Negation(AST* child): child(child){}
+std::string Negation::prefix() const{}
+std::string Negation::postfix() const{}
+double Negation::value() const{}
