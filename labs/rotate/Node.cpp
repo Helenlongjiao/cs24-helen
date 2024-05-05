@@ -1,4 +1,5 @@
 #include "Node.h"
+<<<<<<< HEAD
 #include <string>
 #include <iostream>
 
@@ -25,3 +26,7 @@ Node::Node(const Node& other){
     parent = other.parent;
     data = other.data;
 }
+=======
+
+// Node Function Implementations
+>>>>>>> ebb75c898422bcc08c5d6a7d691feda7bfaac208

@@ -1,6 +1,7 @@
 #include "Tree.h"
 #include <iostream>
 
+<<<<<<< HEAD
 int main(){
     Tree tree;
 
@@ -74,4 +75,15 @@ int main(){
     // tree.insert("livermorium");
     // tree.print();
     return 0;
+=======
+// This file is for you to test your tree functions.
+// It won't be graded - do whatever you want.
+
+int main() {
+  Tree tree;
+
+  // Do tree things!
+
+  return 0;
+>>>>>>> ebb75c898422bcc08c5d6a7d691feda7bfaac208
 }

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #include <iostream>
 #include <string>
 #include "Tree.h"
@@ -455,3 +456,8 @@ void Tree::remove(size_t index){
 }
 
 
+=======
+#include "Tree.h"
+
+// Tree Function Implementations
+>>>>>>> ebb75c898422bcc08c5d6a7d691feda7bfaac208
