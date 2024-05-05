@@ -12,7 +12,9 @@ std::string format(double number) {
 }
 
 //Number implementation
-Number::Number(int data): data(data){}
+Number::Number(int data){
+  this->data = data;
+}
 
 std::string Number::prefix() const{
   return std::to_string(data) + ' ';
@@ -28,7 +30,11 @@ double Number::value() const{
 // }
 
 //Operator implementation
-Operator::Operator(char opr, AST* left, AST* right): opr(opr), left(left), right(right){}
+Operator::Operator(char opr, AST* left, AST* right){
+  this->opr = opr;
+  this->left = left;
+  this->right = right;
+}
 
 std::string Operator::prefix() const{
   std::string output;
@@ -64,7 +70,9 @@ double Operator::value() const{
 // }
 
 //Negation implementation
-Negation::Negation(AST* child):child(child){}
+Negation::Negation(AST* child){
+  this->child = child;
+}
 
 std::string Negation::prefix() const{
   std::string output;
