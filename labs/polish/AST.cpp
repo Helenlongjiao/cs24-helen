@@ -1,8 +1,6 @@
 #include "AST.h"
 #include "Nodes.h"
-#include "Nodes.cpp"
 #include "Stack.h"
-#include "Stack.cpp"
 #include <iostream>
 
 #include <sstream>
