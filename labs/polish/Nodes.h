@@ -23,7 +23,7 @@ public:
     AST* left;
     AST* right;
 public:
-    void print() const;
+    // void print() const;
     Operator(char opr, AST* left, AST* right);
     std::string prefix() const;
     std::string postfix() const;

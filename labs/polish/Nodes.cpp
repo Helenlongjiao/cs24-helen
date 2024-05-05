@@ -23,9 +23,9 @@ std::string Number::postfix() const{
 double Number::value() const{
   return data;
 }
-void Number::print() const{
-  std::cout<<data;
-}
+// void Number::print() const{
+//   std::cout<<data;
+// }
 
 //Operator implementation
 Operator::Operator(char opr, AST* left, AST* right): opr(opr), left(left), right(right){}
@@ -55,13 +55,13 @@ double Operator::value() const{
   //...
 }
 
-void Operator::print() const{
-  std::cout<< opr <<" (left child: ";
-  left->print();
-  std::cout<< " right child: ";
-  right->print();
-  std::cout<<") ";
-}
+// void Operator::print() const{
+//   std::cout<< opr <<" (left child: ";
+//   left->print();
+//   std::cout<< " right child: ";
+//   right->print();
+//   std::cout<<") ";
+// }
 
 //Negation implementation
 Negation::Negation(AST* child):child(child){}
@@ -84,7 +84,7 @@ double Negation::value() const{
   return 0;
 }
 
-void Negation::print() const{
-  std::cout<<'~';
-  child->print();
-}
+// void Negation::print() const{
+//   std::cout<<'~';
+//   child->print();
+// }
