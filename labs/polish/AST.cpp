@@ -20,12 +20,12 @@ AST* AST::parse(const std::string& expression) {
 
     while(stream >> token) {
         if(token == "+" || token == "-" || token == "*" || token == "/" || token == "%"){
-            AST* right = stack.pop();
-            AST* left = stack.pop();
+            AST* right = stack.pop(2);
+            AST* left = stack.pop(1);
             stack.push(new Operator(token.c_str()[0], left, right));
         }
         else if(token == "~"){
-            AST* child = stack.pop();
+            AST* child = stack.pop(1);
             stack.push(new Negation(child));
         }
         else if(isNumber(token)){
@@ -34,20 +34,16 @@ AST* AST::parse(const std::string& expression) {
             stack.push(new Number(value));
         }
         else{
-            stack.clean();
             throw std::runtime_error("Invalid token: " + token);
         }
         // stack.print();
         // std::cout<<'\n';
     }
-    if(stack.isEmpty()) {
-        stack.clean();
-        throw std::runtime_error("No input.");
-    }
-    AST* retNode = stack.pop();
-    if (!stack.isEmpty()) {
+    if(stack.isEmpty()) throw std::runtime_error("No input.");
+    AST* retNode = stack.pop(1);
+    if (!stack.isEmpty()){
         stack.clean();
         throw std::runtime_error("Too many operands.");
-    }
+    } 
     return retNode;
 }

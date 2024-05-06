@@ -14,6 +14,7 @@ Stack::Stack(){
 //     }
 // }
 
+
 Stack::~Stack(){
     clean();
 }
@@ -25,19 +26,26 @@ void Stack::clean(){
 }
 
 void Stack::push(AST* element){
-    if(index == 100){
+    if(index == 4){
+        clean;
         throw std::runtime_error("Too many operands.");
     }
     stackArray[++index] = element;
 } // Pushes an element onto the stack
-AST* Stack::pop(){
+AST* Stack::pop(int n){
     if(index == -1){
+        throw std::runtime_error("Not enough operands.");
+    }
+    if(n == 2 && index < 1){
+        clean;
         throw std::runtime_error("Not enough operands.");
     }
     AST* temp = stackArray[index];
     index --;
     return temp;
 } // Pops the top element from the stack
+
+
 bool Stack::isEmpty(){
     if(index == -1){
         return true;

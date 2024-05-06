@@ -17,7 +17,7 @@ public:
     ~Stack();
     void clean();
     void push(AST* element); // Pushes an element onto the stack
-    AST* pop(); // Pops the top element from the stack
+    AST* pop(int n); // Pops the top element from the stack
     bool isEmpty(); // Checks if the stack is empty
 };
 
