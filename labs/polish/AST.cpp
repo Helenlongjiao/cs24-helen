@@ -34,7 +34,7 @@ AST* AST::parse(const std::string& expression) {
             stack.push(new Number(value));
         }
         else{
-            stack.clean();
+            // stack.clean();
             throw std::runtime_error("Invalid token: " + token);
         }
         // stack.print();
@@ -43,7 +43,7 @@ AST* AST::parse(const std::string& expression) {
     if(stack.isEmpty()) throw std::runtime_error("No input.");
     AST* retNode = stack.pop(1);
     if (!stack.isEmpty()){
-        stack.clean();
+        // stack.clean();
         throw std::runtime_error("Too many operands.");
     } 
     return retNode;
