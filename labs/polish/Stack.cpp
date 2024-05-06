@@ -15,6 +15,10 @@ Stack::Stack(){
 // }
 
 Stack::~Stack(){
+    clean();
+}
+
+void Stack::clean(){
     for(int i = 0; i <= index; ++i){
         delete stackArray[i];
     }
