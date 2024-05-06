@@ -10,8 +10,6 @@ private:
     static const int MAX_SIZE = 100; // Maximum size of the stack
     AST* stackArray[MAX_SIZE];
     int index; // Index of the top element
-    AST* memoryArray[MAX_SIZE];
-    int memoryIndex;
 
 public:
     Stack(); // Constructor
