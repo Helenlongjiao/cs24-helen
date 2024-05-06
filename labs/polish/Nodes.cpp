@@ -115,7 +115,7 @@ std::string Negation::prefix() const{
 std::string Negation::postfix() const{
   std::string output;
   output.append(child->postfix());
-  output += "~ ";
+  output += " ~";
   return output;
 }
 
