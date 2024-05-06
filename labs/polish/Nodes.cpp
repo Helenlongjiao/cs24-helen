@@ -19,10 +19,10 @@ Number::Number(double data){
 Number::~Number(){}
 
 std::string Number::prefix() const{
-  return format(data) + ' ';
+  return format(data) + '&';
 }
 std::string Number::postfix() const{
-  return format(data) + ' ';
+  return format(data) + '&';
 }
 double Number::value() const{
   return data;
@@ -46,7 +46,7 @@ Operator::~Operator(){
 std::string Operator::prefix() const{
   std::string output;
   output += opr;
-  output += ' ';
+  output += '&';
   output.append(left->prefix());
   output.append(right->prefix());
   return output;
@@ -57,7 +57,7 @@ std::string Operator::postfix() const{
   output.append(left->postfix());
   output.append(right->postfix());
   output += opr;
-  output += ' ';
+  output += '&';
   return output;
 }
 
