@@ -39,8 +39,8 @@ Operator::Operator(char opr, AST* left, AST* right){
 }
 
 Operator::~Operator(){
-  delete left;
-  delete right;
+  // delete left;
+  // delete right;
 }
 
 std::string Operator::prefix() const{
@@ -65,6 +65,8 @@ std::string Operator::postfix() const{
 
 double Operator::value() const{
   if(opr == '+'){
+    long double templ;
+    long double tempr;
     return left->value() + right->value();
   }
   else if(opr == '-'){
@@ -102,7 +104,7 @@ Negation::Negation(AST* child){
 }
 
 Negation::~Negation(){
-  delete child;
+  // delete child;
 }
 
 std::string Negation::prefix() const{
