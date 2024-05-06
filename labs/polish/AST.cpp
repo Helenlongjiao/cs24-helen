@@ -29,7 +29,9 @@ AST* AST::parse(const std::string& expression) {
             stack.push(new Negation(child));
         }
         else if(isNumber(token)){
-            stack.push(new Number(std::stoi(token)));
+            double value;
+            value = std::stod(token);
+            stack.push(new Number(value));
         }
         else{
             throw std::runtime_error("Invalid token: " + token);
