@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #include <iostream>
 #include <string>
 #include "Tree.h"
@@ -354,6 +353,7 @@ void Tree::remove(size_t index){
         if(node->left == nullptr && node->right == nullptr){
             if(node->data > node->parent->data){
                 node->parent->right = nullptr;
+                // promote()
             }
             else{
                 node->parent->left = nullptr;
@@ -456,8 +456,3 @@ void Tree::remove(size_t index){
 }
 
 
-=======
-#include "Tree.h"
-
-// Tree Function Implementations
->>>>>>> ebb75c898422bcc08c5d6a7d691feda7bfaac208

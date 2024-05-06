@@ -2,7 +2,6 @@
 #define NODE_H
 
 #include <string>
-<<<<<<< HEAD
 #include <iostream>
 
 struct Node{
@@ -17,11 +16,3 @@ struct Node{
     Node(const Node& other);
 };
 #endif
-=======
-
-struct Node {
-  // TODO!
-};
-
-#endif
->>>>>>> ebb75c898422bcc08c5d6a7d691feda7bfaac208
