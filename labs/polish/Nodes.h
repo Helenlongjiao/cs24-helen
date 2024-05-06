@@ -10,6 +10,7 @@ class Number: public AST{
 public:
     double data;
 public:
+    ~Number();
     void print() const;
     Number(double data);
     std::string prefix() const;
@@ -24,6 +25,7 @@ public:
     AST* right;
 public:
     // void print() const;
+    ~Operator();
     Operator(char opr, AST* left, AST* right);
     std::string prefix() const;
     std::string postfix() const;
@@ -35,6 +37,7 @@ public:
     AST* child;
 public:
     void print() const;
+    ~Negation();
     Negation(AST* child);
     std::string prefix() const;
     std::string postfix() const;

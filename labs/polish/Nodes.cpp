@@ -16,6 +16,8 @@ Number::Number(double data){
   this->data = data;
 }
 
+Number::~Number(){}
+
 std::string Number::prefix() const{
   return std::to_string(data) + ' ';
 }
@@ -34,6 +36,11 @@ Operator::Operator(char opr, AST* left, AST* right){
   this->opr = opr;
   this->left = left;
   this->right = right;
+}
+
+Operator::~Operator(){
+  delete left;
+  delete right;
 }
 
 std::string Operator::prefix() const{
@@ -65,6 +72,9 @@ double Operator::value() const{
     return left->value() * right->value();
   }
   else if(opr == '/'){
+    if(right->value() == 0){
+      throw std::runtime_error ("Division by zero.");
+    }
     return left->value() / right->value();
   }
   else if(opr == '%'){
@@ -84,6 +94,10 @@ double Operator::value() const{
 //Negation implementation
 Negation::Negation(AST* child){
   this->child = child;
+}
+
+Negation::~Negation(){
+  delete child;
 }
 
 std::string Negation::prefix() const{
