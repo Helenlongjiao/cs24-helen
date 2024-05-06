@@ -5,14 +5,14 @@ int main(){
     Tree tree;
 
 //test code for lookup/remove (duplicate data)
-    tree.insert("d");
-    tree.insert("b");
-    tree.insert("e");
-    tree.insert("a");
-    tree.insert("c");
-    tree.insert("h");
-    tree.insert("g");
-    tree.insert("f");
+    // tree.insert("d");
+    // tree.insert("b");
+    // tree.insert("e");
+    // tree.insert("a");
+    // tree.insert("c");
+    // tree.insert("h");
+    // tree.insert("g");
+    // tree.insert("f");
 
     // tree.insert("alpha");
     // tree.insert("beta");
@@ -56,8 +56,20 @@ int main(){
     // tree.insert("b");
     // tree.insert("c");
     // tree.insert("d");
+
+    tree.insert("Apollo");
+    tree.insert("Artemis");
+    tree.insert("Athena");
+    tree.insert("Dionysus");
+    tree.insert("Hades");
+    tree.insert("Hephaestus");
+    tree.insert("Hera");
+    tree.insert("Hermes");
+    tree.insert("Hestia");
+    tree.insert("Poseidon");
+    tree.insert("Zeus");
     tree.print();
-    tree.remove(1);
+    tree.remove(2);
     std::cout<<tree.count();
     tree.print();
 

@@ -134,6 +134,7 @@ size_t Tree::find(const std::string& s) const{
 
 
 void Tree::promote(Node* start, Node* curr){
+    // std::cout<<"promoting";
     if(curr != nullptr){
         int imbalance2 = 0;
         int imbalance1 = std::abs(get_weight(start->left) - get_weight(start->right));
@@ -353,14 +354,14 @@ void Tree::remove(size_t index){
         if(node->left == nullptr && node->right == nullptr){
             if(node->data > node->parent->data){
                 node->parent->right = nullptr;
-                if(node->parent->left != nullptr){
-                    promote(node->parent, node->parent->left);
+                if(cnt == 11){
+                    promote(head, head->right);
                 }
             }
             else{
                 node->parent->left = nullptr;
-                if(node->parent->right != nullptr){
-                    promote(node->parent, node->parent->right);
+                if(cnt == 11){
+                    promote(head, head->right);
                 }
             }
             delete node;
