@@ -27,7 +27,7 @@ void Stack::clean(){
 
 void Stack::push(AST* element){
     if(index == 4){
-        clean;
+        clean();
         throw std::runtime_error("Too many operands.");
     }
     stackArray[++index] = element;
@@ -37,7 +37,7 @@ AST* Stack::pop(int n){
         throw std::runtime_error("Not enough operands.");
     }
     if(n == 2 && index < 1){
-        clean;
+        clean();
         throw std::runtime_error("Not enough operands.");
     }
     AST* temp = stackArray[index];
