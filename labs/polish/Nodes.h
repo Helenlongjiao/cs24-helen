@@ -11,7 +11,7 @@ public:
     double data;
 public:
     void print() const;
-    Number(int data);
+    Number(double data);
     std::string prefix() const;
     std::string postfix() const;
     double value() const;

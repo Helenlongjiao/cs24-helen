@@ -12,7 +12,7 @@ std::string format(double number) {  //这个在哪里用到？
 }
 
 //Number implementation
-Number::Number(int data){
+Number::Number(double data){
   this->data = data;
 }
 
@@ -55,10 +55,21 @@ std::string Operator::postfix() const{
 }
 
 double Operator::value() const{
-  if(opr == '+'){}
-  else if(opr == '-'){}
-  return 0;
-  //...
+  if(opr == '+'){
+    return left->value() + right->value();
+  }
+  else if(opr == '-'){
+    return left->value() - right->value();
+  }
+  else if(opr == '*'){
+    return left->value() * right->value();
+  }
+  else if(opr == '/'){
+    return left->value() / right->value();
+  }
+  else if(opr == '%'){
+    return left->value() - (left->value() / right->value() * right->value());
+  }
 }
 
 // void Operator::print() const{
@@ -89,7 +100,7 @@ std::string Negation::postfix() const{
 }
 
 double Negation::value() const{
-  return 0;
+  return (0 - child->value());
 }
 
 // void Negation::print() const{
