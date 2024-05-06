@@ -353,10 +353,15 @@ void Tree::remove(size_t index){
         if(node->left == nullptr && node->right == nullptr){
             if(node->data > node->parent->data){
                 node->parent->right = nullptr;
-                // promote()
+                if(node->parent->left != nullptr){
+                    promote(node->parent, node->parent->left);
+                }
             }
             else{
                 node->parent->left = nullptr;
+                if(node->parent->right != nullptr){
+                    promote(node->parent, node->parent->right);
+                }
             }
             delete node;
         }
