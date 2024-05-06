@@ -78,6 +78,9 @@ double Operator::value() const{
     return left->value() / right->value();
   }
   else if(opr == '%'){
+    if(right->value() == 0){
+      throw std::runtime_error ("Division by zero.");
+    }
     return left->value() - (static_cast<int>(left->value() / right->value()) * right->value());
   }
   return 0;
