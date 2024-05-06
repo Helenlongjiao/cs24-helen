@@ -65,8 +65,8 @@ std::string Operator::postfix() const{
 
 double Operator::value() const{
   if(opr == '+'){
-    long double templ;
-    long double tempr;
+    // long double templ;
+    // long double tempr;
     return left->value() + right->value();
   }
   else if(opr == '-'){
