@@ -39,6 +39,7 @@ AST* AST::parse(const std::string& expression) {
         // stack.print();
         // std::cout<<'\n';
     }
+    if(stack.isEmpty()) throw std::runtime_error("No input.");
     AST* retNode = stack.pop();
     if (!stack.isEmpty()) throw std::runtime_error("Too many operands.");
     return retNode;

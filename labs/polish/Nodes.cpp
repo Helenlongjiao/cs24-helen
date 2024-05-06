@@ -19,10 +19,10 @@ Number::Number(double data){
 Number::~Number(){}
 
 std::string Number::prefix() const{
-  return std::to_string(data) + ' ';
+  return format(data) + ' ';
 }
 std::string Number::postfix() const{
-  return std::to_string(data) + ' ';
+  return format(data) + ' ';
 }
 double Number::value() const{
   return data;
