@@ -78,7 +78,7 @@ double Operator::value() const{
     return left->value() / right->value();
   }
   else if(opr == '%'){
-    return left->value() - (left->value() / right->value() * right->value());
+    return left->value() - (static_cast<int>(left->value() / right->value()) * right->value());
   }
   return 0;
 }

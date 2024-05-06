@@ -14,6 +14,12 @@ Stack::Stack(){
 //     }
 // }
 
+Stack::~Stack(){
+    for(int i = 0; i <= index; ++i){
+        delete stackArray[i];
+    }
+}
+
 void Stack::push(AST* element){
     if(index == 100){
         throw std::runtime_error("Too many operands.");
