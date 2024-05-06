@@ -26,10 +26,10 @@ void Stack::clean(){
 }
 
 void Stack::push(AST* element){
-    if(index == 4){
-        // clean();
-        throw std::runtime_error("Too many operands.");
-    }
+    // if(index == 4){
+    //     // clean();
+    //     throw std::runtime_error("Too many operands.");
+    // }
     stackArray[++index] = element;
 } // Pushes an element onto the stack
 AST* Stack::pop(int n){
