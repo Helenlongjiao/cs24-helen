@@ -38,13 +38,10 @@ int main(int argc, char** argv) {
         try {
             if(oformat == "prefix") {
                 std::string result = ast->prefix();
-                result.pop_back();
-                std::cout<<"111";
                 std::cout << result << '\n';
             }
             else if(oformat == "postfix") {
                 std::string result = ast->postfix();
-                result.pop_back();
                 std::cout << result << '\n';
             }
             else {
