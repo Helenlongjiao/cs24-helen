@@ -15,6 +15,7 @@ bool isNumber(const std::string& str) {
 
 AST* AST::parse(const std::string& expression) {
     Stack stack;
+    Stack* stackPtr = &stack;
     std::string token;
     std::istringstream stream(expression);
 
@@ -34,13 +35,20 @@ AST* AST::parse(const std::string& expression) {
             stack.push(new Number(value));
         }
         else{
+            delete stackPtr;
             throw std::runtime_error("Invalid token: " + token);
         }
         // stack.print();
         // std::cout<<'\n';
     }
-    if(stack.isEmpty()) throw std::runtime_error("No input.");
+    if(stack.isEmpty()) {
+        delete stackPtr;
+        throw std::runtime_error("No input.");
+    }
     AST* retNode = stack.pop();
-    if (!stack.isEmpty()) throw std::runtime_error("Too many operands.");
+    if (!stack.isEmpty()) {
+        delete stackPtr;
+        throw std::runtime_error("Too many operands.");
+    }
     return retNode;
 }
