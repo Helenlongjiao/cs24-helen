@@ -70,6 +70,7 @@ double Operator::value() const{
   else if(opr == '%'){
     return left->value() - (left->value() / right->value() * right->value());
   }
+  return 0;
 }
 
 // void Operator::print() const{
