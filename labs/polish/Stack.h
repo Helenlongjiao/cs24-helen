@@ -7,8 +7,7 @@
 #include "AST.h"
 class Stack {
 private:
-    static const int MAX_SIZE = 100; // Maximum size of the stack
-    AST* stackArray[MAX_SIZE];
+    AST* stackArray[150];
     int index; // Index of the top element
 
 public:

@@ -34,6 +34,7 @@ AST* AST::parse(const std::string& expression) {
             stack.push(new Number(value));
         }
         else{
+            // DELETE
             throw std::runtime_error("Invalid token: " + token);
         }
         // stack.print();

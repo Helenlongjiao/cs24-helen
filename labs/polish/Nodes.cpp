@@ -1,5 +1,6 @@
 #include "Nodes.h"
 
+#include <cmath>
 #include <sstream>
 #include <string>
 #include <iostream>
@@ -99,7 +100,8 @@ double Operator::value() const{
     if(right->value() == 0){
       throw std::runtime_error ("Division by zero.");
     }
-    return templ - (static_cast<int>(templ / tempr) * tempr);
+    // return templ - (static_cast<int>(templ / tempr) * tempr);
+    return std::fmod(templ, tempr);
   }
   return 0;
 }
