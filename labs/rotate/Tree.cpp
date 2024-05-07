@@ -168,22 +168,22 @@ void Tree::promote(Node* start, Node* curr){
             if(curr == start->right){
                 // if(curr != head){
                     curr->weight = curr->weight + get_weight(start->left) + 1;
+                    start->weight = get_weight(start->left) + get_weight(curr->left) + 1;
                 // }
                 if(curr->left != nullptr){
                     curr->left->parent = start;
                 }
-                start->weight = get_weight(start->left) + get_weight(curr->left) + 1;
                 start->right = curr->left;
                 curr->left = start;
             }
             else{
                 // if(curr != head){
                     curr->weight = curr->weight + get_weight(start->right) + 1;
+                    start->weight = get_weight(start->right) + get_weight(curr->right) + 1;
                 // }
                 if(curr->right != nullptr){
                     curr->right->parent = start;
                 }
-                start->weight = get_weight(start->right) + get_weight(curr->right) + 1;
                 start->left = curr->right;
                 curr->right = start;
             }
