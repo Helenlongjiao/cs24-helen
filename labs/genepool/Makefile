@@ -10,7 +10,7 @@ CXX      = g++
 #  $+ is a list of all the dependencies
 #  $< is the first dependency
 
-genepool: main.o GenePool.o Person.o Query.o
+test: main.o GenePool.o Person.o Query.o
 	${CXX} $(CXXFLAGS) -o $@ $+
 
 
