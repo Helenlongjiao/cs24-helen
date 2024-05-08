@@ -28,4 +28,4 @@ Query.o: Query.cpp Query.h GenePool.h Person.h Enums.h
 
 
 clean:
-	rm -f genepool main.o GenePool.o Person.o Query.o
+	rm -f test main.o GenePool.o Person.o Query.o
