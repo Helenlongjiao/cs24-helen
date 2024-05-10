@@ -14,7 +14,7 @@
 
 class GenePool {
   // Member Variables
-  mutable std::map<std::string, Person> mymap;
+  std::map<std::string, Person*> mymap;
   
 
   // Helper Functions

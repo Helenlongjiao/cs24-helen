@@ -34,8 +34,8 @@ GenePool::GenePool(std::istream& stream){
         else{
             fatherPtr = find(father);
         }
-        // mymap[name] = Person(name, gender, motherPtr, fatherPtr);
-        mymap.emplace(std::make_pair(name, Person(name, gender, motherPtr, fatherPtr)));
+        mymap[name] = new Person(name, gender, motherPtr, fatherPtr);
+        // mymap.emplace(std::make_pair(name, Person(name, gender, motherPtr, fatherPtr)));
     }
 }
 
@@ -46,7 +46,7 @@ GenePool::~GenePool(){}
 std::set<Person*> GenePool::everyone() const{
     std::set<Person*> output;
     for (auto& pair : mymap){
-        output.insert(&pair.second);
+        output.insert(pair.second);
     }
     return output;
 }
@@ -59,6 +59,6 @@ Person* GenePool::find(const std::string& name) const{
         return nullptr;
     }
     else{
-        return &it->second;
+        return it->second;
     }
 }
