@@ -190,7 +190,7 @@ std::set<Person*> Person::siblings(PMod pmod, SMod smod){
     }
     else if(smod == SMod::FULL){
         for(Person* person: output){
-            if(person->mem_father != mem_father || person->mem_mother != mem_father){
+            if(person->mem_father != mem_father || person->mem_mother != mem_mother){
                 output.erase(person);
             }
         }
