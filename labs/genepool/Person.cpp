@@ -181,36 +181,45 @@ std::set<Person*> Person::siblings(PMod pmod, SMod smod){
         }
     }
     // return output;
-    if(mem_mother != nullptr || mem_father != nullptr){
+    if(mem_mother != nullptr || mem_father != nullptr){ //加这行以免output是空的
         if(smod == SMod::HALF){
-            for(Person* person: output){    //这里不知道为啥不对
-                if(person->mem_father != nullptr && person->mem_mother != nullptr
-                && person->mem_father == mem_father && person->mem_mother == mem_mother){
-                    output.erase(person);
+            for (auto it = output.begin(); it != output.end(); ) {
+                Person* person = *it;
+                if (person->mem_father != nullptr && person->mem_mother != nullptr
+                && person->mem_father == mem_father && person->mem_mother == mem_mother) {
+                    it = output.erase(it);
+                } else {
+                    ++it;
                 }
             }
         }
         else if(smod == SMod::FULL){
-            for(Person* person: output){
-                if(person->mem_father != mem_father || person->mem_mother != mem_mother
-                || person->mem_father == nullptr || person->mem_mother == nullptr){
-                    output.erase(person);
+            for (auto it = output.begin(); it != output.end(); ) {
+                Person* person = *it;
+                if (person->mem_father == nullptr || person->mem_mother == nullptr
+                    || person->mem_father != mem_father || person->mem_mother != mem_mother) {
+                    it = output.erase(it);
+                } else {
+                    ++it;
                 }
             }
         }
         else{
-            for(Person* person: output){
-                if((person->mem_father == nullptr && person->mem_mother == nullptr)
+            for (auto it = output.begin(); it != output.end(); ) {
+                Person* person = *it;
+                if ((person->mem_father == nullptr && person->mem_mother == nullptr)
                 ||
                 (person->mem_father == nullptr && person->mem_mother != mem_mother)
                 ||
-                (person->mem_mother == nullptr && person->mem_father != mem_father)){
-                    output.erase(person);
+                (person->mem_mother == nullptr && person->mem_father != mem_father)) {
+                    it = output.erase(it);
+                } else {
+                    ++it;
                 }
             }
         }
+        output.erase(this);
     }
-    output.erase(this);
     return output;
 }
 
