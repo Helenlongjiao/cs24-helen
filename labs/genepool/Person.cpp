@@ -89,7 +89,7 @@ std::set<Person*> Person::descendants(){
 std::set<Person*> Person::grandchildren(){
     std::set<Person*> output;
     for(Person* person: mem_children){
-        output.merge(person->mem_children);
+        output.insert(person->mem_children.begin(), person->mem_children.end());
     }
     return output;
 }
@@ -130,8 +130,8 @@ std::set<Person*> Person::grandparents(PMod pmod){
         return mem_father->parents(pmod);
     }
     else{
-        output.merge(mem_mother->parents(pmod));
-        output.merge(mem_father->parents(pmod));
+        output.insert(mem_mother->parents(pmod).begin(), mem_mother->parents(pmod).end());
+        output.insert(mem_father->parents(pmod).begin(), mem_father->parents(pmod).end());
         return output;
     }
 }
@@ -164,36 +164,49 @@ std::set<Person*> Person::siblings(PMod pmod, SMod smod){
     std::set<Person*> output;
     if(pmod == PMod::MATERNAL){
         if(mem_mother != nullptr){
-            output.merge(mem_mother->mem_children);
+            output.insert(mem_mother->mem_children.begin(), mem_mother->mem_children.end());
         }
     }
-    if(pmod == PMod::PATERNAL){
+    else if(pmod == PMod::PATERNAL){
         if(mem_father != nullptr){
-            output.merge(mem_father->mem_children);
+            output.insert(mem_father->mem_children.begin(), mem_father->mem_children.end());
         }
     }
     else{
         if(mem_mother != nullptr){
-            output.merge(mem_mother->mem_children);
+            output.insert(mem_mother->mem_children.begin(), mem_mother->mem_children.end());
         }
         if(mem_father != nullptr){
-            output.merge(mem_father->mem_children);
+            output.insert(mem_father->mem_children.begin(), mem_father->mem_children.end());
         }
     }
     // return output;
-    if(smod == SMod::HALF){
-        for(Person* person: output){
-            if(person->mem_father != nullptr && person->mem_mother != nullptr
-            && person->mem_father == mem_father && person->mem_mother == mem_mother){
-                output.erase(person);
+    if(mem_mother != nullptr || mem_father != nullptr){
+        if(smod == SMod::HALF){
+            for(Person* person: output){    //这里不知道为啥不对
+                if(person->mem_father != nullptr && person->mem_mother != nullptr
+                && person->mem_father == mem_father && person->mem_mother == mem_mother){
+                    output.erase(person);
+                }
             }
         }
-    }
-    else if(smod == SMod::FULL){
-        for(Person* person: output){
-            if(person->mem_father != mem_father || person->mem_mother != mem_mother
-            || person->mem_father == nullptr || person->mem_mother == nullptr){
-                output.erase(person);
+        else if(smod == SMod::FULL){
+            for(Person* person: output){
+                if(person->mem_father != mem_father || person->mem_mother != mem_mother
+                || person->mem_father == nullptr || person->mem_mother == nullptr){
+                    output.erase(person);
+                }
+            }
+        }
+        else{
+            for(Person* person: output){
+                if((person->mem_father == nullptr && person->mem_mother == nullptr)
+                ||
+                (person->mem_father == nullptr && person->mem_mother != mem_mother)
+                ||
+                (person->mem_mother == nullptr && person->mem_father != mem_father)){
+                    output.erase(person);
+                }
             }
         }
     }
