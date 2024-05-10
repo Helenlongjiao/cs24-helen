@@ -180,6 +180,7 @@ std::set<Person*> Person::siblings(PMod pmod, SMod smod){
             output.merge(mem_father->mem_children);
         }
     }
+    // return output;
     if(smod == SMod::HALF){
         for(Person* person: output){
             if(person->mem_father != nullptr && person->mem_mother != nullptr
@@ -190,7 +191,8 @@ std::set<Person*> Person::siblings(PMod pmod, SMod smod){
     }
     else if(smod == SMod::FULL){
         for(Person* person: output){
-            if(person->mem_father != mem_father || person->mem_mother != mem_mother){
+            if(person->mem_father != mem_father || person->mem_mother != mem_mother
+            || person->mem_father == nullptr || person->mem_mother == nullptr){
                 output.erase(person);
             }
         }
