@@ -41,7 +41,9 @@ GenePool::GenePool(std::istream& stream){
 
 // Clean it up.
 GenePool::~GenePool(){
-    mymap.clear();
+    for (auto& pair : mymap){
+        delete pair.second;
+    }
 }
 
 // List all the people in the database.
