@@ -183,7 +183,7 @@ std::set<Person*> Person::siblings(PMod pmod, SMod smod){
     if(smod == SMod::HALF){
         for(Person* person: output){
             if(person->mem_father != nullptr && person->mem_mother != nullptr
-            && person->mem_father == mem_father && person->mem_mother == mem_father){
+            && person->mem_father == mem_father && person->mem_mother == mem_mother){
                 output.erase(person);
             }
         }
