@@ -53,10 +53,11 @@ std::set<Person*> Person::aunts(PMod pmod, SMod smod){
 
 std::set<Person*> Person::brothers(PMod pmod, SMod smod){
     std::set<Person*> output;
-    std::set<Person*> mem_siblings = siblings();
+    std::set<Person*> mem_siblings = siblings(pmod, smod);
     for (auto it = mem_siblings.begin(); it != mem_siblings.end(); ++it) {
-        if(this->gender() == Gender::MALE){
-            output.insert(*it);
+        Person* person = *it;
+        if(person->gender() == Gender::MALE){
+            output.insert(person);
         }
     }
     return output;
@@ -225,10 +226,11 @@ std::set<Person*> Person::siblings(PMod pmod, SMod smod){
 
 std::set<Person*> Person::sisters(PMod pmod, SMod smod){
     std::set<Person*> output;
-    std::set<Person*> mem_siblings = siblings();
+    std::set<Person*> mem_siblings = siblings(pmod, smod);
     for (auto it = mem_siblings.begin(); it != mem_siblings.end(); ++it) {
-        if(this->gender() == Gender::FEMALE){
-            output.insert(*it);
+        Person* person = *it;
+        if(person->gender() == Gender::FEMALE){
+            output.insert(person);
         }
     }
     return output;
