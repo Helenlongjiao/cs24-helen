@@ -40,7 +40,9 @@ GenePool::GenePool(std::istream& stream){
 }
 
 // Clean it up.
-GenePool::~GenePool(){}
+GenePool::~GenePool(){
+    mymap.clear();
+}
 
 // List all the people in the database.
 std::set<Person*> GenePool::everyone() const{
