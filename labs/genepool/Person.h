@@ -20,6 +20,7 @@ class Person {
   std::set<Person*> mem_children;
 
   // Helper Functions
+  std::set<Person*> selectGender(std::set<Person*> input, Gender gender);
 
 public:
   // Constructor

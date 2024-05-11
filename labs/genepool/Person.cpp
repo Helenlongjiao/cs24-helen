@@ -35,6 +35,17 @@ Gender  Person::gender() const{
     return retGender;
 }
 
+std::set<Person*> Person:: selectGender(std::set<Person*> input, Gender gender){
+    std::set<Person*> output;
+    for (auto it =input.begin(); it != input.end(); ++it) {
+        Person* person = *it;
+        if(person->gender() == gender){
+            output.insert(person);
+        }
+    }
+    return output;
+}
+
 Person* Person::mother(){
     return mem_mother;
 }
@@ -52,15 +63,7 @@ std::set<Person*> Person::aunts(PMod pmod, SMod smod){
 }
 
 std::set<Person*> Person::brothers(PMod pmod, SMod smod){
-    std::set<Person*> output;
-    std::set<Person*> mem_siblings = siblings(pmod, smod);
-    for (auto it = mem_siblings.begin(); it != mem_siblings.end(); ++it) {
-        Person* person = *it;
-        if(person->gender() == Gender::MALE){
-            output.insert(person);
-        }
-    }
-    return output;
+    return selectGender(siblings(pmod, smod), Gender::MALE);
 }
 
 std::set<Person*> Person::children(){
@@ -266,15 +269,7 @@ std::set<Person*> Person::siblings(PMod pmod, SMod smod){
 }
 
 std::set<Person*> Person::sisters(PMod pmod, SMod smod){
-    std::set<Person*> output;
-    std::set<Person*> mem_siblings = siblings(pmod, smod);
-    for (auto it = mem_siblings.begin(); it != mem_siblings.end(); ++it) {
-        Person* person = *it;
-        if(person->gender() == Gender::FEMALE){
-            output.insert(person);
-        }
-    }
-    return output;
+    return selectGender(siblings(pmod, smod), Gender::FEMALE);
 }
 
 std::set<Person*> Person::sons(){
