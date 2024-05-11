@@ -81,8 +81,26 @@ std::set<Person*> Person::children(){
 }
 
 std::set<Person*> Person::cousins(PMod pmod, SMod smod){
-    std::set<Person*> empty; //not written
-    return empty;
+    std::set<Person*> output;
+    if(pmod == PMod::MATERNAL){
+        std::set<Person*> sibl = mother()->siblings(PMod::ANY,smod);
+        for (Person* person: sibl) {
+            output.insert(person->children().begin(), person->children().end());
+        }
+        return output;
+    }
+    else if(pmod == PMod::PATERNAL){
+        std::set<Person*> sibl = father()->siblings(PMod::ANY,smod);
+        for (Person* person: sibl) {
+            output.insert(person->children().begin(), person->children().end());
+        }
+        return output;
+    }
+    else{
+        output.insert(cousins(PMod::MATERNAL, smod).begin(), cousins(PMod::MATERNAL, smod).end());
+        output.insert(cousins(PMod::PATERNAL, smod).begin(), cousins(PMod::PATERNAL, smod).end());
+        return output;
+    }
 }
 
 std::set<Person*> Person::daughters(){
