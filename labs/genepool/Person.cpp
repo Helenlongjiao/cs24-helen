@@ -58,8 +58,18 @@ std::set<Person*> Person::ancestors(PMod pmod){
     return empty;
 }
 std::set<Person*> Person::aunts(PMod pmod, SMod smod){
-    std::set<Person*> empty; //not written
-    return empty;
+    if(pmod == PMod::MATERNAL){
+        return mother()->sisters(PMod::ANY, smod);
+    }
+    else if(pmod == PMod::PATERNAL){
+        return father()->sisters(PMod::ANY, smod);
+    }
+    else{
+        std::set<Person*> output;
+        output.insert(mother()->sisters(PMod::ANY, smod).begin(), mother()->sisters(PMod::ANY, smod).end());
+        output.insert(father()->sisters(PMod::ANY, smod).begin(), father()->sisters(PMod::ANY, smod).end());
+        return output;
+    }
 }
 
 std::set<Person*> Person::brothers(PMod pmod, SMod smod){
@@ -172,12 +182,20 @@ std::set<Person*> Person::grandsons(){
     return selectGender(grandchildren(), Gender::MALE);
 }
 std::set<Person*> Person::nephews(PMod pmod, SMod smod){
-    std::set<Person*> empty; //not written
-    return empty;
+    std::set<Person*> output;
+    std::set<Person*> sibl = siblings(pmod,smod);
+    for (Person* person: sibl) {
+        output.insert(person->sons().begin(), person->sons().end());
+    }
+    return output;
 }
 std::set<Person*> Person::nieces(PMod pmod, SMod smod){
-    std::set<Person*> empty; //not written
-    return empty;
+    std::set<Person*> output;
+    std::set<Person*> sibl = siblings(pmod,smod);
+    for (Person* person: sibl) {
+        output.insert(person->daughters().begin(), person->daughters().end());
+    }
+    return output;
 }
 
 std::set<Person*> Person::parents(PMod pmod){
@@ -263,6 +281,16 @@ std::set<Person*> Person::sons(){
 }
 
 std::set<Person*> Person::uncles(PMod pmod, SMod smod){
-    std::set<Person*> empty; //not written
-    return empty;
+    if(pmod == PMod::MATERNAL){
+        return mother()->brothers(PMod::ANY, smod);
+    }
+    else if(pmod == PMod::PATERNAL){
+        return father()->brothers(PMod::ANY, smod);
+    }
+    else{
+        std::set<Person*> output;
+        output.insert(mother()->brothers(PMod::ANY, smod).begin(), mother()->brothers(PMod::ANY, smod).end());
+        output.insert(father()->brothers(PMod::ANY, smod).begin(), father()->brothers(PMod::ANY, smod).end());
+        return output;
+    }
 }
