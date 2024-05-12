@@ -60,7 +60,9 @@ std::set<Person*> Person::ancestors(PMod pmod){
         if(mem_mother != nullptr){
             std::set<Person*> temp = mem_mother->parents();
             output.insert(temp.begin(), temp.end());
-            mem_mother->ancestors(PMod::ANY);
+            output.insert(mem_mother);
+            std::set<Person*> mother_ancestors = mem_mother->ancestors(PMod::ANY);
+            output.insert(mother_ancestors.begin(), mother_ancestors.end());
         }
         else{
             return output;
@@ -70,7 +72,9 @@ std::set<Person*> Person::ancestors(PMod pmod){
         if(mem_father != nullptr){
             std::set<Person*> temp = mem_father->parents();
             output.insert(temp.begin(), temp.end());
-            mem_father->ancestors(PMod::ANY);
+            output.insert(mem_father);
+            std::set<Person*> father_ancestors = mem_father->ancestors(PMod::ANY);
+            output.insert(father_ancestors.begin(), father_ancestors.end());
         }
         else{
             return output;
@@ -80,12 +84,16 @@ std::set<Person*> Person::ancestors(PMod pmod){
         if(mem_mother != nullptr){
             std::set<Person*> temp = mem_mother->parents();
             output.insert(temp.begin(), temp.end());
-            mem_mother->ancestors(PMod::ANY);
+            output.insert(mem_mother);
+            std::set<Person*> mother_ancestors = mem_mother->ancestors(PMod::ANY);
+            output.insert(mother_ancestors.begin(), mother_ancestors.end());
         }
         if(mem_father != nullptr){
             std::set<Person*> temp = mem_father->parents();
             output.insert(temp.begin(), temp.end());
-            mem_father->ancestors(PMod::ANY);
+            output.insert(mem_father);
+            std::set<Person*> father_ancestors = mem_father->ancestors(PMod::ANY);
+            output.insert(father_ancestors.begin(), father_ancestors.end());
         }
         if(mem_father == nullptr && mem_mother == nullptr){
             return output;
@@ -95,20 +103,30 @@ std::set<Person*> Person::ancestors(PMod pmod){
 }
 
 std::set<Person*> Person::aunts(PMod pmod, SMod smod){
-    if(pmod == PMod::MATERNAL){
-        return mem_mother->sisters(PMod::ANY, smod);
+    std::set<Person*> output;
+    if(pmod == PMod::MATERNAL && mem_mother != nullptr){
+        // return mem_mother->sisters(PMod::ANY, smod);
+        std::set<Person*> aunt_sister = mem_mother->sisters(PMod::ANY, smod);
+        output.insert(aunt_sister.begin(), aunt_sister.end());
     }
-    else if(pmod == PMod::PATERNAL){
-        return mem_father->sisters(PMod::ANY, smod);
+    else if(pmod == PMod::PATERNAL && mem_father != nullptr){
+        // return mem_father->sisters(PMod::ANY, smod);
+        std::set<Person*> aunt_sister = mem_father->sisters(PMod::ANY, smod);
+        output.insert(aunt_sister.begin(), aunt_sister.end());
     }
     else{
-        std::set<Person*> output;
-        std::set<Person*> temp1 = mem_mother->sisters(PMod::ANY, smod);
-        std::set<Person*> temp2 = mem_father->sisters(PMod::ANY, smod);
-        output.insert(temp1.begin(), temp1.end());
-        output.insert(temp2.begin(), temp2.end());
-        return output;
+        // std::set<Person*> output;
+        if(mem_mother != nullptr){
+            std::set<Person*> temp1 = mem_mother->sisters(PMod::ANY, smod);
+            output.insert(temp1.begin(), temp1.end());
+        }
+        if(mem_father != nullptr){
+            std::set<Person*> temp2 = mem_father->sisters(PMod::ANY, smod);
+            output.insert(temp2.begin(), temp2.end());
+        }
+        // return output;
     }
+    return output;
 }
 
 std::set<Person*> Person::brothers(PMod pmod, SMod smod){
@@ -122,26 +140,28 @@ std::set<Person*> Person::children(){
 std::set<Person*> Person::cousins(PMod pmod, SMod smod){
     std::set<Person*> output;
     if(pmod == PMod::MATERNAL){
-        std::set<Person*> sibl = mem_mother->siblings(PMod::ANY,smod);
-        for (Person* person: sibl) {
-            output.insert(person->mem_children.begin(), person->mem_children.end());
+        if(mem_mother != nullptr){
+            std::set<Person*> sibl = mem_mother->siblings(PMod::ANY,smod);
+            for (Person* person: sibl) {
+                output.insert(person->mem_children.begin(), person->mem_children.end());
+            }
         }
-        return output;
     }
     else if(pmod == PMod::PATERNAL){
-        std::set<Person*> sibl = mem_father->siblings(PMod::ANY,smod);
-        for (Person* person: sibl) {
-            output.insert(person->mem_children.begin(), person->mem_children.end());
+        if(mem_father != nullptr){
+            std::set<Person*> sibl = mem_father->siblings(PMod::ANY,smod);
+                for (Person* person: sibl) {
+                output.insert(person->mem_children.begin(), person->mem_children.end());
+            }
         }
-        return output;
     }
     else{
         std::set<Person*> temp1 = cousins(PMod::MATERNAL, smod);
         std::set<Person*> temp2 = cousins(PMod::PATERNAL, smod);
         output.insert(temp1.begin(), temp1.end());
         output.insert(temp2.begin(), temp2.end());
-        return output;
     }
+    return output;
 }
 
 std::set<Person*> Person::daughters(){
@@ -149,8 +169,18 @@ std::set<Person*> Person::daughters(){
 }
 
 std::set<Person*> Person::descendants(){
-    std::set<Person*> empty; //not written
-    return empty;
+    std::set<Person*> output;
+    if(mem_children.empty()){
+        return output;
+    }
+    else{
+        output.insert(mem_children.begin(), mem_children.end());
+        for(Person* person: mem_children){
+            std::set<Person*> rec_desc = person->descendants();
+            output.insert(rec_desc.begin(), rec_desc.end());
+        }
+        return output;
+    }
 }
 
 std::set<Person*> Person::grandchildren(){
@@ -344,18 +374,28 @@ std::set<Person*> Person::sons(){
 }
 
 std::set<Person*> Person::uncles(PMod pmod, SMod smod){
-    if(pmod == PMod::MATERNAL){
-        return mem_mother->brothers(PMod::ANY, smod);
+    std::set<Person*> output;
+    if(pmod == PMod::MATERNAL && mem_mother != nullptr){
+        // return mem_mother->sisters(PMod::ANY, smod);
+        std::set<Person*> aunt_brother = mem_mother->brothers(PMod::ANY, smod);
+        output.insert(aunt_brother.begin(), aunt_brother.end());
     }
-    else if(pmod == PMod::PATERNAL){
-        return mem_father->brothers(PMod::ANY, smod);
+    else if(pmod == PMod::PATERNAL && mem_father != nullptr){
+        // return mem_father->brothers(PMod::ANY, smod);
+        std::set<Person*> aunt_brother = mem_father->brothers(PMod::ANY, smod);
+        output.insert(aunt_brother.begin(), aunt_brother.end());
     }
     else{
-        std::set<Person*> output;
-        std::set<Person*> temp1 = mem_mother->brothers(PMod::ANY, smod);
-        std::set<Person*> temp2 = mem_father->brothers(PMod::ANY, smod);
-        output.insert(temp1.begin(), temp1.end());
-        output.insert(temp2.begin(), temp2.end());
-        return output;
+        // std::set<Person*> output;
+        if(mem_mother != nullptr){
+            std::set<Person*> temp1 = mem_mother->brothers(PMod::ANY, smod);
+            output.insert(temp1.begin(), temp1.end());
+        }
+        if(mem_father != nullptr){
+            std::set<Person*> temp2 = mem_father->brothers(PMod::ANY, smod);
+            output.insert(temp2.begin(), temp2.end());
+        }
+        // return output;
     }
+    return output;
 }
