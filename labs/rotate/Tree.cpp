@@ -340,10 +340,10 @@ void Tree::remove(size_t index){
     }
     Node* node = lookup_node(index);
     
-    if(node == head){
-        clear();
-    }
-    else{
+    // if(node == head){
+    //     clear();
+    // }
+    // else{
         //先把weight更新一下
         Node* temp1 = node->parent;
         while(temp1 != nullptr){
@@ -452,13 +452,6 @@ void Tree::remove(size_t index){
         }
         cnt --;
     }
-    //promotion target: 
-    // if(curr->right != nullptr){
-    //     promote(curr,curr->right->data);
-    // }
-    // else{
-    //     promote(curr,curr->data);
-    // }
-}
+// }
 
 

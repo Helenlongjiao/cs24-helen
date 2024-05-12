@@ -14,38 +14,38 @@ int main(){
     // tree.insert("g");
     // tree.insert("f");
 
-    tree.insert("alpha");
-    tree.insert("beta");
-    tree.insert("chi");
-    tree.insert("delta");
-    tree.insert("epsilon");
-    tree.insert("eta");
-    tree.insert("gamma");
-    tree.insert("iota");
-    tree.insert("kappa");
-    tree.insert("lambda");
-    tree.insert("nu");
-    tree.insert("omega");
-    tree.insert("omicron");
-    tree.insert("phi");
-    tree.insert("pi");
-    tree.insert("psi");
-    tree.insert("rho");
-    tree.insert("sigma");
-    tree.insert("tau");
-    tree.insert("theta");
-    tree.insert("upsilon");
-    tree.insert("xi");
-    tree.insert("zeta");
+    // tree.insert("alpha");
+    // tree.insert("beta");
+    // tree.insert("chi");
+    // tree.insert("delta");
+    // tree.insert("epsilon");
+    // tree.insert("eta");
+    // tree.insert("gamma");
+    // tree.insert("iota");
+    // tree.insert("kappa");
+    // tree.insert("lambda");
+    // tree.insert("nu");
+    // tree.insert("omega");
+    // tree.insert("omicron");
+    // tree.insert("phi");
+    // tree.insert("pi");
+    // tree.insert("psi");
+    // tree.insert("rho");
+    // tree.insert("sigma");
+    // tree.insert("tau");
+    // tree.insert("theta");
+    // tree.insert("upsilon");
+    // tree.insert("xi");
+    // tree.insert("zeta");
 
-    // tree.insert("Mercury");
-    // tree.insert("Earth");
-    // tree.insert("Mars");
-    // tree.insert("Jupiter");
-    // tree.insert("Saturn");
-    // tree.insert("Neptune");
-    // tree.insert("Venus");
-    // tree.insert("Uranus");
+    tree.insert("Mercury");
+    tree.insert("Earth");
+    tree.insert("Mars");
+    tree.insert("Jupiter");
+    tree.insert("Saturn");
+    tree.insert("Neptune");
+    tree.insert("Venus");
+    tree.insert("Uranus");
 
 
     // tree.insert("h");
@@ -66,8 +66,9 @@ int main(){
     // tree.insert("Poseidon");
     // tree.insert("Zeus");
     tree.print();
-    std::cout<<tree.find("psi");
-    // std::cout<<tree.count();
+    // std::cout<<tree.find("psi");
+    tree.remove(3);
+    std::cout<<tree.count();
     tree.print();
 
 
