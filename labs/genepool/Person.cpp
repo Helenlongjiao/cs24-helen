@@ -58,7 +58,8 @@ std::set<Person*> Person::ancestors(PMod pmod){
     std::set<Person*> output;
     if(pmod == PMod::MATERNAL){
         if(mem_mother != nullptr){
-            output.insert(mem_mother->parents().begin(), mem_mother->parents().end());
+            std::set<Person*> temp = mem_mother->parents();
+            output.insert(temp.begin(), temp.end());
             mem_mother->ancestors(PMod::ANY);
         }
         else{
@@ -67,7 +68,8 @@ std::set<Person*> Person::ancestors(PMod pmod){
     }
     else if(pmod == PMod::PATERNAL){
         if(mem_father != nullptr){
-            output.insert(mem_father->parents().begin(), mem_father->parents().end());
+            std::set<Person*> temp = mem_father->parents();
+            output.insert(temp.begin(), temp.end());
             mem_father->ancestors(PMod::ANY);
         }
         else{
@@ -76,11 +78,13 @@ std::set<Person*> Person::ancestors(PMod pmod){
     }
     else{
         if(mem_mother != nullptr){
-            output.insert(mem_mother->parents().begin(), mem_mother->parents().end());
+            std::set<Person*> temp = mem_mother->parents();
+            output.insert(temp.begin(), temp.end());
             mem_mother->ancestors(PMod::ANY);
         }
         if(mem_father != nullptr){
-            output.insert(mem_father->parents().begin(), mem_father->parents().end());
+            std::set<Person*> temp = mem_father->parents();
+            output.insert(temp.begin(), temp.end());
             mem_father->ancestors(PMod::ANY);
         }
         if(mem_father == nullptr && mem_mother == nullptr){
@@ -99,8 +103,10 @@ std::set<Person*> Person::aunts(PMod pmod, SMod smod){
     }
     else{
         std::set<Person*> output;
-        output.insert(mem_mother->sisters(PMod::ANY, smod).begin(), mem_mother->sisters(PMod::ANY, smod).end());
-        output.insert(mem_father->sisters(PMod::ANY, smod).begin(), mem_father->sisters(PMod::ANY, smod).end());
+        std::set<Person*> temp1 = mem_mother->sisters(PMod::ANY, smod);
+        std::set<Person*> temp2 = mem_father->sisters(PMod::ANY, smod);
+        output.insert(temp1.begin(), temp1.end());
+        output.insert(temp2.begin(), temp2.end());
         return output;
     }
 }
@@ -118,20 +124,22 @@ std::set<Person*> Person::cousins(PMod pmod, SMod smod){
     if(pmod == PMod::MATERNAL){
         std::set<Person*> sibl = mem_mother->siblings(PMod::ANY,smod);
         for (Person* person: sibl) {
-            output.insert(person->children().begin(), person->children().end());
+            output.insert(person->mem_children.begin(), person->mem_children.end());
         }
         return output;
     }
     else if(pmod == PMod::PATERNAL){
         std::set<Person*> sibl = mem_father->siblings(PMod::ANY,smod);
         for (Person* person: sibl) {
-            output.insert(person->children().begin(), person->children().end());
+            output.insert(person->mem_children.begin(), person->mem_children.end());
         }
         return output;
     }
     else{
-        output.insert(cousins(PMod::MATERNAL, smod).begin(), cousins(PMod::MATERNAL, smod).end());
-        output.insert(cousins(PMod::PATERNAL, smod).begin(), cousins(PMod::PATERNAL, smod).end());
+        std::set<Person*> temp1 = cousins(PMod::MATERNAL, smod);
+        std::set<Person*> temp2 = cousins(PMod::PATERNAL, smod);
+        output.insert(temp1.begin(), temp1.end());
+        output.insert(temp2.begin(), temp2.end());
         return output;
     }
 }
@@ -237,7 +245,8 @@ std::set<Person*> Person::nephews(PMod pmod, SMod smod){
     std::set<Person*> output;
     std::set<Person*> sibl = siblings(pmod,smod);
     for (Person* person: sibl) {
-        output.insert(person->sons().begin(), person->sons().end());
+        std::set<Person*> temp = person->sons();
+        output.insert(temp.begin(), temp.end());
     }
     return output;
 }
@@ -246,7 +255,8 @@ std::set<Person*> Person::nieces(PMod pmod, SMod smod){
     std::set<Person*> output;
     std::set<Person*> sibl = siblings(pmod,smod);
     for (Person* person: sibl) {   //不知道为什么这个for loop有问题
-        output.insert(person->daughters().begin(), person->daughters().end());
+        std::set<Person*> temp = person->daughters();
+        output.insert(temp.begin(), temp.end());
     }
     return output;
 }
@@ -342,8 +352,10 @@ std::set<Person*> Person::uncles(PMod pmod, SMod smod){
     }
     else{
         std::set<Person*> output;
-        output.insert(mem_mother->brothers(PMod::ANY, smod).begin(), mem_mother->brothers(PMod::ANY, smod).end());
-        output.insert(mem_father->brothers(PMod::ANY, smod).begin(), mem_father->brothers(PMod::ANY, smod).end());
+        std::set<Person*> temp1 = mem_mother->brothers(PMod::ANY, smod);
+        std::set<Person*> temp2 = mem_father->brothers(PMod::ANY, smod);
+        output.insert(temp1.begin(), temp1.end());
+        output.insert(temp2.begin(), temp2.end());
         return output;
     }
 }
