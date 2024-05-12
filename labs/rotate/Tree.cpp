@@ -343,7 +343,7 @@ void Tree::remove(size_t index){
     if(node == head){
         node->parent = head;
     }
-    else{
+    // else{
         //先把weight更新一下
         Node* temp1 = node->parent;
         while(temp1 != nullptr){
@@ -452,6 +452,6 @@ void Tree::remove(size_t index){
         }
         cnt --;
     }
-}
+// }
 
 
