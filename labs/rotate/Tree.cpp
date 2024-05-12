@@ -341,17 +341,34 @@ void Tree::remove(size_t index){
     Node* node = lookup_node(index);
     
     if(node == head){
-        node->parent = head;
-    }
-    // else{
-        //先把weight更新一下
-        Node* temp1 = node->parent;
+        Node* temp = node->right;
+        while(temp->left != nullptr){
+            temp = temp->left;
+        }
+        Node* temp1 = temp->parent;
         while(temp1 != nullptr){
             temp1->weight --;
             temp1 = temp1->parent;
         }
+        if(temp->parent != nullptr){
+            temp->parent->left = temp->right;
+        }
+        temp->weight = cnt;
+        temp->right = node->right;
+        temp->left = node->left;
+        temp->parent = nullptr;
+        head = temp;
+        delete node;
+    }
+    else{
         //情况1：没有children：直接remove，parent设为nullptr
         if(node->left == nullptr && node->right == nullptr){
+            //先把weight更新一下
+            Node* temp1 = node->parent;
+            while(temp1 != nullptr){
+                temp1->weight --;
+                temp1 = temp1->parent;
+            }
             if(node->data > node->parent->data){
                 node->parent->right = nullptr;
                 if(cnt == 11){
@@ -369,6 +386,12 @@ void Tree::remove(size_t index){
         
         //情况2：有一个children：remove后把children接到上面那个
         else if(node->left == nullptr && node->right != nullptr){
+            //先把weight更新一下
+            Node* temp1 = node->parent;
+            while(temp1 != nullptr){
+                temp1->weight --;
+                temp1 = temp1->parent;
+            }
             // std::cout<<node->data<<'\n';
             if(node->data > node->parent->data){
                 node->parent->right = node->right;
@@ -394,6 +417,12 @@ void Tree::remove(size_t index){
             delete node;
         }
         else if(node->left != nullptr && node->right == nullptr){
+            //先把weight更新一下
+            Node* temp1 = node->parent;
+            while(temp1 != nullptr){
+                temp1->weight --;
+                temp1 = temp1->parent;
+            }
             // std::cout<<node->data<<'\n';
             if(node->data > node->parent->data){
                 node->parent->right = node->left;
@@ -424,7 +453,16 @@ void Tree::remove(size_t index){
             while(temp->left != nullptr){
                 temp = temp->left;
             }
+            //先把weight更新一下
+            Node* temp1 = temp->parent;
+            while(temp1 != nullptr){
+                temp1->weight --;
+                temp1 = temp1->parent;
+            }
             if(node->right == temp){
+                if(temp->right != nullptr){
+                    temp->parent->left = temp->right;
+                }
                 if(node == node->parent->right){
                     node->parent->right = temp;
                 }
@@ -433,6 +471,7 @@ void Tree::remove(size_t index){
                 }
                 temp->left = node->left;
                 temp->parent = node->parent;
+                temp->right = node->right;
                 delete node;
             }
             else if(temp->right != nullptr && node->right != temp){
@@ -452,6 +491,6 @@ void Tree::remove(size_t index){
         }
         cnt --;
     }
-// }
+}
 
 
