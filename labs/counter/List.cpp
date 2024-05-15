@@ -39,6 +39,15 @@ Node* List::find(const std::string str) const{
     return nullptr;
 }
 
+Node* List::find_add(const std::string str, int num) {
+    Node* node = find(str);
+    if(node != nullptr) {
+        return node;
+    }
+    insert(str, num);
+    return tail;
+}
+
 void List::remove(const std::string str){
     Node* curr = head;
     while(curr != nullptr){

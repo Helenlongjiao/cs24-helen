@@ -24,6 +24,7 @@ public:
     ~List();
     void insert(const std::string str, int num = 0);
     Node* find(const std::string str) const;
+    Node* find_add(const std::string str, int num = 0);
     void remove(const std::string str);
 };
 
