@@ -52,8 +52,12 @@ void List::remove(const std::string str){
     Node* curr = head;
     while(curr != nullptr){
         if(curr->key == str){
-            curr->last->next = curr->next;
-            curr->next->last = curr->last;
+            if(curr->last != nullptr){
+                curr->last->next = curr->next;
+            }
+            if(curr->next != nullptr){
+                curr->next->last = curr->last;
+            }
             delete curr;
             break;
         }
