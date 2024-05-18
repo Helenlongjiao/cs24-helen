@@ -77,6 +77,11 @@ void hashList::remove(Node* node){
                 delete curr;
                 return;
             }
+            else{
+                curr->last->next = nullptr;
+                delete curr;
+                return;
+            }
         }
         curr = curr->next;
     }
