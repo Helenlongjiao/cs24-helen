@@ -72,7 +72,10 @@ int  Counter::get(const std::string& key) const{
 
 // set(k, v) sets a count by key.
 void Counter::set(const std::string& key, int count){
-    hashTable.find(key)->value = count;
+    Node* node_find = hashTable.find(key);
+    if(node_find != nullptr){
+        node_find->value = count;
+    }
 }
 
 // begin() returns an iterator to the first-inserted item in the counter.
