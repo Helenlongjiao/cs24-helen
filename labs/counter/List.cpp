@@ -59,8 +59,14 @@ void List::remove(const std::string str){
             if(curr->last != nullptr){
                 curr->last->next = curr->next;
             }
+            else{
+                head = curr->next;
+            }
             if(curr->next != nullptr){
                 curr->next->last = curr->last;
+            }
+            else{
+                tail = curr->last;
             }
             delete curr;
             break;
