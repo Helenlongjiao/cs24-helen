@@ -2,7 +2,11 @@
 
 // Index Member Functions
 
-hashList::hashList(){}
+hashList::hashList(){
+    for(int i = 0; i < 10000; ++i){
+        head[i] = nullptr;
+    }
+}
 
 hashList::~hashList(){
     for(int i = 0; i < 10000; ++i){
