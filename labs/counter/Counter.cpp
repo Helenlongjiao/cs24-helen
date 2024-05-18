@@ -32,7 +32,8 @@ int Counter::total() const{
 void Counter::inc(const std::string& key, int by){
     Node* node_find = hashTable.find(key);
     if(node_find == nullptr){
-        list.insert(key, by);
+        Node* insert_node = list.insert(key, by);
+        hashTable.insert(insert_node, key);
     }
     else{
         node_find->value += by;

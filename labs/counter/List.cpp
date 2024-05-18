@@ -24,7 +24,7 @@ List::~List(){
     }
 }
 
-void List::insert(const std::string str, int num){
+Node* List::insert(const std::string str, int num){
     Node* node = new Node(str, num);
     node->next = nullptr;
     if(head == nullptr){
@@ -35,6 +35,7 @@ void List::insert(const std::string str, int num){
         tail->next = node;
     }
     tail = node;
+    return node;
 }
 
 Node* List::find(const std::string str) const{

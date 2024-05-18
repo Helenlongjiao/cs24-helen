@@ -20,7 +20,11 @@ hashList::~hashList(){
 }
 
 int hashList::hashFunction(const std::string str) const{
-    return std::stoi(str) % 10000;
+    int ret = 0;
+    for (char c : str) {
+        ret += static_cast<int>(c);
+    }
+    return ret % 10000;
 }
 
 void hashList::insert(Node* node, const std::string str){
