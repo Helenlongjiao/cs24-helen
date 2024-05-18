@@ -44,7 +44,8 @@ void Counter::inc(const std::string& key, int by){
 void Counter::dec(const std::string& key, int by){
     Node* node_find = hashTable.find(key);
     if(node_find == nullptr){
-        list.insert(key, -by);
+        Node* node_insert = list.insert(key, -by);
+        hashTable.insert(node_insert, key);
     }
     else{
         node_find->value -= by;
@@ -56,6 +57,7 @@ void Counter::del(const std::string& key){
     Node* node_find = hashTable.find(key);
     if(node_find != nullptr){
         list.remove(node_find);
+        hashTable.remove(node_find);
     }
 }
 

@@ -38,11 +38,13 @@ void hashList::insert(Node* node, const std::string str){
     newNode->next = nullptr;
     newNode->node = node;
     if(head[index] == nullptr){
+        newNode->last = nullptr;
         head[index] = newNode;
     }
     if(tail != nullptr){
         tail->next = newNode;
     }
+    newNode->last = tail;
     tail = newNode;
 }
 
@@ -59,4 +61,23 @@ Node* hashList::find(const std::string str) const{
         curr = curr->next;
     }
     return nullptr;
+}
+
+void hashList::remove(Node* node){
+    int index = hashFunction(node->key);
+    while(true){
+        hashNode* curr = head[index];
+        if(curr == nullptr){
+            return;
+        }
+        if(curr->key == node->key){
+            if(curr->next != nullptr){
+                curr->next->last = curr->last;
+                curr->last->next = curr->next;
+                delete curr;
+                return;
+            }
+        }
+        curr = curr->next;
+    }
 }

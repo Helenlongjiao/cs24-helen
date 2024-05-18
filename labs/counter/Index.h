@@ -5,6 +5,7 @@
 class hashNode{
 public:
     hashNode* next;
+    hashNode* last;
     std::string key;
     int index;
     Node* node;
@@ -20,6 +21,7 @@ public:
     ~hashList();
     void insert(Node* node, const std::string str);
     Node* find(const std::string str) const;
+    void remove(Node* node);
     int hashFunction(const std::string str) const;
 };
 
