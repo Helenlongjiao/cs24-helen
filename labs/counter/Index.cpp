@@ -13,7 +13,7 @@ hashList::~hashList(){
             delete curr;
             curr = curr_next;
         }
-        // delete head[i];
+        delete head[i];
     }
 }
 
