@@ -15,7 +15,14 @@ List::List(){
     tail = nullptr;
 }
 
-List::~List(){}
+List::~List(){
+    Node* curr = head;
+    while(curr != nullptr){
+        Node* curr_next = curr->next;
+        delete curr;
+        curr = curr_next;
+    }
+}
 
 void List::insert(const std::string str, int num){
     Node* node = new Node(str, num);
