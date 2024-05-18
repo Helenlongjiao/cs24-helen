@@ -1,5 +1,6 @@
 #include "Counter.h"
 #include "List.h"
+#include "Index.h"
 
 // Counter Member Functions
 
@@ -29,32 +30,48 @@ int Counter::total() const{
 
 // inc(k, d) increments a count by a given value (default one).
 void Counter::inc(const std::string& key, int by){
-    list.find_add(key)->value += by;
+    Node* node_find = hashTable.find(key);
+    if(node_find == nullptr){
+        list.insert(key, by);
+    }
+    else{
+        node_find->value += by;
+    }
 }
 
 // dec(k, d) decrements a count by a given value (default one).
 void Counter::dec(const std::string& key, int by){
-    list.find_add(key)->value -= by;
+    Node* node_find = hashTable.find(key);
+    if(node_find == nullptr){
+        list.insert(key, -by);
+    }
+    else{
+        node_find->value -= by;
+    }
 }
 
 // del(k) removes a key from the counter, setting its count to (implicit) zero.
 void Counter::del(const std::string& key){
-    list.remove(key);
+    Node* node_find = hashTable.find(key);
+    if(node_find != nullptr){
+        list.remove(node_find);
+    }
 }
 
 // get(k) looks up a count by key. If the key isn't present, it returns zero.
 int  Counter::get(const std::string& key) const{
-    if(list.find(key) == nullptr){
+    Node* node_find = hashTable.find(key);
+    if(node_find == nullptr){
         return 0;
     }
     else{
-        return list.find(key)->value;
+        return node_find->value;
     }
 }
 
 // set(k, v) sets a count by key.
 void Counter::set(const std::string& key, int count){
-    list.find_add(key)->value = count;
+    hashTable.find(key)->value = count;
 }
 
 // begin() returns an iterator to the first-inserted item in the counter.
@@ -66,10 +83,6 @@ Counter::Iterator Counter::begin() const{
 // end() returns an invalid "end" iterator.
 Counter::Iterator Counter::end() const{
     return nullptr;
-}
-
-const std::string& Counter::Iterator::key() const{
-    return curr->key;
 }
 
 

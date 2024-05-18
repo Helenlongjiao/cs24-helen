@@ -2,20 +2,25 @@
 #define INDEX_H
 #include "List.h"
 
-// class Index{
-// private:
-//     // List** hashTable = new List*[10000];
-//     Node*** hashTable = new Node**[10000];
-//     int* hashTable_cnt = new int[10000];
+class hashNode{
+public:
+    hashNode* next;
+    std::string key;
+    int index;
+    Node* node;
+};
 
-// public:
-//     Index();
-//     void insert(Node* node);
-//     Node* find(std::string str) const;
-//     void remove(std::string str);
+class hashList{
+private:
+    hashNode** head = new hashNode*[10000];
+    hashNode* tail;
 
-// private:
-//     int hashFunction(std::string str) const;
-// };
+public:
+    hashList();
+    ~hashList();
+    void insert(Node* node, const std::string str);
+    Node* find(const std::string str) const;
+    int hashFunction(const std::string str) const;
+};
 
 #endif

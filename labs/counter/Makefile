@@ -6,7 +6,7 @@ CXX      = g++
 
 all: test
 
-test: List.o Counter.o Iterator.o main.o
+test: List.o Counter.o Iterator.o main.o Index.o
 	${CXX} $(CXXFLAGS) -o $@ $+
 
 char-count: List.o Counter.o Iterator.o char-count.o
@@ -19,10 +19,13 @@ List.o: List.cpp List.h
 	${CXX} $(CXXFLAGS) -c -o $@ $<
 
 
-Counter.o: Counter.cpp Counter.h List.h
+Counter.o: Counter.cpp Counter.h List.h Index.h
 	${CXX} $(CXXFLAGS) -c -o $@ $<
 
 Iterator.o: Iterator.cpp Counter.h
+	${CXX} $(CXXFLAGS) -c -o $@ $<
+
+Index.o: Index.cpp Index.h
 	${CXX} $(CXXFLAGS) -c -o $@ $<
 
 main.o: main.cpp Counter.h

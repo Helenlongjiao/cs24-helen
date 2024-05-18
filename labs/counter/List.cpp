@@ -59,25 +59,19 @@ Node* List::find_add(const std::string str, int num) {
     return tail;
 }
 
-void List::remove(const std::string str){
-    Node* curr = head;
-    while(curr != nullptr){
-        if(curr->key == str){
-            if(curr->last != nullptr){
-                curr->last->next = curr->next;
-            }
-            else{
-                head = curr->next;
-            }
-            if(curr->next != nullptr){
-                curr->next->last = curr->last;
-            }
-            else{
-                tail = curr->last;
-            }
-            delete curr;
-            break;
-        }
-        curr = curr->next;
+void List::remove(Node* node){
+    if(node->last != nullptr){
+        node->last->next = node->next;
     }
+    else{
+        head = node->next;
+    }
+    if(node->next != nullptr){
+        node->next->last = node->last;
+    }
+    else{
+        tail = node->last;
+    }
+    delete node;
+    
 }

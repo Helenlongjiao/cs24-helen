@@ -1,5 +1,9 @@
 #include "Counter.h"
 
+const std::string& Counter::Iterator::key() const{
+    return curr->key;
+}
+
 // Counter::Iterator Member Functions
 int Counter::Iterator::value() const{
     return curr->value;
