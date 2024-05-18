@@ -56,8 +56,8 @@ void Counter::dec(const std::string& key, int by){
 void Counter::del(const std::string& key){
     Node* node_find = hashTable.find(key);
     if(node_find != nullptr){
-        list.remove(node_find);
         hashTable.remove(node_find);
+        list.remove(node_find);
     }
 }
 
