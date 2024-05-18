@@ -11,12 +11,20 @@ Counter::~Counter(){}
 
 // count() returns the number of keys stored in the counter.
 size_t Counter::count() const{
-    return 1;
+    int sum = 0;
+    for(auto itr = begin(); itr != end(); ++itr) {
+        sum ++;
+    }
+    return sum;
 }
 
 // total() returns the sum of all counts in the counter.
 int Counter::total() const{
-    return 1;
+    int sum = 0;
+    for(auto itr = begin(); itr != end(); ++itr) {
+        sum += itr.value();
+    }
+    return sum;
 }
 
 // inc(k, d) increments a count by a given value (default one).
@@ -50,4 +58,34 @@ void Counter::set(const std::string& key, int count){
 }
 
 // begin() returns an iterator to the first-inserted item in the counter.
-// end() returns an invalid "end" iterator (see below).
+Counter::Iterator Counter::begin() const{
+    Iterator retIter(list.head);
+    return retIter;
+}
+
+// end() returns an invalid "end" iterator.
+Counter::Iterator Counter::end() const{
+    return nullptr;
+}
+
+const std::string& Counter::Iterator::key() const{
+    return curr->key;
+}
+
+int Counter::Iterator::value() const{
+    return curr->value;
+}
+
+void Counter::Iterator::operator ++ (){
+    if(curr != nullptr){
+        curr = curr->next;
+    }                                           //如果是nullptr需要return什么吗？
+}
+
+bool Counter::Iterator::operator == (const Iterator& other) const{
+    return curr == other.curr;
+}
+
+bool Counter::Iterator::operator != (const Iterator& other) const{
+    return curr != other.curr;
+}
