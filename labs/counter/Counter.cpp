@@ -72,20 +72,4 @@ const std::string& Counter::Iterator::key() const{
     return curr->key;
 }
 
-int Counter::Iterator::value() const{
-    return curr->value;
-}
 
-void Counter::Iterator::operator ++ (){
-    if(curr != nullptr){
-        curr = curr->next;
-    }                                           //如果是nullptr需要return什么吗？
-}
-
-bool Counter::Iterator::operator == (const Iterator& other) const{
-    return curr == other.curr;
-}
-
-bool Counter::Iterator::operator != (const Iterator& other) const{
-    return curr != other.curr;
-}

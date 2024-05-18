@@ -1,4 +1,5 @@
 #include "List.h"
+#include <iostream>
 
 // List Member Functions
 
@@ -24,6 +25,7 @@ void List::insert(const std::string str, int num){
     }
     else{
         node->last = tail;
+        tail->next = node;
     }
     tail = node;
 }
@@ -32,8 +34,10 @@ Node* List::find(const std::string str) const{
     Node* curr = head;
     while(curr != nullptr){
         if(curr->key == str){
+            // std::cout << "found";
             return curr;
         }
+        // std::cout << "not found" << curr->key;
         curr = curr->next;
     }
     return nullptr;

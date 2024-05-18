@@ -9,8 +9,8 @@ all: test
 test: List.o Counter.o Iterator.o main.o
 	${CXX} $(CXXFLAGS) -o $@ $+
 
-# char-count: List.o Counter.o Iterator.o char-count.o
-# 	${CXX} $(CXXFLAGS) -o $@ $+
+char-count: List.o Counter.o Iterator.o char-count.o
+	${CXX} $(CXXFLAGS) -o $@ $+
 
 word-count: List.o Counter.o Iterator.o word-count.o
 	${CXX} $(CXXFLAGS) -o $@ $+
