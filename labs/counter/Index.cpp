@@ -2,9 +2,7 @@
 
 // Index Member Functions
 
-hashList::hashList(){
-    tail = nullptr;
-}
+hashList::hashList(){}
 
 hashList::~hashList(){
     for(int i = 0; i < 10000; ++i){
@@ -41,11 +39,14 @@ void hashList::insert(Node* node, const std::string str){
         newNode->last = nullptr;
         head[index] = newNode;
     }
-    if(tail != nullptr){
+    else{
+        hashNode* tail = head[index];
+        while(tail->next != nullptr){
+            tail = tail->next;
+        }
         tail->next = newNode;
+        newNode->last = tail;
     }
-    newNode->last = tail;
-    tail = newNode;
 }
 
 Node* hashList::find(const std::string str) const{

@@ -14,7 +14,6 @@ public:
 class hashList{
 private:
     hashNode** head = new hashNode*[10000];
-    hashNode* tail;
 
 public:
     hashList();
