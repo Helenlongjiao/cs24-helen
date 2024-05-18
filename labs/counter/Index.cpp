@@ -17,8 +17,8 @@ hashList::~hashList(){
             delete curr;
             curr = curr_next;
         }
-        delete head[i];
     }
+    delete head;
 }
 
 int hashList::hashFunction(const std::string str) const{
