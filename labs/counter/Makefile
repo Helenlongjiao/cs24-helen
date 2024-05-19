@@ -9,7 +9,7 @@ all: test
 test: List.o Counter.o Iterator.o main.o Index.o
 	${CXX} $(CXXFLAGS) -o $@ $+
 
-char-count: List.o Counter.o Iterator.o char-count.o
+char-count: List.o Counter.o Iterator.o char-count.o Index.o
 	${CXX} $(CXXFLAGS) -o $@ $+
 
 word-count: List.o Counter.o Iterator.o word-count.o Index.o

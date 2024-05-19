@@ -77,18 +77,25 @@ void hashList::remove(Node* node){
         }
         if(curr->key == node->key){
             if(curr->next != nullptr){
-                curr->next->last = curr->last;
-                curr->last->next = curr->next;
-                delete curr;
-                return;
+                if(curr->last != nullptr){
+                    curr->next->last = curr->last;
+                    curr->last->next = curr->next;
+                }
+                else{
+                    head[index] = curr->next;
+                    curr->next->last = nullptr;
+                }
             }
             else{
                 if(curr->last != nullptr){
                     curr->last->next = nullptr;
                 }
-                delete curr;
-                return;
+                else{
+                    head[index] = nullptr;
+                }
             }
+            delete curr;
+            return;
         }
         curr = curr->next;
     }
