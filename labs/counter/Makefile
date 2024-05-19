@@ -12,7 +12,7 @@ test: List.o Counter.o Iterator.o main.o Index.o
 char-count: List.o Counter.o Iterator.o char-count.o
 	${CXX} $(CXXFLAGS) -o $@ $+
 
-word-count: List.o Counter.o Iterator.o word-count.o
+word-count: List.o Counter.o Iterator.o word-count.o Index.o
 	${CXX} $(CXXFLAGS) -o $@ $+
 
 List.o: List.cpp List.h

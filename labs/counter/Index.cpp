@@ -55,8 +55,8 @@ void hashList::insert(Node* node, const std::string str){
 
 Node* hashList::find(const std::string str) const{
     int index = hashFunction(str);
+    hashNode* curr = head[index];
     while(true){
-        hashNode* curr = head[index];
         if(curr == nullptr){
             return nullptr;
         }
@@ -70,8 +70,8 @@ Node* hashList::find(const std::string str) const{
 
 void hashList::remove(Node* node){
     int index = hashFunction(node->key);
+    hashNode* curr = head[index];
     while(true){
-        hashNode* curr = head[index];
         if(curr == nullptr){
             return;
         }
