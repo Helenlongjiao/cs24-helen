@@ -6,10 +6,16 @@ CXX      = g++
 
 all: test
 
-test: main.o Heap.o Point.o WordList.o
+# test: main.o Heap.o Point.o WordList.o
+# 	${CXX} $(CXXFLAGS) -o $@ $+
+
+# main.o: main.cpp WordList.h
+# 	${CXX} $(CXXFLAGS) -c -o $@ $<
+
+test: test.o Heap.o Point.o WordList.o
 	${CXX} $(CXXFLAGS) -o $@ $+
 
-main.o: main.cpp WordList.h
+test.o: test.cpp
 	${CXX} $(CXXFLAGS) -c -o $@ $<
 
 Heap.o: Heap.cpp Heap.h
@@ -18,8 +24,8 @@ Heap.o: Heap.cpp Heap.h
 Point.o: Point.cpp Point.h 
 	${CXX} $(CXXFLAGS) -c -o $@ $<
 
-WordList.o: WordList.cpp WordList.h
-	${CXX} $(CXXFLAGS) -c -o $@ $<
+# WordList.o: WordList.cpp WordList.h
+# 	${CXX} $(CXXFLAGS) -c -o $@ $<
 
 clean:
 	rm -f test main.o Heap.o Point.o WordList.o

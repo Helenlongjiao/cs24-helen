@@ -7,7 +7,12 @@
 int main() {
     Heap heap(8);
 
-    std::cout << "This program doesn't do anything interesting yet...\n";
+    heap.push("a",4);
+    heap.push("b",2);
+    heap.push("c",3);
 
+    for(size_t i = 0; i < heap.count(); ++i){
+        std::cout<<heap.lookup(i).value<<"\n";
+    }
     return 0;
 }
