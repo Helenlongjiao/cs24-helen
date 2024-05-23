@@ -103,7 +103,6 @@ void Heap::push(const std::string& value, float score){
     }
     mData[mCount].score = score;
     mData[mCount].value = value;
-    mCount ++;
 
     size_t index = mCount;
     while(mCount > 0){
@@ -116,6 +115,7 @@ void Heap::push(const std::string& value, float score){
         }
         index = index_par;
     }
+    mCount ++;
 }
 
 const Heap::Entry& Heap::top() const{
