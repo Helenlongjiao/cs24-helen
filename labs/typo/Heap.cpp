@@ -99,15 +99,16 @@ Heap::Entry Heap::pushpop(const std::string& value, float score){
 }
 
 void Heap::push(const std::string& value, float score){
-    if(mCount == mCapacity){
+    if(mCount >= mCapacity){
         throw std::overflow_error("healp is full");
     }
     mData[mCount].score = score;
     mData[mCount].value = value;
 
-    int index = mCount;
+    size_t index = mCount;
+    mCount ++;
     while(index > 0){
-        int index_par = (index - 1) / 2;
+        size_t index_par = (index - 1) / 2;
         // if(index_par <= 0){
         //     break;
         // }
@@ -119,7 +120,6 @@ void Heap::push(const std::string& value, float score){
             break;
         }
     }
-    mCount ++;
 }
 
 const Heap::Entry& Heap::top() const{
