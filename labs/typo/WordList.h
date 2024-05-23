@@ -21,6 +21,7 @@ public:
     WordList(std::istream& stream);
 
     Heap correct(const std::vector<Point>& points, size_t maxcount, float cutoff) const;
+    size_t score(const std::vector<Point>& points) const;
 };
 
 #endif
