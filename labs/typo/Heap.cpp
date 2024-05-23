@@ -108,10 +108,7 @@ void Heap::push(const std::string& value, float score){
     size_t index = mCount;
     while(index > 0){
         size_t index_par = (index - 1) / 2;
-        // if(index_par <= 0){
-        //     break;
-        // }
-        if(mData[mCount].score < mData[index_par].score){
+        if(mData[index].score < mData[index_par].score){
             std::swap(mData[index_par], mData[index]);
             index = index_par;
         }
