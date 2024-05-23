@@ -1,13 +1,12 @@
 #include "WordList.h"
 #include <iostream>
-#include <cmath>
 
 float squareRoot(float number) {
     float x0 = number;
     float x1 = 0;
     while (true) {
         x1 = 0.5f * (x0 + number / x0);
-        if (std::abs(x1 - x0) < 0.01) {
+        if (std::abs(x1 - x0) < 0.001) {
             break; 
         }
         x0 = x1;
