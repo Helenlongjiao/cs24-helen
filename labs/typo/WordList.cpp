@@ -1,6 +1,19 @@
 #include "WordList.h"
 #include <iostream>
 
+float squareRoot(float number) {
+    float x0 = number;
+    float x1 = 0;
+    while (true) {
+        x1 = 0.5f * (x0 + number / x0);
+        if (std::abs(x1 - x0) < 0.01) {
+            break; 
+        }
+        x0 = x1;
+    }
+    return x1;
+}
+
 bool isLowerCase(const std::string& str) {
     for (char c : str) {
         if (!std::islower(c)) {
@@ -26,7 +39,7 @@ Heap WordList::correct(const std::vector<Point>& points, size_t maxcount, float 
                 Point keyLoc = QWERTY[word[i] - 'a'];
                 float dx = points[i].x - keyLoc.x;
                 float dy = points[i].y - keyLoc.y;
-                float dist = std::sqrt(dx * dx + dy * dy);
+                float dist = squareRoot(dx * dx + dy * dy);
                 float score = 1 / (10 * dist * dist + 1);
                 total_score += score;
             }
