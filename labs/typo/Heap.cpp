@@ -8,8 +8,9 @@ Heap::Heap(size_t capacity){
 }
 
 Heap::Heap(const Heap& other){
+    Heap* result = new Heap(other.capacity());
     for(size_t i = 0; i < mCount; ++i){
-        mData[i] = other.mData[i];
+        result->mData[i] = other.mData[i];
     }
     mCapacity = other.mCapacity;
     mCount = other.mCount;
@@ -105,18 +106,18 @@ void Heap::push(const std::string& value, float score){
     mData[mCount].value = value;
 
     int index = mCount;
-    while(true){
-        int index_par = (mCount - 1) / 2;
-        if(index_par <= 0){
-            break;
-        }
+    while(index > 0){
+        int index_par = (index - 1) / 2;
+        // if(index_par <= 0){
+        //     break;
+        // }
         if(mData[mCount].score < mData[index_par].score){
             std::swap(mData[index_par], mData[index]);
+            index = index_par;
         }
         else{
             break;
         }
-        index = index_par;
     }
     mCount ++;
 }
