@@ -1,5 +1,6 @@
 #include "WordList.h"
 #include <iostream>
+#include <cmath>
 
 float squareRoot(float number) {
     float x0 = number;
