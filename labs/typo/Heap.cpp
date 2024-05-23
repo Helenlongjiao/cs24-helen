@@ -40,7 +40,7 @@ Heap::Entry Heap::pop(){
         throw std::underflow_error("Heap is empty");
     }
     Entry min = mData[0];
-    mData[0] = mData[mCount];
+    mData[0] = mData[mCount - 1];
     mCount --;
 
     size_t index = 0;
@@ -104,9 +104,12 @@ void Heap::push(const std::string& value, float score){
     mData[mCount].score = score;
     mData[mCount].value = value;
 
-    size_t index = mCount;
-    while(mCount > 0){
-        size_t index_par = (mCount - 1) / 2;
+    int index = mCount;
+    while(true){
+        int index_par = (mCount - 1) / 2;
+        if(index_par <= 0){
+            break;
+        }
         if(mData[mCount].score < mData[index_par].score){
             std::swap(mData[index_par], mData[index]);
         }

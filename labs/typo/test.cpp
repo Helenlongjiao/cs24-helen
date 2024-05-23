@@ -11,6 +11,8 @@ int main() {
     heap.push("b",2);
     heap.push("c",3);
 
+    std::cout<<heap.pop().value;
+
     for(size_t i = 0; i < heap.count(); ++i){
         std::cout<<heap.lookup(i).value<<"\n";
     }
