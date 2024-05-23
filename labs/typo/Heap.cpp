@@ -40,7 +40,7 @@ Heap::Entry Heap::pop(){
         throw std::underflow_error("Heap is empty");
     }
     Entry min = mData[0];
-    mData[0] = mData[mCount - 1];
+    std::swap(mData[0], mData[mCount - 1]);
     mCount --;
 
     size_t index = 0;
