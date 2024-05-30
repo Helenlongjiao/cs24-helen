@@ -1,9 +1,7 @@
-#include "Point.h"
+#include <iostream>
 
-std::istream& operator >> (std::istream& stream, Point& point) {
-  return stream >> point.x >> point.y >> point.z;
-}
+int main () {
+  std::cout << "Hello World!\n";
 
-std::ostream& operator << (std::ostream& stream, const Point& point) {
-  return stream << '(' << point.x << ", " << point.y << ", " << point.z << ')';
+  return 0;
 }
