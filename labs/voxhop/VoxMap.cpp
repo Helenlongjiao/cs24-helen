@@ -22,7 +22,7 @@ VoxMap::VoxMap(std::istream& stream) {
 }
 
 VoxMap::~VoxMap() {
-
+//try
 }
 
 Route VoxMap::route(Point src, Point dst) {
