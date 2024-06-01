@@ -9,12 +9,18 @@ VoxMap::VoxMap(std::istream& stream) {
   stream >> mWidth >> mDepth >> mHeight;
   temp3Darray.resize(mWidth, std::vector<std::vector<bool>>(mDepth, std::vector<bool>(mHeight, false)));
 
-  std::string line;
+  std::string line = "";
 
   for (int z = 0; z < mHeight; ++z) {
     std::getline(stream, line);
+    if(line.empty()){
+      continue;
+    }
     for (int y = 0; y < mDepth; ++y) {
       std::getline(stream, line);
+      if(line.empty()){
+        continue;
+      }
       for (int x = 0; x < mWidth / 4; ++x) {
         char hex = line[x];
         // int value = std::stoi(std::string(1, hex), 0, 16);
@@ -143,7 +149,6 @@ Route VoxMap::route(Point src, Point dst) {
       return Result(preResult);
     }
   }
-
   throw std::runtime_error("An error occurred!");
 }
 
