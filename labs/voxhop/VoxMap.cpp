@@ -17,14 +17,23 @@ VoxMap::VoxMap(std::istream& stream) {
       std::getline(stream, line);
       for (int x = 0; x < mWidth / 4; ++x) {
         char hex = line[x];
-        int value = std::stoi(std::string(1, hex), nullptr, 16);
+        // int value = std::stoi(std::string(1, hex), 0, 16);
+        int value = 0;
+        if (hex >= '0' && hex <= '9') {
+            value = hex - '0';  // Convert '0' to '9' to integer 0 to 9
+        } else if (hex >= 'A' && hex <= 'F') {
+            value = hex - 'A' + 10;  // Convert 'A' to 'F' to integer 10 to 15
+        } else if (hex >= 'a' && hex <= 'f') {
+            value = hex - 'a' + 10;  // Convert 'a' to 'f' to integer 10 to 15 (for lowercase hex digits)
+        } else {
+            // Handle error: hex is not a valid hex digit
+        }
         for (int i = 0; i < 4; ++i) {
           temp3Darray[x*4 + i][y][z] = (value & (8 >> i)) != 0;
         }
       }
     }
   }
-
 
   // Build mGraph from 3D ARR
   for (int x = 0; x < mWidth; ++x) {
