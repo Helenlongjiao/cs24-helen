@@ -4,10 +4,27 @@
 
 VoxMap::VoxMap(std::istream& stream) {
   // Build Temporary 3D Array
-  // temp3Darray.resize(mWidth, std::vector<std::vector<bool>>(mDepth, std::vector<bool>(mHeight, false)));
   
   std::vector<std::vector<std::vector<bool>>> temp3Darray;
   stream >> mWidth >> mDepth >> mHeight;
+
+  temp3Darray.resize(mWidth, std::vector<std::vector<bool>>(mDepth, std::vector<bool>(mHeight, false)));
+
+  // temp3Darray.resize(mWidth);
+  // for (int i = 0; i < mWidth; ++i) {
+  //   temp3Darray[i].resize(mDepth);
+  //   for (int j = 0; j < mDepth; ++j) {
+  //     temp3Darray[i][j].resize(mHeight);
+  //   }
+  // }
+  // for (int i = 0; i < mWidth; ++i) {
+  //   for (int j = 0; j < mDepth; ++j) {
+  //     for (int k = 0; k < mHeight; ++k) {
+  //       temp3Darray[i][j][k] = static_cast<int>(i * mDepth * mHeight + j * mHeight + k);
+  //     }
+  //   }
+  // }
+
 
   std::string line;
 
