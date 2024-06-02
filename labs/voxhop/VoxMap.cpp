@@ -47,9 +47,9 @@ VoxMap::VoxMap(std::istream& stream) {
     for (int y = 0; y < mDepth; ++y) {
       for (int x = 0; x < mWidth; ++x) {
         if (temp3Darray[x][y][z]) {
-          std::cout<< "1";
+          // std::cout<< "1";
         } else {
-          std::cout<< "0";
+          // std::cout<< "0";
         }
       }
     }
