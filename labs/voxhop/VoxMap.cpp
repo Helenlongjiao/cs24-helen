@@ -53,30 +53,30 @@ VoxMap::VoxMap(std::istream& stream) {
         Point northPt(x, y-1, z);
         if (hasPath(currPt, northPt, temp3Darray)){
           newSet.insert(northPt);
-          std::cout<< "insert North \n";
+          // std::cout<< "insert North \n";
         }
         // South
         Point southPt(x, y+1, z);
         if (hasPath(currPt, southPt, temp3Darray)){
           newSet.insert(southPt);
-          std::cout<< "insert South \n";
+          // std::cout<< "insert South \n";
         }
         // West
         Point westPt(x-1, y, z);
         if (hasPath(currPt, westPt, temp3Darray)){
           newSet.insert(westPt);
-          std::cout<< "insert West \n";
+          // //std::cout<< "insert West \n";
         }
         // East
         Point eastPt(x+1, y, z);
         if (hasPath(currPt, eastPt, temp3Darray)){
           newSet.insert(eastPt);
-          std::cout<< "insert East \n";
+          //std::cout<< "insert East \n";
         }
-        std::cout<< "trying to add set";
+        //std::cout<< "trying to add set";
         mGraph[currPt] = newSet;
         for(auto itr = newSet.begin(); itr != newSet.end(); itr++) {
-          std::cout<< *itr;
+          //std::cout<< *itr;
         }
       }
       // std::cout<< "\n";
@@ -122,14 +122,14 @@ Route VoxMap::route(Point src, Point dst) {
   wQueue.push(src);
 
   while(wQueue.size() > 0) {
-    std::cout<<wQueue.size()<<"\n";
+    //std::cout<<wQueue.size()<<"\n";
 
     Point currPt = wQueue.front();
     wQueue.pop();
 
     std::set<Point> currSet = mGraph[currPt];
     for(auto itr = currSet.begin(); itr != currSet.end(); itr++) {
-      std::cout<< *itr;
+      //std::cout<< *itr;
       Point currSubPt = *itr;
 
       // add to pMap(map)
@@ -143,10 +143,10 @@ Route VoxMap::route(Point src, Point dst) {
       // add to visited(set)
       vSet.insert(currSubPt);
     }
-    std::cout << "finished for loop\n";
+    //std::cout << "finished for loop\n";
 
     if(vSet.find(dst) != vSet.end()) {
-      std::cout <<"find destination\n";
+      //std::cout <<"find destination\n";
 
       std::vector<Point> preResult;
       Point holder = dst;
@@ -192,6 +192,9 @@ bool VoxMap::isInBounds(const Point& point) {
 
 bool VoxMap::isWalkable(const Point& point,  std::vector<std::vector<std::vector<bool>>> temp3Darray) {
   // current tile is not empty
+  if(!isInBounds(point)) {
+    return false;
+  }
   if (temp3Darray[point.x][point.y][point.z]) {
     // std::cout << "Not walkable because not empty" << point << "\n";
     return false;
@@ -223,13 +226,13 @@ bool VoxMap::hasPath(const Point& src, const Point& dst, std::vector<std::vector
   }
   // case 1 - src and dst is at same level
   if (src.z == dst.z) {
-    std::cout<< "Has Path \n";
+    //std::cout<< "Has Path \n";
     return true;
   }
   // case 2 - climb up by 1 level 
   Point pointAbove = Point(src.x, src.y, src.z + 1);
   if (dst.z - src.z == 1 && isInBounds(pointAbove) && !temp3Darray[src.x][src.y][src.z + 1]) {
-    std::cout<< "Has Path \n";
+    //std::cout<< "Has Path \n";
     return true;
   }
   // case 3 - free fall
@@ -239,7 +242,7 @@ bool VoxMap::hasPath(const Point& src, const Point& dst, std::vector<std::vector
         return false;
       }
     }
-    std::cout<< "Has Path \n";
+    //std::cout<< "Has Path \n";
     return true;
   }
   // std::cout<< "No Path \n";
