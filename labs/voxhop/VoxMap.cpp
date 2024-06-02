@@ -1,17 +1,17 @@
+
 #include "VoxMap.h"
 #include "Errors.h"
 
 VoxMap::VoxMap(std::istream& stream) {
   // Build Temporary 3D Array
-  std::vector<std::vector<std::vector<bool>>> temp3Darray;
+  // temp3Darray.resize(mWidth, std::vector<std::vector<bool>>(mDepth, std::vector<bool>(mHeight, false)));
   
+  std::vector<std::vector<std::vector<bool>>> temp3Darray;
   stream >> mWidth >> mDepth >> mHeight;
-  temp3Darray.resize(mWidth, std::vector<std::vector<bool>>(mDepth, std::vector<bool>(mHeight, false)));
 
   std::string line;
 
   for (int z = 0; z < mHeight; ++z) {
-    std::getline(stream, line);
     for (int y = 0; y < mDepth; ++y) {
       std::getline(stream, line);
       if(line.empty()){
