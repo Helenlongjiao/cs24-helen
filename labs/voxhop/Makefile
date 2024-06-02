@@ -30,4 +30,4 @@ VoxMap.o: VoxMap.cpp VoxMap.h Errors.h Route.h
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 clean:
-	rm -f main test *.o
+	rm -f main test *.o Route.o VoxMap.o Point.o
