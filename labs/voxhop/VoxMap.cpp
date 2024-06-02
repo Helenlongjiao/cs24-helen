@@ -8,7 +8,7 @@ VoxMap::VoxMap(std::istream& stream) {
   std::vector<std::vector<std::vector<bool>>> temp3Darray;
   stream >> mWidth >> mDepth >> mHeight;
 
-  temp3Darray.resize(mWidth, std::vector<std::vector<bool>>(mDepth, std::vector<bool>(mHeight, false)));
+  temp3Darray.resize(mWidth+2, std::vector<std::vector<bool>>(mDepth+2, std::vector<bool>(mHeight+2, false)));
 
   std::string line;
 
