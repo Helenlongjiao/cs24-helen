@@ -8,22 +8,7 @@ VoxMap::VoxMap(std::istream& stream) {
   std::vector<std::vector<std::vector<bool>>> temp3Darray;
   stream >> mWidth >> mDepth >> mHeight;
 
-  temp3Darray.resize(mWidth + 2, std::vector<std::vector<bool>>(mDepth + 2, std::vector<bool>(mHeight + 2, false)));
-
-  // temp3Darray.resize(mWidth);
-  // for (int i = 0; i < mWidth; ++i) {
-  //   temp3Darray[i].resize(mDepth);
-  //   for (int j = 0; j < mDepth; ++j) {
-  //     temp3Darray[i][j].resize(mHeight);
-  //   }
-  // }
-  // for (int i = 0; i < mWidth; ++i) {
-  //   for (int j = 0; j < mDepth; ++j) {
-  //     for (int k = 0; k < mHeight; ++k) {
-  //       temp3Darray[i][j][k] = static_cast<int>(i * mDepth * mHeight + j * mHeight + k);
-  //     }
-  //   }
-  // }
+  temp3Darray.resize(mWidth, std::vector<std::vector<bool>>(mDepth, std::vector<bool>(mHeight, false)));
 
   std::string line;
 
@@ -47,9 +32,9 @@ VoxMap::VoxMap(std::istream& stream) {
     for (int y = 0; y < mDepth; ++y) {
       for (int x = 0; x < mWidth; ++x) {
         if (temp3Darray[x][y][z]) {
-          // std::cout<< "1";
+          std::cout<< "1";
         } else {
-          // std::cout<< "0";
+          std::cout<< "0";
         }
       }
     }
@@ -144,6 +129,7 @@ Route VoxMap::route(Point src, Point dst) {
     wQueue.pop();
 
     std::set<Point> currSet = mGraph[currPt];
+    std::cout << "spot 1\n";
     for(auto itr = currSet.begin(); itr != currSet.end(); itr++) {
       //std::cout<< *itr;
       Point currSubPt = *itr;
@@ -170,12 +156,15 @@ Route VoxMap::route(Point src, Point dst) {
       while( pMap.find(holder) != pMap.end() ) {
         Point pt = pMap.find(holder)->second;
         preResult.push_back(pt);
+        holder = pMap[holder];
       }
 
       return Result(preResult);
     }
   }
-  throw std::runtime_error("An error occurred!");
+  // throw std::runtime_error("An error occurred!");
+  Route out;
+  return out;
 }
 
 bool VoxMap::isValid(const Point& point) {
