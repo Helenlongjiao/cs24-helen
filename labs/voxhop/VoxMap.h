@@ -22,9 +22,9 @@ class VoxMap {
   std::map<Point, std::set<Point> > mGraph;
 
   bool isValid(const Point& point);
-  bool isWalkable(const Point& point,  std::vector<std::vector<std::vector<bool>>> temp3Darray);
+  bool isWalkable(const Point& point,  std::vector<std::vector<std::vector<bool>>>& temp3Darray);
   bool isInBounds(const Point& point);
-  bool hasPath(const Point& src, const Point& dst, std::vector<std::vector<std::vector<bool>>> temp3Darray);
+  bool hasPath(const Point& src, const Point& dst, std::vector<std::vector<std::vector<bool>>>& temp3Darray);
 
 public:
   VoxMap(std::istream& stream);

@@ -234,7 +234,7 @@ bool VoxMap::isInBounds(const Point& point) {
   return valid;
 }
 
-bool VoxMap::isWalkable(const Point& point,  std::vector<std::vector<std::vector<bool>>> temp3Darray) {
+bool VoxMap::isWalkable(const Point& point,  std::vector<std::vector<std::vector<bool>>>& temp3Darray) {
   if(!isInBounds(point)) {
     return false;
   }
@@ -250,7 +250,7 @@ bool VoxMap::isWalkable(const Point& point,  std::vector<std::vector<std::vector
   return false;
 }
 
-bool VoxMap::hasPath(const Point& src, const Point& dst, std::vector<std::vector<std::vector<bool>>> temp3Darray){
+bool VoxMap::hasPath(const Point& src, const Point& dst, std::vector<std::vector<std::vector<bool>>>& temp3Darray){
   // check if src can go to dst by one step
   if (!isWalkable(src, temp3Darray) || !isWalkable(dst, temp3Darray)) {
     // std::cout << "Ptr: " << dst << " is not walkable\n";
