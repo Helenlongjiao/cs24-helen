@@ -13,6 +13,10 @@
 #include "Point.h"
 #include "Route.h"
 
+// class 3DArray {
+
+// };
+
 class VoxMap {
   int           mWidth, mDepth, mHeight;
   std::map<Point, std::set<Point> > mGraph;

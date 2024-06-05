@@ -19,15 +19,23 @@ bool Point::operator!=(const Point & other) const{
 }
 
 bool Point::operator>(const Point & other) const{
-  int parsedPoint = this -> x * 100 + this -> y * 10 + this -> z;
-  int otherPoint = other.x * 100 + other.y * 10 + other.z;
-  return parsedPoint > otherPoint;
+  if(this->x != other.x) return this->x > other.x;
+  if(this->y != other.y) return this->y > other.y;
+  return this->z > other.z;
+
+  // int parsedPoint = this -> x * 100 + this -> y * 10 + this -> z;
+  // int otherPoint = other.x * 100 + other.y * 10 + other.z;
+  // return parsedPoint > otherPoint;
 }
 
 bool Point::operator<(const Point & other) const{
-  int parsedPoint = this -> x * 100 + this -> y * 10 + this -> z;
-  int otherPoint = other. x * 100 + other.y * 10 + other.z;
-  return parsedPoint < otherPoint;
+  if(this->x != other.x) return this->x < other.x;
+  if(this->y != other.y) return this->y < other.y;
+  return this->z < other.z;
+
+  // int parsedPoint = this -> x * 100 + this -> y * 10 + this -> z;
+  // int otherPoint = other. x * 100 + other.y * 10 + other.z;
+  // return parsedPoint < otherPoint;
 }
 
 

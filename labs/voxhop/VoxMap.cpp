@@ -7,8 +7,7 @@ VoxMap::VoxMap(std::istream& stream) {
   
   std::vector<std::vector<std::vector<bool>>> temp3Darray;
   stream >> mWidth >> mDepth >> mHeight;
-
-  temp3Darray.resize(mWidth + 2, std::vector<std::vector<bool>>(mDepth +2, std::vector<bool>(mHeight +2, false)));
+  temp3Darray.resize(mWidth + 2, std::vector<std::vector<bool>>(mDepth + 2, std::vector<bool>(mHeight + 2, false)));
 
   std::string line;
 
@@ -33,63 +32,87 @@ VoxMap::VoxMap(std::istream& stream) {
   //   for (int y = 0; y < mDepth; ++y) {
   //     for (int x = 0; x < mWidth; ++x) {
   //       if (temp3Darray[x][y][z]) {
-  //         std::cout << x << y << z;
-  //         std::cout << "  1\n";
+  //         // std::cout << x << y << z;
+  //         std::cout << "  1";
   //       } else {
-  //         std::cout << x << y << z;
-  //         std::cout<< "  0\n";
+  //         // std::cout << x << y << z;
+  //         std::cout<< "  0";
   //       }
   //     }
+  //     std::cout<<"\n";
   //   }
   // }
 
   // Build mGraph from 3D ARR
-  for (int z = 0; z < mHeight; ++z) {
+  for (int z = 1; z < mHeight; ++z) {
     for (int y = 0; y < mDepth; ++y) {
+      // std::cout << "\n" << "\n" << "y = " << y << "\n" << "\n";
       for (int x = 0; x < mWidth; ++x) {
-
 
         Point currPt(x, y, z);
 
-        // std::cout << temp3Darray[x][y][z];
-        // std::cout << currPt << "\n";
-
-
-        if (!isWalkable(currPt, temp3Darray)) {
+        if (!isWalkable(currPt, temp3Darray)) {       
           continue;
         }
-
         
         // create a set to save into map
         std::set<Point> newSet;
+        // std::cout << "\n";
+
+        // //std::cout << currPt << "\n";
 
         // North
         Point northPt(x, y-1, z);
-        if (hasPath(currPt, northPt, temp3Darray)){
-          newSet.insert(northPt);
+        for(int i = 1; i < z +1; i++) {
+          northPt.z = i;
+          if(hasPath(currPt, northPt, temp3Darray)) {
+            //std::cout<<"Ptr: "<<northPt<<"\n";
+            newSet.insert(northPt);
+            break;
+          }
         }
 
         // South
         Point southPt(x, y+1, z);
-        if (hasPath(currPt, southPt, temp3Darray)){
-          newSet.insert(southPt);
+        for(int i = 1; i < z+1; i++) {
+          southPt.z = i;
+          if(hasPath(currPt, southPt, temp3Darray)) {
+            //std::cout<<"Ptr: "<<southPt<<"\n";
+            newSet.insert(southPt);
+            break;
+          }
         }
 
         // West
         Point westPt(x-1, y, z);
-        if (hasPath(currPt, westPt, temp3Darray)){
-          newSet.insert(westPt);
+        for(int i = 1; i < z+1; i++) {
+          westPt.z = i;
+          if(hasPath(currPt, westPt, temp3Darray)) {
+            //std::cout<<"Ptr: "<<westPt<<"\n";
+            newSet.insert(westPt);
+            break;
+          }
         }
 
         // East
         Point eastPt(x+1, y, z);
-        if (hasPath(currPt, eastPt, temp3Darray)){
-          newSet.insert(eastPt);
+        for(int i = 1; i < z+1; i++) {
+          eastPt.z = i;
+          if(hasPath(currPt, eastPt, temp3Darray)) {
+            //std::cout<<"Ptr: "<<eastPt<<"\n";
+            newSet.insert(eastPt);
+            break;
+          }
         }
 
+        //std::cout << "currPt at last"<<currPt << "\n" << "from set: ";
+
         mGraph[currPt] = newSet;
-        for(auto itr = newSet.begin(); itr != newSet.end(); itr++) {
-        }
+        // for(auto itr = mGraph[currPt].begin(); itr != mGraph[currPt].end(); itr++) {
+        //   std::cout << *itr;
+        // }
+        
+        //std::cout << "\n";
       }
     }
   }
@@ -97,8 +120,8 @@ VoxMap::VoxMap(std::istream& stream) {
   // for(auto itr = mGraph.begin(); itr != mGraph.end(); itr++) {
   //   std::cout <<"Node" << itr->first << "\n";
   //   std::set<Point> sub = itr->second;
+  //   std::cout <<"Can go to\n";
   //   for(auto it = sub.begin(); it != sub.end(); it++) {
-  //     std::cout <<"Can go to\n";
   //     std::cout << *it << "\n";
   //   }
   //   std::cout << "\n";
@@ -147,13 +170,17 @@ Route VoxMap::route(Point src, Point dst) {
     Point currPt = wQueue.front();
     wQueue.pop();
 
+    // std::cout << "\n" << "currPt is: " << currPt << "Subset is: ";
+
     std::set<Point> currSet = mGraph[currPt];
+    
     for(auto itr = currSet.begin(); itr != currSet.end(); itr++) {
       Point currSubPt = *itr;
       
       if(vSet.find(currSubPt) == vSet.end()) {
         pMap[currSubPt] = currPt;
         wQueue.push(currSubPt);  
+        // std::cout << currSubPt;
       }
       vSet.insert(currSubPt);
 
@@ -227,12 +254,15 @@ bool VoxMap::isWalkable(const Point& point,  std::vector<std::vector<std::vector
 bool VoxMap::hasPath(const Point& src, const Point& dst, std::vector<std::vector<std::vector<bool>>> temp3Darray){
   // check if src can go to dst by one step
   if (!isWalkable(src, temp3Darray) || !isWalkable(dst, temp3Darray)) {
+    // std::cout << "Ptr: " << dst << " is not walkable\n";
     return false;
   }
+
   // if they are separated by more than 1 tile, no path
   if (abs(src.x - dst.x) > 1 || abs(src.y - dst.y) > 1) {
     return false;
   }
+
   // case 1 - src and dst is at same level
   if (src.z == dst.z) {
     return true;
