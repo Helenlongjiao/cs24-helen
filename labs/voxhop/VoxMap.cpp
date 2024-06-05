@@ -203,8 +203,7 @@ Route VoxMap::route(Point src, Point dst) {
       return Result(preResult);
     }
   }
-  Route out;
-  return out;
+  throw NoRoute(src,dst);
 }
 
 bool VoxMap::isValid(const Point& point) {
