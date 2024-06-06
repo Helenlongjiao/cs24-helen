@@ -11,9 +11,18 @@
 #include <queue>
 #include <unordered_set>
 #include <list>
+#include <cmath>
 
 #include "Point.h"
 #include "Route.h"
+
+struct Compare {
+    typedef Point value_type;
+
+    bool operator()(const Point& a, const Point& b) const {
+        return a.dis_to_dst < b.dis_to_dst;
+    }
+};
 
 
 class VoxMap {

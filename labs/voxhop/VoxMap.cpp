@@ -154,6 +154,14 @@ Route Result(std::vector<Point> vector) {
   return route;
 }
 
+double qifa(Point src, Point dst) {
+  double x = src.x - dst.x;
+  double y = src.y - dst.y;
+  double z = src.z - dst.z;
+
+  return sqrt(x*x + y*y + z*z);
+}
+
 Route VoxMap::route(Point src, Point dst) {
   if(!isValid(src) || !isValid(dst)) {
     std::runtime_error("An error occurred!");
@@ -165,85 +173,30 @@ Route VoxMap::route(Point src, Point dst) {
     throw InvalidPoint(dst);
   }
 
-  std::set<Point>        vSet;
-  // BFS
-  //std::queue<Point>      wQueue;
-  //DFS
-  std::stack<Point>      wQueue;
-  std::map<Point, Point> pMap;
+  std::set<Point>                                       vSet;
+  std::priority_queue<Point, std::vector<Point>, Compare> minHeap;
+  std::map<Point, Point>                                pMap;
 
+  src.dis_to_dst = qifa(src, dst);
   vSet.insert(src);
-  wQueue.push(src);
+  minHeap.push(src);
 
-  while(wQueue.size() > 0) {
+  while(minHeap.size() > 0) {
 
-    Point currPt = wQueue.top();
-    wQueue.pop();
-
-    // std::cout << "\n" << "currPt is: " << currPt << "Subset is: ";
+    Point currPt = minHeap.top();
+    minHeap.pop();
 
     std::set<Point> currSet = mGraph[currPt];
     
     for(auto itr = currSet.begin(); itr != currSet.end(); itr++) {
       Point currSubPt = *itr;
-      
-      if(vSet.find(currSubPt) == vSet.end()) {
-        if( (abs(currPt.x - dst.x) >= abs(currSubPt.x - dst.x)) && 
-            (abs(currPt.y - dst.y) >= abs(currSubPt.y - dst.y)) && 
-            (abs(currPt.z - dst.z) >= abs(currSubPt.z - dst.z)) ) {
-          pMap[currSubPt] = currPt;
-          wQueue.push(currSubPt);  
-        }
-        // std::cout << currSubPt;
-      }
-      vSet.insert(currSubPt);
-
-    }
-    vSet.insert(currPt);
-
-    if(vSet.find(dst) != vSet.end()) {
-
-      std::vector<Point> preResult;
-      Point holder = dst;
-
-      preResult.push_back(dst);
-      
-      while( pMap.find(holder) != pMap.end() ) {
-        Point pt = pMap.find(holder)->second;
-        preResult.push_back(pt);
-        holder = pt;
-      }
-
-      return Result(preResult);
-    }
-  }
-
-  std::queue<Point> NewQueue;;     
-  vSet.clear();
-  pMap.clear();
-
-  vSet.insert(src);
-  NewQueue.push(src);
-  
-  while(NewQueue.size() > 0) {
-
-    Point currPt = NewQueue.front();
-    NewQueue.pop();
-
-    // std::cout << "\n" << "currPt is: " << currPt << "Subset is: ";
-
-    std::set<Point> currSet = mGraph[currPt];
-    
-    for(auto itr = currSet.begin(); itr != currSet.end(); itr++) {
-      Point currSubPt = *itr;
+      currSubPt.dis_to_dst = qifa(currSubPt, dst);
       
       if(vSet.find(currSubPt) == vSet.end()) {
         pMap[currSubPt] = currPt;
-        NewQueue.push(currSubPt);  
-        // std::cout << currSubPt;
+        minHeap.push(currSubPt); 
       }
       vSet.insert(currSubPt);
-
     }
     vSet.insert(currPt);
 
@@ -263,7 +216,6 @@ Route VoxMap::route(Point src, Point dst) {
       return Result(preResult);
     }
   }
-  
   throw NoRoute(src,dst);
 }
 
