@@ -117,15 +117,15 @@ VoxMap::VoxMap(std::istream& stream) {
     }
   }
 
-  for(auto itr = mGraph.begin(); itr != mGraph.end(); itr++) {
-    std::cout <<"Node" << itr->first << "\n";
-    std::set<Point> sub = itr->second;
-    std::cout <<"Can go to\n";
-    for(auto it = sub.begin(); it != sub.end(); it++) {
-      std::cout << *it << "\n";
-    }
-    std::cout << "\n";
-  }
+  // for(auto itr = mGraph.begin(); itr != mGraph.end(); itr++) {
+  //   std::cout <<"Node" << itr->first << "\n";
+  //   std::set<Point> sub = itr->second;
+  //   std::cout <<"Can go to\n";
+  //   for(auto it = sub.begin(); it != sub.end(); it++) {
+  //     std::cout << *it << "\n";
+  //   }
+  //   std::cout << "\n";
+  // }
   
 }
 
@@ -301,6 +301,7 @@ bool VoxMap::hasPath(const Point& src, const Point& dst, std::vector<std::vector
   // check if src can go to dst by one step
   if (!isWalkable(src, temp3Darray) || !isWalkable(dst, temp3Darray)) {
     // std::cout << "Ptr: " << dst << " is not walkable\n";
+    // throw InvalidPoint(src);
     return false;
   }
 
