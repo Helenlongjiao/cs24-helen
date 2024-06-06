@@ -117,15 +117,15 @@ VoxMap::VoxMap(std::istream& stream) {
     }
   }
 
-  // for(auto itr = mGraph.begin(); itr != mGraph.end(); itr++) {
-  //   std::cout <<"Node" << itr->first << "\n";
-  //   std::set<Point> sub = itr->second;
-  //   std::cout <<"Can go to\n";
-  //   for(auto it = sub.begin(); it != sub.end(); it++) {
-  //     std::cout << *it << "\n";
-  //   }
-  //   std::cout << "\n";
-  // }
+  for(auto itr = mGraph.begin(); itr != mGraph.end(); itr++) {
+    std::cout <<"Node" << itr->first << "\n";
+    std::set<Point> sub = itr->second;
+    std::cout <<"Can go to\n";
+    for(auto it = sub.begin(); it != sub.end(); it++) {
+      std::cout << *it << "\n";
+    }
+    std::cout << "\n";
+  }
   
 }
 
@@ -178,8 +178,55 @@ Route VoxMap::route(Point src, Point dst) {
       Point currSubPt = *itr;
       
       if(vSet.find(currSubPt) == vSet.end()) {
-        pMap[currSubPt] = currPt;
-        wQueue.push(currSubPt);  
+        if( (abs(currPt.x - dst.x) >= abs(currSubPt.x - dst.x)) && 
+            (abs(currPt.y - dst.y) >= abs(currSubPt.y - dst.y)) && 
+            (abs(currPt.z - dst.z) >= abs(currSubPt.z - dst.z)) ) {
+          pMap[currSubPt] = currPt;
+          wQueue.push(currSubPt);  
+        }
+        // std::cout << currSubPt;
+      }
+      vSet.insert(currSubPt);
+
+    }
+    vSet.insert(currPt);
+
+    if(vSet.find(dst) != vSet.end()) {
+
+      std::vector<Point> preResult;
+      Point holder = dst;
+
+      preResult.push_back(dst);
+      
+      while( pMap.find(holder) != pMap.end() ) {
+        Point pt = pMap.find(holder)->second;
+        preResult.push_back(pt);
+        holder = pt;
+      }
+
+      return Result(preResult);
+    }
+  }
+  
+  while(wQueue.size() > 0) {
+
+    Point currPt = wQueue.front();
+    wQueue.pop();
+
+    // std::cout << "\n" << "currPt is: " << currPt << "Subset is: ";
+
+    std::set<Point> currSet = mGraph[currPt];
+    
+    for(auto itr = currSet.begin(); itr != currSet.end(); itr++) {
+      Point currSubPt = *itr;
+      
+      if(vSet.find(currSubPt) == vSet.end()) {
+        if( (abs(currPt.x - dst.x) <= abs(currSubPt.x - dst.x)) && 
+            (abs(currPt.y - dst.y) <= abs(currSubPt.y - dst.y)) && 
+            (abs(currPt.z - dst.z) <= abs(currSubPt.z - dst.z)) ) {
+          pMap[currSubPt] = currPt;
+          wQueue.push(currSubPt);  
+        }
         // std::cout << currSubPt;
       }
       vSet.insert(currSubPt);
