@@ -7,6 +7,7 @@
 #include <istream>
 #include <vector>
 #include <string>
+#include <stack>
 #include <queue>
 #include <unordered_set>
 #include <list>
