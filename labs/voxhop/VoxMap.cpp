@@ -63,7 +63,7 @@ VoxMap::VoxMap(std::istream& stream) {
 
         // North
         Point northPt(x, y-1, z);
-        for(int i = 1; i < z +1; i++) {
+        for(int i = 1; i <= z+1; i++) {
           northPt.z = i;
           if(hasPath(currPt, northPt, temp3Darray)) {
             //std::cout<<"Ptr: "<<northPt<<"\n";
@@ -74,7 +74,7 @@ VoxMap::VoxMap(std::istream& stream) {
 
         // South
         Point southPt(x, y+1, z);
-        for(int i = 1; i < z+1; i++) {
+        for(int i = 1; i <= z+1; i++) {
           southPt.z = i;
           if(hasPath(currPt, southPt, temp3Darray)) {
             //std::cout<<"Ptr: "<<southPt<<"\n";
@@ -85,7 +85,7 @@ VoxMap::VoxMap(std::istream& stream) {
 
         // West
         Point westPt(x-1, y, z);
-        for(int i = 1; i < z+1; i++) {
+        for(int i = 1; i <= z+1; i++) {
           westPt.z = i;
           if(hasPath(currPt, westPt, temp3Darray)) {
             //std::cout<<"Ptr: "<<westPt<<"\n";
@@ -96,7 +96,7 @@ VoxMap::VoxMap(std::istream& stream) {
 
         // East
         Point eastPt(x+1, y, z);
-        for(int i = 1; i < z+1; i++) {
+        for(int i = 1; i <= z+1; i++) {
           eastPt.z = i;
           if(hasPath(currPt, eastPt, temp3Darray)) {
             //std::cout<<"Ptr: "<<eastPt<<"\n";
@@ -117,15 +117,15 @@ VoxMap::VoxMap(std::istream& stream) {
     }
   }
 
-  // for(auto itr = mGraph.begin(); itr != mGraph.end(); itr++) {
-  //   std::cout <<"Node" << itr->first << "\n";
-  //   std::set<Point> sub = itr->second;
-  //   std::cout <<"Can go to\n";
-  //   for(auto it = sub.begin(); it != sub.end(); it++) {
-  //     std::cout << *it << "\n";
-  //   }
-  //   std::cout << "\n";
-  // }
+  for(auto itr = mGraph.begin(); itr != mGraph.end(); itr++) {
+    std::cout <<"Node" << itr->first << "\n";
+    std::set<Point> sub = itr->second;
+    std::cout <<"Can go to\n";
+    for(auto it = sub.begin(); it != sub.end(); it++) {
+      std::cout << *it << "\n";
+    }
+    std::cout << "\n";
+  }
   
 }
 
@@ -259,6 +259,7 @@ bool VoxMap::hasPath(const Point& src, const Point& dst, std::vector<std::vector
 
   // if they are separated by more than 1 tile, no path
   if (abs(src.x - dst.x) > 1 || abs(src.y - dst.y) > 1) {
+    // std::cout << "more than one seperation";
     return false;
   }
 
@@ -266,16 +267,17 @@ bool VoxMap::hasPath(const Point& src, const Point& dst, std::vector<std::vector
   if (src.z == dst.z) {
     return true;
   }
+  
   // case 2 - climb up by 1 level 
   Point pointAbove = Point(src.x, src.y, src.z + 1);
   if (dst.z - src.z == 1 && isInBounds(pointAbove) && !temp3Darray[src.x][src.y][src.z + 1]) {
-    std::cout<<"111";
     return true;
   }
+
   // case 3 - free fall
   if (dst.z < src.z) {
-    for(int i = 0; i < abs(src.z - dst.z); ++i) {
-      if (temp3Darray[src.x][src.y][i]) {
+    for(int i = dst.z; i <= abs(src.z); ++i) {
+      if (temp3Darray[dst.x][dst.y][i]) {
         return false;
       }
     }
