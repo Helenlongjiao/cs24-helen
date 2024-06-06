@@ -1,11 +1,12 @@
 
 #include "VoxMap.h"
 #include "Errors.h"
+#define SHIFT 20
 
 VoxMap::VoxMap(std::istream& stream) {
   // Build Temporary 3D Array
   
-  std::vector<std::vector<std::vector<bool>>> temp3Darray;
+  // std::vector<std::vector<std::vector<bool>>> temp3Darray;
   stream >> mWidth >> mDepth >> mHeight;
   temp3Darray.resize(mWidth + 2, std::vector<std::vector<bool>>(mDepth + 2, std::vector<bool>(mHeight + 2, false)));
 
@@ -156,6 +157,12 @@ Route Result(std::vector<Point> vector) {
 Route VoxMap::route(Point src, Point dst) {
   if(!isValid(src) || !isValid(dst)) {
     std::runtime_error("An error occurred!");
+  }
+  if(!isWalkable(src, temp3Darray)){
+    throw InvalidPoint(src);
+  }
+  if(!isWalkable(dst, temp3Darray)){
+    throw InvalidPoint(dst);
   }
 
   std::set<Point>        vSet;

@@ -13,13 +13,11 @@
 #include "Point.h"
 #include "Route.h"
 
-// class 3DArray {
-
-// };
 
 class VoxMap {
   int           mWidth, mDepth, mHeight;
   std::map<Point, std::set<Point> > mGraph;
+  std::vector<std::vector<std::vector<bool>>> temp3Darray;
 
   bool isValid(const Point& point);
   bool isWalkable(const Point& point,  std::vector<std::vector<std::vector<bool>>>& temp3Darray);
