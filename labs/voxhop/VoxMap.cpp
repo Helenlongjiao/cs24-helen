@@ -117,15 +117,15 @@ VoxMap::VoxMap(std::istream& stream) {
     }
   }
 
-  for(auto itr = mGraph.begin(); itr != mGraph.end(); itr++) {
-    std::cout <<"Node" << itr->first << "\n";
-    std::set<Point> sub = itr->second;
-    std::cout <<"Can go to\n";
-    for(auto it = sub.begin(); it != sub.end(); it++) {
-      std::cout << *it << "\n";
-    }
-    std::cout << "\n";
-  }
+  // for(auto itr = mGraph.begin(); itr != mGraph.end(); itr++) {
+  //   std::cout <<"Node" << itr->first << "\n";
+  //   std::set<Point> sub = itr->second;
+  //   std::cout <<"Can go to\n";
+  //   for(auto it = sub.begin(); it != sub.end(); it++) {
+  //     std::cout << *it << "\n";
+  //   }
+  //   std::cout << "\n";
+  // }
   
 }
 
