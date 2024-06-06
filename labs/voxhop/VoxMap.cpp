@@ -207,11 +207,18 @@ Route VoxMap::route(Point src, Point dst) {
       return Result(preResult);
     }
   }
-  
-  while(wQueue.size() > 0) {
 
-    Point currPt = wQueue.front();
-    wQueue.pop();
+  std::queue<Point> NewQueue;;     
+  vSet.clear();
+  pMap.clear();
+
+  vSet.insert(src);
+  NewQueue.push(src);
+  
+  while(NewQueue.size() > 0) {
+
+    Point currPt = NewQueue.front();
+    NewQueue.pop();
 
     // std::cout << "\n" << "currPt is: " << currPt << "Subset is: ";
 
@@ -221,12 +228,8 @@ Route VoxMap::route(Point src, Point dst) {
       Point currSubPt = *itr;
       
       if(vSet.find(currSubPt) == vSet.end()) {
-        if( (abs(currPt.x - dst.x) <= abs(currSubPt.x - dst.x)) && 
-            (abs(currPt.y - dst.y) <= abs(currSubPt.y - dst.y)) && 
-            (abs(currPt.z - dst.z) <= abs(currSubPt.z - dst.z)) ) {
-          pMap[currSubPt] = currPt;
-          wQueue.push(currSubPt);  
-        }
+        pMap[currSubPt] = currPt;
+        NewQueue.push(currSubPt);  
         // std::cout << currSubPt;
       }
       vSet.insert(currSubPt);
@@ -250,6 +253,7 @@ Route VoxMap::route(Point src, Point dst) {
       return Result(preResult);
     }
   }
+  
   throw NoRoute(src,dst);
 }
 
@@ -299,9 +303,13 @@ bool VoxMap::isWalkable(const Point& point,  std::vector<std::vector<std::vector
 
 bool VoxMap::hasPath(const Point& src, const Point& dst, std::vector<std::vector<std::vector<bool>>>& temp3Darray){
   // check if src can go to dst by one step
-  if (!isWalkable(src, temp3Darray) || !isWalkable(dst, temp3Darray)) {
+  if (!isWalkable(src, temp3Darray)) {
     // std::cout << "Ptr: " << dst << " is not walkable\n";
     // throw InvalidPoint(src);
+    return false;
+  }
+  if(!isWalkable(dst, temp3Darray)){
+    // throw InvalidPoint(dst);
     return false;
   }
 

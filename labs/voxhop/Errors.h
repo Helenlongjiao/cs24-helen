@@ -8,6 +8,9 @@ class InvalidPoint {
 public:
   InvalidPoint(Point point): mPoint(point) {}
   const Point& point() const {return mPoint;}
+  void printInvalidPoint() const {
+      std::cout << "Invalid point: " << mPoint << std::endl;
+  }
 };
 
 class NoRoute {
