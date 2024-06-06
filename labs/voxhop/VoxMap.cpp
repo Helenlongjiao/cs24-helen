@@ -144,10 +144,10 @@ Route Result(std::vector<Point> vector) {
       route.push_back(Move::EAST);
     }
     else if(vector[i - 1].y > vector[i].y){
-      route.push_back(Move::NORTH);
+      route.push_back(Move::SOUTH);
     }
     else if(vector[i - 1].y < vector[i].y){
-      route.push_back(Move::SOUTH);
+      route.push_back(Move::NORTH);
     }
   }
   return route;
@@ -228,7 +228,7 @@ bool VoxMap::isInBounds(const Point& point) {
   if (point.x < 0 || point.y < 0 || point.z < 0) {
     valid = false;
   }
-  if (point.x > mWidth || point.y > mDepth || point.z > mHeight) {
+  if (point.x >= mWidth || point.y >= mDepth || point.z >= mHeight) {
     valid = false;
   }
   return valid;
@@ -269,6 +269,7 @@ bool VoxMap::hasPath(const Point& src, const Point& dst, std::vector<std::vector
   // case 2 - climb up by 1 level 
   Point pointAbove = Point(src.x, src.y, src.z + 1);
   if (dst.z - src.z == 1 && isInBounds(pointAbove) && !temp3Darray[src.x][src.y][src.z + 1]) {
+    std::cout<<"111";
     return true;
   }
   // case 3 - free fall
