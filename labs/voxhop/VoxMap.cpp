@@ -1,7 +1,11 @@
 
 #include "VoxMap.h"
 #include "Errors.h"
-#define SHIFT 20
+
+#define ALEVEL 10
+#define BLEVEL 8
+#define CLEVEL 6
+#define THRESHOLD 10
 
 VoxMap::VoxMap(std::istream& stream) {
   // Build Temporary 3D Array
@@ -154,80 +158,38 @@ Route Result(std::vector<Point> vector) {
   return route;
 }
 
+
 Route VoxMap::route(Point src, Point dst) {
+
   if(!isValid(src) || !isValid(dst)) {
     std::runtime_error("An error occurred!");
   }
-  if(!isWalkable(src, temp3Darray)){
-    throw InvalidPoint(src);
-  }
-  if(!isWalkable(dst, temp3Darray)){
-    throw InvalidPoint(dst);
-  }
+
+  std::list<Point> Sets;
 
   std::set<Point>        vSet;
-  std::queue<Point>      wQueue;
+  std::list<Point>       wList;
   std::map<Point, Point> pMap;
 
   vSet.insert(src);
-  wQueue.push(src);
+  wList.push_back(src);
+  wList.front().score = ALEVEL;
 
-  while(wQueue.size() > 0) {
+  while(wList.size() > 0) {
 
-    Point currPt = wQueue.front();
-    wQueue.pop();
+    Point currPt(-1,-1,-1);
 
-    // std::cout << "\n" << "currPt is: " << currPt << "Subset is: ";
-
-    std::set<Point> currSet = mGraph[currPt];
-    
-    for(auto itr = currSet.begin(); itr != currSet.end(); itr++) {
-      Point currSubPt = *itr;
-      
-      if(vSet.find(currSubPt) == vSet.end()) {
-        if( (abs(currPt.x - dst.x) >= abs(currSubPt.x - dst.x)) && 
-            (abs(currPt.y - dst.y) >= abs(currSubPt.y - dst.y)) && 
-            (abs(currPt.z - dst.z) >= abs(currSubPt.z - dst.z)) ) {
-          pMap[currSubPt] = currPt;
-          wQueue.push(currSubPt);  
-        }
-        // std::cout << currSubPt;
+    int grader = THRESHOLD;
+    for (auto itr = wList.begin(); itr != wList.end();) {
+      (*itr).score++;
+      if ((*itr).score >= grader) {
+        currPt = *itr;
+        itr = wList.erase(itr); // Advance iterator after erasing
+      } else {
+        ++itr; // Move to the next element
       }
-      vSet.insert(currSubPt);
-
+      grader += 1;
     }
-    vSet.insert(currPt);
-
-    if(vSet.find(dst) != vSet.end()) {
-
-      std::vector<Point> preResult;
-      Point holder = dst;
-
-      preResult.push_back(dst);
-      
-      while( pMap.find(holder) != pMap.end() ) {
-        Point pt = pMap.find(holder)->second;
-        preResult.push_back(pt);
-        holder = pt;
-      }
-
-      return Result(preResult);
-    }
-  }
-
-  std::queue<Point> NewQueue;;     
-  vSet.clear();
-  pMap.clear();
-
-  vSet.insert(src);
-  NewQueue.push(src);
-  
-  while(NewQueue.size() > 0) {
-
-    Point currPt = NewQueue.front();
-    NewQueue.pop();
-
-    // std::cout << "\n" << "currPt is: " << currPt << "Subset is: ";
 
     std::set<Point> currSet = mGraph[currPt];
     
@@ -236,8 +198,10 @@ Route VoxMap::route(Point src, Point dst) {
       
       if(vSet.find(currSubPt) == vSet.end()) {
         pMap[currSubPt] = currPt;
-        NewQueue.push(currSubPt);  
-        // std::cout << currSubPt;
+        //BFS
+        //wList.push_back(currSubPt);  
+        //DFS
+        wList.push_front(currSubPt);  
       }
       vSet.insert(currSubPt);
 
@@ -256,13 +220,12 @@ Route VoxMap::route(Point src, Point dst) {
         preResult.push_back(pt);
         holder = pt;
       }
-
       return Result(preResult);
     }
   }
-  
   throw NoRoute(src,dst);
 }
+
 
 bool VoxMap::isValid(const Point& point) {
   bool valid = true;
@@ -311,18 +274,14 @@ bool VoxMap::isWalkable(const Point& point,  std::vector<std::vector<std::vector
 bool VoxMap::hasPath(const Point& src, const Point& dst, std::vector<std::vector<std::vector<bool>>>& temp3Darray){
   // check if src can go to dst by one step
   if (!isWalkable(src, temp3Darray)) {
-    // std::cout << "Ptr: " << dst << " is not walkable\n";
-    // throw InvalidPoint(src);
     return false;
   }
   if(!isWalkable(dst, temp3Darray)){
-    // throw InvalidPoint(dst);
     return false;
   }
 
   // if they are separated by more than 1 tile, no path
   if (abs(src.x - dst.x) > 1 || abs(src.y - dst.y) > 1) {
-    // std::cout << "more than one seperation";
     return false;
   }
 

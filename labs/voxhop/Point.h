@@ -8,8 +8,10 @@ struct Point {
   int y;
   int z;
 
+  int score;
+
   Point() {}
-  Point(int x, int y, int z): x(x), y(y), z(z) {}
+  Point(int x, int y, int z): x(x), y(y), z(z) {score = 0;}
 
 public:
   bool operator==(const Point & other) const;

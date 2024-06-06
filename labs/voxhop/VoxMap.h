@@ -9,6 +9,7 @@
 #include <string>
 #include <queue>
 #include <unordered_set>
+#include <list>
 
 #include "Point.h"
 #include "Route.h"
