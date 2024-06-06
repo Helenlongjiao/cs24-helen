@@ -20,7 +20,7 @@ struct Compare {
     typedef Point value_type;
 
     bool operator()(const Point& a, const Point& b) const {
-        return a.dis_to_dst < b.dis_to_dst;
+        return a.dis_to_dst > b.dis_to_dst;
     }
 };
 
