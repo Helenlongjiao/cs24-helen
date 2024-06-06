@@ -10,6 +10,7 @@
 #include <stack>
 #include <queue>
 #include <unordered_set>
+#include <unordered_map>
 #include <list>
 #include <cmath>
 
@@ -23,6 +24,15 @@ struct Compare {
         return a.dis_to_dst > b.dis_to_dst;
     }
 };
+
+namespace std {
+    template <>
+    struct hash<Point> {
+        size_t operator()(const Point& p) const {
+          return p.dis_to_dst * p.x +p.z;
+        }
+    };
+}
 
 
 class VoxMap {

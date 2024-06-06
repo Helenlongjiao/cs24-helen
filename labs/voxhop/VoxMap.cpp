@@ -173,9 +173,9 @@ Route VoxMap::route(Point src, Point dst) {
     throw InvalidPoint(dst);
   }
 
-  std::set<Point>                                       vSet;
+  std::set<Point>                                         vSet;
   std::priority_queue<Point, std::vector<Point>, Compare> minHeap;
-  std::map<Point, Point>                                pMap;
+  std::unordered_map<Point, Point>                        pMap;
 
   src.dis_to_dst = qifa(src, dst);
   vSet.insert(src);
