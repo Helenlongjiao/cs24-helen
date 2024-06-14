@@ -51,6 +51,22 @@ VoxMap::VoxMap(std::istream& stream) {
   // Build mGraph from 3D ARR
 
   fallCache.resize(mWidth + 2, std::vector<std::vector<int>>(mDepth + 2, std::vector<int>(mHeight + 2, -1)));
+  // for (int z = 0; z < mHeight; ++z) {
+  //   for (int y = 0; y < mDepth; ++y) {
+  //     for (int x = 0; x < mWidth; ++x) {
+  //       if (fallCache[x][y][z] == -1) {
+  //         if (temp3Darray[x][y][z]) {
+  //           fallCache[x][y][z] = z;
+  //         } else if (z > 0) {
+  //           fallCache[x][y][z] = fallCache[x][y][z-1];
+  //         } else {
+  //           fallCache[x][y][z] = -99;
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
+
   for (int z = 0; z < mHeight; ++z) {
     for (int y = 0; y < mDepth; ++y) {
       for (int x = 0; x < mWidth; ++x) {
@@ -60,16 +76,28 @@ VoxMap::VoxMap(std::istream& stream) {
           } else if (z > 0) {
             fallCache[x][y][z] = fallCache[x][y][z-1];
           } else {
-            fallCache[x][y][z] = -1;
+            fallCache[x][y][z] = -99;
           }
         }
-      }
-    }
-  }
+        if (fallCache[x + 1][y][z] == -1) {
+          if (temp3Darray[x + 1][y][z]) {
+            fallCache[x + 1][y][z] = z;
+          } else if (z > 0) {
+            fallCache[x + 1][y][z] = fallCache[x + 1][y][z-1];
+          } else {
+            fallCache[x + 1][y][z] = -99;
+          }
+        }
+        if (fallCache[x][y + 1][z] == -1) {
+          if (temp3Darray[x][y + 1][z]) {
+            fallCache[x][y + 1][z] = z;
+          } else if (z > 0) {
+            fallCache[x][y + 1][z] = fallCache[x][y + 1][z-1];
+          } else {
+            fallCache[x][y + 1][z] = -99;
+          }
+        }
 
-  for (int z = 0; z < mHeight; ++z) {
-    for (int y = 0; y < mDepth; ++y) {
-      for (int x = 0; x < mWidth; ++x) {
         Point currPt(x, y, z);
         // std::cout << fallCache[x][y][z] << " ";
 
