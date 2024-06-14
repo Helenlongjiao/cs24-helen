@@ -51,24 +51,27 @@ VoxMap::VoxMap(std::istream& stream) {
   // Build mGraph from 3D ARR
 
   fallCache.resize(mWidth + 2, std::vector<std::vector<int>>(mDepth + 2, std::vector<int>(mHeight + 2, -1)));
-
-
   for (int z = 0; z < mHeight; ++z) {
     for (int y = 0; y < mDepth; ++y) {
       for (int x = 0; x < mWidth; ++x) {
-
         if (fallCache[x][y][z] == -1) {
           if (temp3Darray[x][y][z]) {
             fallCache[x][y][z] = z;
           } else if (z > 0) {
             fallCache[x][y][z] = fallCache[x][y][z-1];
           } else {
-            fallCache[x][y][z] = z;
+            fallCache[x][y][z] = -1;
           }
         }
+      }
+    }
+  }
 
+  for (int z = 0; z < mHeight; ++z) {
+    for (int y = 0; y < mDepth; ++y) {
+      for (int x = 0; x < mWidth; ++x) {
         Point currPt(x, y, z);
-        //std::cout << fallCache[x][y][z] << " ";
+        // std::cout << fallCache[x][y][z] << " ";
 
         if (!isWalkable(currPt, temp3Darray)) {       
           continue;
@@ -122,9 +125,9 @@ VoxMap::VoxMap(std::istream& stream) {
         }
         mGraph[currPt] = newSet;
       }
-      //std::cout << "\n";
+      // std::cout << "\n";
     }
-    //std::cout << "\n";
+    // std::cout << "\n";
   }
 
   // //std::cout << "Build Graph End: "
@@ -132,13 +135,12 @@ VoxMap::VoxMap(std::istream& stream) {
   //                  clock.time_since_epoch()).count() << '\n';
 
   // for(auto itr = mGraph.begin(); itr != mGraph.end(); itr++) {
-  //   //std::cout <<"Node" << itr->first << "\n";
+  //   std::cout <<"Node" << itr->first << "\n";
   //   std::set<Point> sub = itr->second;
-  //   //std::cout <<"Can go to\n";
+  //   std::cout <<"Can go to\n";
   //   for(auto it = sub.begin(); it != sub.end(); it++) {
-  //     //std::cout << *it << "\n";
+  //     std::cout << *it << "\n";
   //   }
-  //   //std::cout << "\n";
   // }
 }
 
@@ -299,7 +301,6 @@ bool VoxMap::hasPath(const Point& src, const Point& dst, std::vector<std::vector
 
   // if they are separated by more than 1 tile, no path
   if (abs(src.x - dst.x) > 1 || abs(src.y - dst.y) > 1) {
-    // //std::cout << "more than one seperation";
     return false;
   }
 
@@ -316,7 +317,7 @@ bool VoxMap::hasPath(const Point& src, const Point& dst, std::vector<std::vector
 
   // case 3 - free fall
   if (dst.z < src.z) {
-    if (fallCache[dst.x][dst.y][src.z] == dst.z) {
+    if (fallCache[dst.x][dst.y][src.z] == (dst.z - 1)) {
       return true;
     }
   }
