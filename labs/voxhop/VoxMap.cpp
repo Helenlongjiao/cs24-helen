@@ -315,8 +315,10 @@ bool VoxMap::hasPath(const Point& src, const Point& dst, std::vector<std::vector
   }
 
   // case 3 - free fall
-  if (fallCache[src.x][src.y][src.z] == dst.z) {
-    return true;
+  if (dst.z < src.z) {
+    if (fallCache[dst.x][dst.y][src.z] == dst.z) {
+      return true;
+    }
   }
   // if (dst.z < src.z) {
   //   for(int i = dst.z; i <= abs(src.z); ++i) {
