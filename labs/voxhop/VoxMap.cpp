@@ -1,9 +1,13 @@
-
 #include "VoxMap.h"
+// #include <chrono>
 #include "Errors.h"
 #define SHIFT 20
 
 VoxMap::VoxMap(std::istream& stream) {
+  // const auto clock = std::chrono::system_clock::now();
+  // //std::cout << "Build Graph Start: "
+  //             << std::chrono::duration_cast<std::chrono::seconds>(
+  //                  clock.time_since_epoch()).count() << '\n';
   // Build Temporary 3D Array
   
   // std::vector<std::vector<std::vector<bool>>> temp3Darray;
@@ -33,7 +37,7 @@ VoxMap::VoxMap(std::istream& stream) {
   //   for (int y = 0; y < mDepth; ++y) {
   //     for (int x = 0; x < mWidth; ++x) {
   //       if (temp3Darray[x][y][z]) {
-  //         // std::cout << x << y << z;
+  //         // ////std::cout << x << y << z;
   //         std::cout << "  1";
   //       } else {
   //         // std::cout << x << y << z;
@@ -45,12 +49,24 @@ VoxMap::VoxMap(std::istream& stream) {
   // }
 
   // Build mGraph from 3D ARR
-  for (int z = 1; z < mHeight; ++z) {
+
+  fallCache.resize(mWidth + 2, std::vector<std::vector<int>>(mDepth + 2, std::vector<int>(mHeight + 2, -1)));
+
+
+  for (int z = 0; z < mHeight; ++z) {
     for (int y = 0; y < mDepth; ++y) {
-      // std::cout << "\n" << "\n" << "y = " << y << "\n" << "\n";
       for (int x = 0; x < mWidth; ++x) {
 
+        if (fallCache[x][y][z] == -1) {
+          if (temp3Darray[x][y][z]) {
+            fallCache[x][y][z] = z;
+          } else {
+            fallCache[x][y][z] = fallCache[x][y][z-1];
+          }
+        }
+
         Point currPt(x, y, z);
+        //std::cout << fallCache[x][y][z] << " ";
 
         if (!isWalkable(currPt, temp3Darray)) {       
           continue;
@@ -58,15 +74,12 @@ VoxMap::VoxMap(std::istream& stream) {
         
         // create a set to save into map
         std::set<Point> newSet;
-        // std::cout << "\n";
-
-        // //std::cout << currPt << "\n";
 
         // North
         Point northPt(x, y-1, z);
         for(int i = 1; i <= z+1; i++) {
           northPt.z = i;
-          if(hasPath(currPt, northPt, temp3Darray)) {
+          if(hasPath(currPt, northPt, temp3Darray, fallCache)) {
             //std::cout<<"Ptr: "<<northPt<<"\n";
             newSet.insert(northPt);
             break;
@@ -77,7 +90,7 @@ VoxMap::VoxMap(std::istream& stream) {
         Point southPt(x, y+1, z);
         for(int i = 1; i <= z+1; i++) {
           southPt.z = i;
-          if(hasPath(currPt, southPt, temp3Darray)) {
+          if(hasPath(currPt, southPt, temp3Darray, fallCache)) {
             //std::cout<<"Ptr: "<<southPt<<"\n";
             newSet.insert(southPt);
             break;
@@ -88,8 +101,8 @@ VoxMap::VoxMap(std::istream& stream) {
         Point westPt(x-1, y, z);
         for(int i = 1; i <= z+1; i++) {
           westPt.z = i;
-          if(hasPath(currPt, westPt, temp3Darray)) {
-            //std::cout<<"Ptr: "<<westPt<<"\n";
+          if(hasPath(currPt, westPt, temp3Darray, fallCache)) {
+            ////std::cout<<"Ptr: "<<westPt<<"\n";
             newSet.insert(westPt);
             break;
           }
@@ -99,35 +112,32 @@ VoxMap::VoxMap(std::istream& stream) {
         Point eastPt(x+1, y, z);
         for(int i = 1; i <= z+1; i++) {
           eastPt.z = i;
-          if(hasPath(currPt, eastPt, temp3Darray)) {
-            //std::cout<<"Ptr: "<<eastPt<<"\n";
+          if(hasPath(currPt, eastPt, temp3Darray, fallCache)) {
+            ////std::cout<<"Ptr: "<<eastPt<<"\n";
             newSet.insert(eastPt);
             break;
           }
         }
-
-        //std::cout << "currPt at last"<<currPt << "\n" << "from set: ";
-
         mGraph[currPt] = newSet;
-        // for(auto itr = mGraph[currPt].begin(); itr != mGraph[currPt].end(); itr++) {
-        //   std::cout << *itr;
-        // }
-        
-        //std::cout << "\n";
       }
+      //std::cout << "\n";
     }
+    //std::cout << "\n";
   }
 
+  // //std::cout << "Build Graph End: "
+  //             << std::chrono::duration_cast<std::chrono::seconds>(
+  //                  clock.time_since_epoch()).count() << '\n';
+
   // for(auto itr = mGraph.begin(); itr != mGraph.end(); itr++) {
-  //   std::cout <<"Node" << itr->first << "\n";
+  //   //std::cout <<"Node" << itr->first << "\n";
   //   std::set<Point> sub = itr->second;
-  //   std::cout <<"Can go to\n";
+  //   //std::cout <<"Can go to\n";
   //   for(auto it = sub.begin(); it != sub.end(); it++) {
-  //     std::cout << *it << "\n";
+  //     //std::cout << *it << "\n";
   //   }
-  //   std::cout << "\n";
+  //   //std::cout << "\n";
   // }
-  
 }
 
 VoxMap::~VoxMap() {
@@ -163,6 +173,10 @@ double qifa(Point src, Point dst) {
 }
 
 Route VoxMap::route(Point src, Point dst) {
+  // const auto clock = std::chrono::system_clock::now();
+  // //std::cout << "Route start: "
+  //             << std::chrono::duration_cast<std::chrono::seconds>(
+  //                  clock.time_since_epoch()).count() << '\n';
   if(!isValid(src) || !isValid(dst)) {
     std::runtime_error("An error occurred!");
   }
@@ -173,9 +187,9 @@ Route VoxMap::route(Point src, Point dst) {
     throw InvalidPoint(dst);
   }
 
-  std::set<Point>                                         vSet;
+  std::set<Point>                                       vSet;
   std::priority_queue<Point, std::vector<Point>, Compare> minHeap;
-  std::unordered_map<Point, Point>                        pMap;
+  std::map<Point, Point>                                pMap;
 
   src.dis_to_dst = qifa(src, dst);
   vSet.insert(src);
@@ -212,10 +226,16 @@ Route VoxMap::route(Point src, Point dst) {
         preResult.push_back(pt);
         holder = pt;
       }
-
+      
+      // //std::cout << "Route end: "
+      //         << std::chrono::duration_cast<std::chrono::seconds>(
+      //              clock.time_since_epoch()).count() << '\n';
       return Result(preResult);
     }
   }
+  // //std::cout << "Route end: "
+  //             << std::chrono::duration_cast<std::chrono::seconds>(
+  //                  clock.time_since_epoch()).count() << '\n';
   throw NoRoute(src,dst);
 }
 
@@ -263,10 +283,10 @@ bool VoxMap::isWalkable(const Point& point,  std::vector<std::vector<std::vector
   return false;
 }
 
-bool VoxMap::hasPath(const Point& src, const Point& dst, std::vector<std::vector<std::vector<bool>>>& temp3Darray){
+bool VoxMap::hasPath(const Point& src, const Point& dst, std::vector<std::vector<std::vector<bool>>>& temp3Darray, std::vector<std::vector<std::vector<int>>>& fallCache){
   // check if src can go to dst by one step
   if (!isWalkable(src, temp3Darray)) {
-    // std::cout << "Ptr: " << dst << " is not walkable\n";
+    // //std::cout << "Ptr: " << dst << " is not walkable\n";
     // throw InvalidPoint(src);
     return false;
   }
@@ -277,7 +297,7 @@ bool VoxMap::hasPath(const Point& src, const Point& dst, std::vector<std::vector
 
   // if they are separated by more than 1 tile, no path
   if (abs(src.x - dst.x) > 1 || abs(src.y - dst.y) > 1) {
-    // std::cout << "more than one seperation";
+    // //std::cout << "more than one seperation";
     return false;
   }
 
@@ -293,13 +313,16 @@ bool VoxMap::hasPath(const Point& src, const Point& dst, std::vector<std::vector
   }
 
   // case 3 - free fall
-  if (dst.z < src.z) {
-    for(int i = dst.z; i <= abs(src.z); ++i) {
-      if (temp3Darray[dst.x][dst.y][i]) {
-        return false;
-      }
-    }
+  if (fallCache[src.x][src.y][src.z] == dst.z) {
     return true;
   }
+  // if (dst.z < src.z) {
+  //   for(int i = dst.z; i <= abs(src.z); ++i) {
+  //     if (temp3Darray[dst.x][dst.y][i]) {
+  //       return false;
+  //     }
+  //   }
+  //   return true;
+  // }
   return false;
 }
