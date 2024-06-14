@@ -60,8 +60,10 @@ VoxMap::VoxMap(std::istream& stream) {
         if (fallCache[x][y][z] == -1) {
           if (temp3Darray[x][y][z]) {
             fallCache[x][y][z] = z;
-          } else {
+          } else if (z > 0) {
             fallCache[x][y][z] = fallCache[x][y][z-1];
+          } else {
+            fallCache[x][y][z] = z;
           }
         }
 
